@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Burbujas Nails — Salón de Uñas en Concepción, Chile</title>
+  <meta name="description" content="Salón de uñas en Concepción. Esmaltado semipermanente, extensiones, pedicura spa, lifting de pestañas y más. Agenda por WhatsApp.">
+  <link rel="canonical" href="https://burbujasnails.cl/">
+  <!-- Open Graph -->
+  <meta property="og:title" content="Burbujas Nails — Salón de Uñas en Concepción">
+  <meta property="og:description" content="Esmaltado semipermanente, extensiones, pedicura spa y más. Concepción, Chile.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://burbujasnails.cl/">
+  <meta property="og:image" content="https://burbujasnails.cl/og-image.jpg">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Burbujas Nails — Salón de Uñas en Concepción">
+  <meta name="twitter:description" content="Esmaltado semipermanente, extensiones, pedicura spa y más.">
+  <!-- Schema.org LocalBusiness -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "NailSalon",
+    "name": "Burbujas Nails",
+    "description": "Salón de uñas en Concepción, Chile. Esmaltado semipermanente, extensiones, pedicura spa, lifting de pestañas y más.",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Concepción",
+      "addressRegion": "Biobío",
+      "addressCountry": "CL"
+    },
+    "telephone": "+56930912644",
+    "url": "https://burbujasnails.cl"
+  }
+  </script>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=a6d5279a">
+</head>
+<body>
+
+<!-- ═══════════ NAVBAR ═══════════ -->
+<header>
+  <nav class="nav-bar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <span class="logo-bubble">💅</span>
+        <span class="logo-text">Burbujas<strong>Nails</strong></span>
+      </a>
+
+      <!-- Desktop links -->
+      <ul class="nav-links">
+        <li><a href="#servicios">💅 Servicios</a></li>
+        <li><a href="#galeria">🖼️ Galería</a></li>
+        <li><a href="#resenas">⭐ Reseñas</a></li>
+        <li><a href="#contacto">📍 Contacto</a></li>
+        <li><a href="https://link.mercadopago.cl/burbujasnails" target="_blank" rel="noopener" class="btn btn-outline btn-sm">💳 Pagar</a></li>
+      </ul>
+
+      <!-- Burger -->
+      <button class="nav-burger" id="navBurger" aria-label="Menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <ul class="nav-mobile" id="navMobile" hidden>
+      <li><a href="#servicios">💅 Servicios</a></li>
+      <li><a href="#galeria">🖼️ Galería</a></li>
+      <li><a href="#resenas">⭐ Reseñas</a></li>
+      <li><a href="#contacto">📍 Contacto</a></li>
+      <li><a href="https://link.mercadopago.cl/burbujasnails" target="_blank" rel="noopener">💳 Pagar en línea</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero-wrap reveal">
+  <div class="hero-inner">
+    <p class="hero-tag">✨ Salón de uñas en Concepción</p>
+    <h1 class="hero-title">Tus uñas merecen <em>lo mejor</em></h1>
+    <p class="hero-sub">Esmaltado semipermanente · Extensiones · Pedicura spa · Pestañas y cejas</p>
+    <div class="hero-cta">
+      <a href="https://wa.me/56930912644?text=Hola!%20Quiero%20agendar%20una%20cita%20%F0%9F%92%85"
+         target="_blank" rel="noopener" class="btn btn-primary btn-lg">
+        Agendar por WhatsApp 💬
+      </a>
+      <a href="#servicios" class="btn btn-ghost btn-lg">Ver servicios →</a>
+    </div>
+  </div>
+  <div class="hero-deco" aria-hidden="true">
+    <span class="deco-circle c1"></span>
+    <span class="deco-circle c2"></span>
+    <span class="deco-circle c3"></span>
+  </div>
+</section>
+
+<!-- ═══════════ SERVICIOS ═══════════ -->
+<section id="servicios" class="section reveal">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Nuestros Servicios</h2>
+      <p class="section-sub">Encuentra el servicio perfecto para ti 💅</p>
+    </div>
+
+    <div id="svcContainer">
+      <!-- Filtros -->
+      <div class="frow" role="list"></div>
+      <!-- Lista -->
+      <div id="svcList"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ GALERÍA ═══════════ -->
+<section id="galeria" class="section section-alt reveal">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Galería</h2>
+      <p class="section-sub">Nuestros trabajos más recientes ✨</p>
+    </div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+</section>
+
+<!-- ═══════════ TESTIMONIOS ═══════════ -->
+<section id="resenas" class="section reveal">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Lo que dicen nuestras clientas</h2>
+      <p class="section-sub">Reseñas reales de clientas felices ⭐</p>
+    </div>
+    <div class="test-wrap">
+      <button class="test-nav" id="testPrev" aria-label="Anterior">‹</button>
+      <div class="test-viewport">
+        <div class="test-track" id="testTrack">
+
+          <div class="test-card">
+            <div class="test-stars">⭐⭐⭐⭐⭐</div>
+            <p class="test-text">"Las mejores uñas de Concepción! El esmaltado semipermanente me duró más de tres semanas perfecto. Volvería mil veces."</p>
+            <p class="test-author">— Valentina R.</p>
+          </div>
+
+          <div class="test-card">
+            <div class="test-stars">⭐⭐⭐⭐⭐</div>
+            <p class="test-text">"Me hice las extensiones acrílicas y quedé encantada. Super prolija, me explicó todo y el resultado fue increíble. 100% recomendada."</p>
+            <p class="test-author">— Camila T.</p>
+          </div>
+
+          <div class="test-card">
+            <div class="test-stars">⭐⭐⭐⭐⭐</div>
+            <p class="test-text">"La pedicura spa fue una experiencia relajante. Mis pies quedaron suavísimos y el esmaltado perfectamente aplicado. ¡Volveré!"</p>
+            <p class="test-author">— Daniela M.</p>
+          </div>
+
+          <div class="test-card">
+            <div class="test-stars">⭐⭐⭐⭐⭐</div>
+            <p class="test-text">"El lifting de pestañas + cejas que me hicieron fue espectacular. Se nota que son profesionales de verdad. Lugar limpio y muy acogedor."</p>
+            <p class="test-author">— Sofía A.</p>
+          </div>
+
+        </div>
+      </div>
+      <button class="test-nav" id="testNext" aria-label="Siguiente">›</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CONTACTO ═══════════ -->
+<section id="contacto" class="section section-alt reveal">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Contáctanos</h2>
+      <p class="section-sub">¡Estamos para atenderte! 🌸</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-ico">📍</div>
+        <h3>Ubicación</h3>
+        <p>Concepción, Chile</p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-ico">📱</div>
+        <h3>WhatsApp</h3>
+        <p><a href="https://wa.me/56930912644" target="_blank" rel="noopener">+56 9 3091 2644</a></p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-ico">💳</div>
+        <h3>Pago en línea</h3>
+        <p><a href="https://link.mercadopago.cl/burbujasnails" target="_blank" rel="noopener">MercadoPago</a></p>
+      </div>
+    </div>
+    <div class="contact-cta">
+      <a href="https://wa.me/56930912644?text=Hola!%20Quiero%20agendar%20una%20cita%20%F0%9F%92%85"
+         target="_blank" rel="noopener" class="btn btn-primary btn-lg">
+        Agendar cita ahora 💬
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <span class="logo-bubble small">💅</span>
+      <span class="logo-text">Burbujas<strong>Nails</strong></span>
+    </div>
+    <p class="footer-copy">© <span id="footerYear"></span> Burbujas Nails · Concepción, Chile</p>
+    <nav class="footer-links">
+      <a href="#servicios">Servicios</a>
+      <a href="#galeria">Galería</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </div>
+</footer>
+
+<!-- ═══════════ FAB WhatsApp ═══════════ -->
+<a href="https://wa.me/56930912644?text=Hola!%20Quiero%20agendar%20una%20cita%20%F0%9F%92%85"
+   target="_blank" rel="noopener" class="wa-fab" aria-label="Chatear por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+<div class="fab-bubble" id="fabBubble">
+  <span class="fab-bubble-shine"></span>
+  ✨ Reserva tu cita hoy 💅
+</div>
+
+<!-- Scripts -->
+<script src="data.js?v=1d32f3a7"></script>
+<script src="app.js?v=aabdaf73"></script>
+</body>
+</html>
