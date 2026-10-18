@@ -22,5 +22,6 @@ jobs:
           node --check data.js
           node --check admin.js
           node tests/security.mjs
+          node tests/rls-contract.mjs
       - name: Comprobar paquete distribuible
         run: bash build.sh
