@@ -6,7 +6,7 @@ const esc = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').repl
 
 /* ─── Catálogo público canónico ────────────────────────────────
  * La versión del catálogo se publica mediante Git; nunca se toma el
- * contenido de localStorage de un antiguo panel "administrativo".
+ * contenido local de un antiguo panel "administrativo".
  */
 function loadServices() {
   const services = window.INITIAL_SERVICES || [];
