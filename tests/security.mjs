@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+const read = f => readFileSync(new URL('../' + f, import.meta.url), 'utf8');
+const admin = read('admin.js');
+const adminPage = read('admin.html');
+const app = read('app.js');
+const build = read('build.sh');
+const home = read('index.html');
+assert(!/ADMIN_PASS|bn_auth|sessionStorage|password/i.test(admin), 'No incluir credenciales en admin.js');
+assert(!/<input[^>]*type\s*=\s*["']?password/i.test(adminPage), 'No habilitar login estático');
+assert(!/admin\.js/.test(adminPage), 'No ejecutar administración antigua');
+assert(/no disponible/i.test(adminPage), 'La ruta admin debe avisar que está deshabilitada');
+assert(!/STORE\.load|localStorage/i.test(app), 'Catálogo público no debe depender del antiguo almacenamiento admin');
+assert(/window\.INITIAL_SERVICES/.test(app), 'Catálogo versionado requerido');
+assert(!/cp -R[^\n]*admin\.js/.test(build), 'No empaquetar script antiguo');
+assert(!/admin\.html/.test(home), 'No exponer acceso administrativo desde la portada');
+console.log('Controles de seguridad del sitio estático: OK');

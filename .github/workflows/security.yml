@@ -1,0 +1,26 @@
+name: Seguridad web estática
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static-security:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Comprobar sintaxis y ausencia de administración insegura
+        run: |
+          node --check app.js
+          node --check data.js
+          node --check admin.js
+          node tests/security.mjs
+      - name: Comprobar paquete distribuible
+        run: bash build.sh
