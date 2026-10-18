@@ -4,39 +4,19 @@
 /* ─── Utilidades ─────────────────────────────────────────────── */
 const esc = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 
-/* ─── Almacenamiento ─────────────────────────────────────────── */
-const STORE = {
-  KEY_SERVICES: 'bn_services',
-  KEY_GALLERY:  'bn_gallery',
-  KEY_CONFIG:   'bn_config',
-
-  load(key, fallback) {
-    try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
-    catch { return fallback; }
-  },
-  save(key, val) {
-    try { localStorage.setItem(key, JSON.stringify(val)); } catch {}
-  }
-};
-
-/* ─── Datos ──────────────────────────────────────────────────── */
+/* ─── Catálogo público canónico ────────────────────────────────
+ * La versión del catálogo se publica mediante Git; nunca se toma el
+ * contenido de localStorage de un antiguo panel "administrativo".
+ */
 function loadServices() {
-  let svc = STORE.load(STORE.KEY_SERVICES, null);
-  if (!svc) {
-    svc = (window.INITIAL_SERVICES || []);
-    STORE.save(STORE.KEY_SERVICES, svc);
-  }
-  // Migración: agregar campo emoji si falta
-  let changed = false;
-  svc.forEach(s => {
-    if (!s.emoji) { s.emoji = CAT_EMOJI[s.category] || '💅'; changed = true; }
-  });
-  if (changed) STORE.save(STORE.KEY_SERVICES, svc);
-  return svc;
+  const services = window.INITIAL_SERVICES || [];
+  return services.map(service => ({
+    ...service,
+    emoji: service.emoji || CAT_EMOJI[service.category] || '💅'
+  }));
 }
-
 function loadGallery() {
-  return STORE.load(STORE.KEY_GALLERY, []);
+  return Array.isArray(window.INITIAL_GALLERY) ? window.INITIAL_GALLERY : [];
 }
 
 /* ─── Emojis por categoría (fallback) ───────────────────────── */
