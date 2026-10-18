@@ -1,6 +1,6 @@
-/* ── Burbujas Nails — Datos iniciales ──────────────────────────
-   Este archivo sólo se usa como SEED la primera vez.
-   Después, los datos viven en localStorage (clave: bn_services).
+/* ── Burbujas Nails — catálogo público versionado ────────────
+   Cambios: editar este archivo mediante un commit revisado.
+   Nunca almacenar credenciales ni datos privados aquí.
 ─────────────────────────────────────────────────────────────── */
 window.INITIAL_SERVICES = [
   {
