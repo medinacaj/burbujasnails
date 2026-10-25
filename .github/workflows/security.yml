@@ -23,5 +23,6 @@ jobs:
           node --check admin.js
           node tests/security.mjs
           node tests/rls-contract.mjs
+          node tests/gitignore-security.mjs
       - name: Comprobar paquete distribuible
         run: bash build.sh
