@@ -140,7 +140,7 @@ button:focus-visible,a:focus-visible{outline:3px solid #de7697;outline-offset:4p
 /* Gallery */
 .gallery-section{background:#fffaf8}
 .gallery-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.gallery-item{position:relative;aspect-ratio:4/5;overflow:hidden;border-radius:20px;cursor:zoom-in;background:#f7e4eb;box-shadow:var(--shadow)}
+.gallery-item{position:relative;display:block;appearance:none;width:100%;padding:0;text-align:left;border:0;aspect-ratio:4/5;overflow:hidden;border-radius:20px;cursor:zoom-in;background:#f7e4eb;box-shadow:var(--shadow);font:inherit;color:inherit}
 .gallery-item img{height:100%;width:100%;object-fit:cover;transition:transform .3s}
 .gallery-item:hover img{transform:scale(1.04)}
 .gallery-caption{position:absolute;inset:auto 0 0;padding:45px 20px 17px;background:linear-gradient(transparent,rgba(43,29,35,.72));color:#fff;font-size:.82rem}
@@ -172,6 +172,21 @@ button:focus-visible,a:focus-visible{outline:3px solid #de7697;outline-offset:4p
 .contact-card p{font-size:.84rem;color:var(--muted);overflow-wrap:anywhere}
 .contact-card a{color:var(--rose-dark);font-weight:600}
 .contact-card a:hover{text-decoration:underline}
+
+/* Ubicación y mapa — visible, accesible y apto para dispositivos móviles. */
+.location-map{margin-top:44px;background:#fff;border:1px solid #e9dadd;border-radius:22px;overflow:hidden;box-shadow:var(--shadow)}
+.location-map-heading{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 24px}
+.location-map-heading h3{font-weight:700;font-size:1.05rem;color:var(--ink)}
+.location-map-heading p{font-size:.86rem;color:var(--muted);margin-top:5px}
+.location-map-heading a{color:var(--rose-dark);font-size:.85rem;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.location-map iframe{display:block;width:100%;height:360px;border:0;background:#efe5e4}
+.map-privacy-note{padding:9px 20px 13px;color:var(--soft);font-size:.7rem;text-align:right}
+@media(max-width:650px){
+ .location-map{margin-top:28px;border-radius:17px}
+ .location-map-heading{align-items:start;flex-direction:column;gap:12px;padding:19px}
+ .location-map iframe{height:310px}
+ .map-privacy-note{text-align:left}
+}
 
 /* Footer and action */
 .footer{background:#30232c;color:#eddee1;padding:35px 0}

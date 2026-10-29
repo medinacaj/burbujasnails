@@ -193,3 +193,17 @@ window.INITIAL_SERVICES = [
     includes:['Baño de parafina','Hidratación profunda','Masaje incluido']
   }
 ];
+
+// Galería real proporcionada por el negocio. Fotos WebP optimizadas y sin metadatos EXIF.
+window.INITIAL_GALLERY = [
+  { url: 'gallery/trabajo-02.webp', title: "Francesa rosa en uñas largas", caption: "Uñas largas con manicura francesa rosada en un evento", category: "Manicura francesa" },
+  { url: 'gallery/trabajo-03.webp', title: "Uñas invernales azules", caption: "Diseño de uñas azul y blanco con copos de nieve", category: "Nail art" },
+  { url: 'gallery/trabajo-04.webp', title: "Manicura blanca con relieve", caption: "Uñas en tonos blancos y nacarados con detalles en relieve", category: "Nail art" },
+  { url: 'gallery/trabajo-05.webp', title: "Manicura burdeos brillante", caption: "Uñas almendradas con esmalte burdeos de acabado brillante", category: "Esmaltado" },
+  { url: 'gallery/trabajo-06.webp', title: "Manicura nude con lunares", caption: "Uñas cortas en tono nude con pequeños lunares blancos", category: "Nail art" },
+  { url: 'gallery/trabajo-07.webp', title: "Uñas decoradas en negro y amarillo", caption: "Diseño de uñas negro y amarillo con telarañas", category: "Nail art" },
+  { url: 'gallery/trabajo-08.webp', title: "Manicura naranja temática", caption: "Uñas con esmalte naranja y diseño de telaraña", category: "Nail art" },
+  { url: 'gallery/trabajo-09.webp', title: "Diseño azul con flores", caption: "Uñas azules y blancas con motivos florales", category: "Nail art" },
+  { url: 'gallery/trabajo-10.webp', title: "Esmaltado oscuro con brillo", caption: "Uñas cortas negras con brillo sutil", category: "Esmaltado" },
+  { url: 'gallery/trabajo-01.webp', title: "Preparación de material esterilizado", caption: "Material de manicura preparado junto a equipo de esterilización", category: "Nuestro estudio" }
+];

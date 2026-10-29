@@ -4,42 +4,58 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Protección adicional compatible con publicación estática GitHub Pages. -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; frame-src 'none'; connect-src 'self'; script-src 'self' 'sha256-hOvc0b+wPbZ8LtQ45HqJoCvjaI78SlKIW/6FIHI7psg='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; frame-src 'none'; connect-src 'self'; frame-src https://www.google.com; script-src 'self' 'sha256-chzmjGB2CFINPhuLf7LStDSGnG4PBx9iflIY87oNX+8='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <title>Burbujas Nails — Salón de Uñas en Concepción, Chile</title>
-  <meta name="description" content="Salón de uñas en Concepción. Esmaltado semipermanente, extensiones, pedicura spa, lifting de pestañas y más. Agenda por WhatsApp.">
+  <title>Manicure, Uñas y Nail Art en Concepción | Burbujas Nails</title>
+  <meta name="description" content="Manicure, esmaltado semipermanente, nail art y pedicura en Burbujas Nails, Maipú 1020, Concepción. Mira nuestros trabajos y reserva por WhatsApp.">
   <link rel="canonical" href="https://burbujasnails.cl/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#fcf9f6">
+  <meta name="geo.region" content="CL-BI">
+  <meta name="geo.placename" content="Concepción">
   <!-- Open Graph -->
-  <meta property="og:title" content="Burbujas Nails — Salón de Uñas en Concepción">
+  <meta property="og:title" content="Manicure y Nail Art en Concepción | Burbujas Nails">
+  <meta property="og:site_name" content="Burbujas Nails">
+  <meta property="og:locale" content="es_CL">
   <meta property="og:description" content="Esmaltado semipermanente, extensiones, pedicura spa y más. Concepción, Chile.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://burbujasnails.cl/">
+  <meta property="og:image" content="https://burbujasnails.cl/gallery/burbujas-nails-compartir.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Manicura blanca y nacarada con decoración en relieve realizada por Burbujas Nails">
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Burbujas Nails — Salón de Uñas en Concepción">
-  <meta name="twitter:description" content="Esmaltado semipermanente, extensiones, pedicura spa y más.">
+  <meta name="twitter:description" content="Conoce nuestros diseños de uñas en Concepción y agenda por WhatsApp.">
+  <meta name="twitter:image" content="https://burbujasnails.cl/gallery/burbujas-nails-compartir.jpg">
   <!-- Schema.org LocalBusiness -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "NailSalon",
+    "@id": "https://burbujasnails.cl/#negocio",
     "name": "Burbujas Nails",
-    "description": "Salón de uñas en Concepción, Chile. Esmaltado semipermanente, extensiones, pedicura spa, lifting de pestañas y más.",
+    "description": "Estudio de manicura, nail art, esmaltado, pestañas y cejas en Concepción, Biobío.",
+    "url": "https://burbujasnails.cl/",
+    "image": "https://burbujasnails.cl/gallery/trabajo-04.webp",
+    "telephone": "+56930912644",
+    "hasMap": "https://www.google.com/maps/search/?api=1&query_place_id=ChIJcV6iZwC1aZYRHvw-7mt7No0&query=Burbujas%20Nails",
     "address": {
       "@type": "PostalAddress",
+      "streetAddress": "Maipú 1020, oficina 4",
       "addressLocality": "Concepción",
       "addressRegion": "Biobío",
       "addressCountry": "CL"
-    },
-    "telephone": "+56930912644",
-    "url": "https://burbujasnails.cl"
+    }
   }
   </script>
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=modern20261029">
+  <link rel="stylesheet" href="styles.css?v=galeria20261029">
 </head>
 <body>
 
@@ -141,9 +157,23 @@
       <div class="section-header section-header-centered">
         <p class="section-kicker">INSPIRACIÓN</p>
         <h2 class="section-title" id="gallery-title">Los detalles <em>hablan.</em></h2>
-        <p class="section-sub">Un espacio reservado para nuestros próximos trabajos.</p>
+        <p class="section-sub">Diseños y manicuras de nuestro portafolio. Inspírate con trabajos reales.</p>
       </div>
       <div class="gallery-grid" id="galleryGrid" aria-live="polite"></div>
+      <noscript>
+        <div class="gallery-grid" aria-label="Galería de trabajos de uñas">
+          <figure class="gallery-item"><img src="gallery/trabajo-02.webp" alt="Manicura francesa rosada con uñas largas" loading="lazy" width="720" height="1280"></figure>
+          <figure class="gallery-item"><img src="gallery/trabajo-03.webp" alt="Manicura azul invernal con copos de nieve" loading="lazy" width="720" height="1280"></figure>
+          <figure class="gallery-item"><img src="gallery/trabajo-04.webp" alt="Manicura blanca y perlada con decoración en relieve" loading="lazy" width="720" height="1280"></figure>
+          <figure class="gallery-item"><img src="gallery/trabajo-05.webp" alt="Uñas burdeos en forma almendrada" loading="lazy" width="720" height="1280"></figure>
+          <figure class="gallery-item"><img src="gallery/trabajo-06.webp" alt="Uñas nude con puntos blancos" loading="lazy" width="720" height="1280"></figure>
+          <figure class="gallery-item"><img src="gallery/trabajo-07.webp" alt="Diseño negro y amarillo de uñas con telarañas" loading="lazy" width="720" height="1280"></figure>
+          <figure class="gallery-item"><img src="gallery/trabajo-08.webp" alt="Uñas naranja de temporada con telarañas" loading="lazy" width="720" height="1280"></figure>
+          <figure class="gallery-item"><img src="gallery/trabajo-09.webp" alt="Diseño de uñas azules y blancas con flores" loading="lazy" width="720" height="1280"></figure>
+          <figure class="gallery-item"><img src="gallery/trabajo-10.webp" alt="Esmaltado negro con brillo en uñas cortas" loading="lazy" width="720" height="1280"></figure>
+          <figure class="gallery-item"><img src="gallery/trabajo-01.webp" alt="Material preparado junto a equipo de esterilización" loading="lazy" width="720" height="1280"></figure>
+        </div>
+      </noscript>
     </div>
   </section>
 
@@ -157,10 +187,18 @@
           <div class="contact-cta"><a href="https://wa.me/56930912644?text=Hola%2C%20quisiera%20reservar%20una%20cita%20en%20Burbujas%20Nails" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">Agendar mi cita <span aria-hidden="true">↗</span></a></div>
         </div>
         <div class="contact-grid">
-          <div class="contact-card"><div class="contact-ico" aria-hidden="true">⌖</div><div><h3>Ubicación</h3><p>Concepción, Región del Biobío</p></div></div>
+          <div class="contact-card"><div class="contact-ico" aria-hidden="true">⌖</div><div><h3>Visítanos</h3><p><a href="https://www.google.com/maps/search/?api=1&amp;query=Burbujas%20Nails%2C%20Maip%C3%BA%201020%2C%20Concepci%C3%B3n&amp;query_place_id=ChIJcV6iZwC1aZYRHvw-7mt7No0" target="_blank" rel="noopener noreferrer">Maipú 1020, oficina 4<br>Concepción, Biobío <span aria-hidden="true">↗</span></a></p></div></div>
           <div class="contact-card"><div class="contact-ico" aria-hidden="true">✉</div><div><h3>WhatsApp</h3><p><a href="https://wa.me/56930912644" target="_blank" rel="noopener noreferrer">+56 9 3091 2644</a></p></div></div>
           <div class="contact-card"><div class="contact-ico" aria-hidden="true">◇</div><div><h3>Pago en línea</h3><p><a href="https://link.mercadopago.cl/burbujasnails" target="_blank" rel="noopener noreferrer">Mercado Pago ↗</a></p></div></div>
         </div>
+      </div>
+      <div class="location-map">
+        <div class="location-map-heading">
+          <div><h3>Encuéntranos en Concepción</h3><p>Maipú 1020, oficina 4 · Concepción, Chile</p></div>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Burbujas%20Nails%2C%20Maip%C3%BA%201020%2C%20Concepci%C3%B3n&amp;query_place_id=ChIJcV6iZwC1aZYRHvw-7mt7No0" target="_blank" rel="noopener noreferrer">Abrir Google Maps <span aria-hidden="true">↗</span></a>
+        </div>
+        <iframe title="Mapa de ubicación de Burbujas Nails en Maipú 1020, Concepción" src="https://www.google.com/maps?q=Maip%C3%BA%201020%2C%20Concepci%C3%B3n%2C%20Chile&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        <p class="map-privacy-note">El mapa se sirve desde Google Maps y puede transmitir información técnica al proveedor.</p>
       </div>
     </div>
   </section>
@@ -177,7 +215,7 @@
 </a>
 
 <!-- Scripts -->
-<script src="data.js?v=secure20261018"></script>
-<script src="app.js?v=modern20261029"></script>
+<script src="data.js?v=fotos20261029"></script>
+<script src="app.js?v=fotos20261029"></script>
 </body>
 </html>
