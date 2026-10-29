@@ -232,29 +232,6 @@ function openSlideshow(items, startIdx) {
   document.body.appendChild(ov);
 }
 
-/* ─── Testimonios ────────────────────────────────────────────── */
-function initTestimonios() {
-  const track = document.getElementById('testTrack');
-  if (!track) return;
-  const cards = track.querySelectorAll('.test-card');
-  if (cards.length <= 1) return;
-
-  let idx = 0;
-  const total = cards.length;
-
-  function goTo(n) {
-    idx = (n + total) % total;
-    track.style.transform = `translateX(-${idx * 100}%)`;
-  }
-
-  const prev = document.getElementById('testPrev');
-  const next = document.getElementById('testNext');
-  if (prev) prev.addEventListener('click', () => goTo(idx - 1));
-  if (next) next.addEventListener('click', () => goTo(idx + 1));
-
-  setInterval(() => goTo(idx + 1), 5000);
-}
-
 /* ─── Reveal on scroll ───────────────────────────────────────── */
 function initReveal() {
   if (!('IntersectionObserver' in window)) {
@@ -342,7 +319,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initFooterYear();
   renderServices();
   renderGallery();
-  initTestimonios();
   initReveal();
   initFabBubble();
 
