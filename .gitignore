@@ -1,2 +1,36 @@
 *.zip
 .DS_Store
+
+# Archivos locales de configuración: nunca publicar credenciales
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+*.pem
+*.p12
+*.pfx
+*.key
+*.keystore
+id_rsa
+id_ed25519
+credentials.json
+service-account.json
+service_account.json
+
+# Bases locales, respaldos y material temporal
+*.db
+*.sqlite
+*.sqlite3
+*.bak
+*.backup
+*.old
+*.tmp
+*.log
+*.swp
+
+# Cachés/entornos de trabajo, no forman parte del sitio distribuido
+node_modules/
+.vercel/
+.next/
+.cache/
