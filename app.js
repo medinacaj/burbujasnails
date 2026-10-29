@@ -58,13 +58,16 @@ function renderServices() {
   const frow = container.querySelector('.frow') || document.querySelector('.frow');
   if (frow) {
     frow.innerHTML = cats.map(c => `
-      <button class="fb${c === activeFilter ? ' active' : ''}" data-cat="${esc(c)}">${esc(c)}</button>
+      <button class="fb${c === activeFilter ? ' active' : ''}" data-cat="${esc(c)}" aria-pressed="${c === activeFilter}">${esc(c)}</button>
     `).join('');
     frow.querySelectorAll('.fb').forEach(btn => {
       btn.addEventListener('click', () => {
         activeFilter = btn.dataset.cat;
         renderServiceList();
-        frow.querySelectorAll('.fb').forEach(b => b.classList.toggle('active', b === btn));
+        frow.querySelectorAll('.fb').forEach(b => {
+          b.classList.toggle('active', b === btn);
+          b.setAttribute('aria-pressed', String(b === btn));
+        });
       });
     });
   }
@@ -86,51 +89,50 @@ function renderServiceList() {
   }
 
   list.innerHTML = filtered.map(s => `
-    <div class="svc-row" data-id="${esc(s.id)}">
-      <div class="svc-ico">${esc(s.emoji || CAT_EMOJI[s.category] || '💅')}</div>
-      <div class="svc-info">
-        <p class="svc-name">${esc(s.name)}${s.popular ? ' <span class="badge-pop">⭐ Popular</span>' : ''}</p>
-        <p class="svc-dur">${esc(s.duration || '')}</p>
-      </div>
-      <div class="svc-right">
-        <span class="svc-price">${
-          s.price && s.price.toLowerCase().includes('consultar')
-            ? esc(s.price)
-            : s.price
-              ? '$' + esc(s.price)
-              : '—'
-        }</span>
-      </div>
-      <button class="svc-toggle" aria-label="Ver detalle">›</button>
-    </div>
-    <div class="svc-detail" id="det-${esc(s.id)}" hidden>
-      <div class="svc-detail-inner">
-        ${s.description ? `<p class="svc-desc">${esc(s.description)}</p>` : ''}
-        ${s.includes && s.includes.length ? `
-          <ul class="svc-includes">
-            ${s.includes.map(i => `<li>${esc(i)}</li>`).join('')}
+    <article class="svc-card">
+      <button type="button" class="svc-row" data-id="${esc(s.id)}"
+        aria-expanded="false" aria-controls="det-${esc(s.id)}"
+        aria-label="Detalles de ${esc(s.name)}">
+        <span class="svc-ico" aria-hidden="true">${esc(s.emoji || CAT_EMOJI[s.category] || '💅')}</span>
+        <span class="svc-info">
+          <span class="svc-name">${esc(s.name)}${s.popular ? ' <span class="badge-pop">Popular</span>' : ''}</span>
+          <span class="svc-dur">${esc(s.duration || '')}</span>
+        </span>
+        <span class="svc-right"><span class="svc-price">${s.price && s.price.toLowerCase().includes('consultar')
+          ? esc(s.price)
+          : s.price ? '$' + esc(s.price) : '—'}</span></span>
+        <span class="svc-toggle" aria-hidden="true">+</span>
+      </button>
+      <div class="svc-detail" id="det-${esc(s.id)}" hidden>
+        <div class="svc-detail-inner">
+          ${s.description ? `<p class="svc-desc">${esc(s.description)}</p>` : ''}
+          ${Array.isArray(s.includes) && s.includes.length ? `<ul class="svc-includes">
+            ${s.includes.map(item => `<li>${esc(item)}</li>`).join('')}
           </ul>` : ''}
-        <a href="https://wa.me/56930912644?text=Hola!%20Quiero%20agendar%20${encodeURIComponent(s.name)}%20%F0%9F%92%85"
-           target="_blank" rel="noopener" class="btn btn-primary btn-sm svc-agendar">
-          Agendar por WhatsApp ✨
-        </a>
+          <a class="btn btn-primary btn-sm svc-agendar"
+             target="_blank" rel="noopener noreferrer"
+             href="https://wa.me/56930912644?text=Hola%2C%20quiero%20consultar%20disponibilidad%20para%20${encodeURIComponent(s.name)}">
+            Consultar este servicio <span aria-hidden="true">↗</span>
+          </a>
+        </div>
       </div>
-    </div>
+    </article>
   `).join('');
 
-  // Toggle detalle
   list.querySelectorAll('.svc-row').forEach(row => {
     row.addEventListener('click', () => {
-      const id = row.dataset.id;
-      const det = document.getElementById('det-' + id);
-      if (!det) return;
-      const open = !det.hidden;
-      // Cerrar todos
-      list.querySelectorAll('.svc-detail').forEach(d => { d.hidden = true; });
-      list.querySelectorAll('.svc-row').forEach(r => r.classList.remove('open'));
-      if (!open) {
-        det.hidden = false;
+      const details = document.getElementById('det-' + row.dataset.id);
+      if (!details) return;
+      const willOpen = details.hidden;
+      list.querySelectorAll('.svc-row').forEach(button => {
+        button.classList.remove('open');
+        button.setAttribute('aria-expanded', 'false');
+      });
+      list.querySelectorAll('.svc-detail').forEach(detail => { detail.hidden = true; });
+      details.hidden = !willOpen;
+      if (willOpen) {
         row.classList.add('open');
+        row.setAttribute('aria-expanded', 'true');
       }
     });
   });
@@ -143,7 +145,7 @@ function renderGallery() {
 
   const items = loadGallery();
   if (!items.length) {
-    grid.innerHTML = `<p class="gallery-empty">Próximamente… ✨</p>`;
+    grid.innerHTML = '<div class="gallery-empty"><strong>Pronto, más inspiración.</strong><p>Estamos preparando este espacio para mostrar nuestros trabajos.</p><a href="#servicios">Mientras tanto, explora los servicios ↗</a></div>';
     return;
   }
 
@@ -254,11 +256,12 @@ function initNav() {
     const open = !menu.hidden;
     menu.hidden = open;
     burger.setAttribute('aria-expanded', String(!open));
+    burger.setAttribute('aria-label', open ? 'Abrir menú' : 'Cerrar menú');
   });
 
   // Cerrar al hacer click en enlace
   menu.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => { menu.hidden = true; burger.setAttribute('aria-expanded', 'false'); });
+    a.addEventListener('click', () => { menu.hidden = true; burger.setAttribute('aria-expanded', 'false'); burger.setAttribute('aria-label', 'Abrir menú'); });
   });
 }
 
@@ -295,22 +298,6 @@ function initFooterYear() {
   if (yr) yr.textContent = new Date().getFullYear();
 }
 
-/* ─── FAB burbuja ─────────────────────────────────────────────── */
-function initFabBubble() {
-  function showFabBubble() {
-    const bubble = document.getElementById('fabBubble');
-    if (!bubble) return;
-    bubble.classList.remove('hiding');
-    bubble.classList.add('visible');
-    setTimeout(() => {
-      bubble.classList.add('hiding');
-      setTimeout(() => bubble.classList.remove('visible', 'hiding'), 400);
-    }, 5000);
-  }
-  setTimeout(showFabBubble, 8000);            // primera vez a los 8s
-  setInterval(showFabBubble, 2 * 60 * 1000); // luego cada 2 minutos
-}
-
 /* ─── Init ───────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
   initNav();
@@ -320,7 +307,6 @@ document.addEventListener('DOMContentLoaded', () => {
   renderServices();
   renderGallery();
   initReveal();
-  initFabBubble();
 
   // Reveal general
   document.querySelectorAll('.section, .hero-wrap').forEach(el => el.classList.add('reveal'));
