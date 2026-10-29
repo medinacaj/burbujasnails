@@ -16,7 +16,19 @@ function loadServices() {
   }));
 }
 function loadGallery() {
-  return Array.isArray(window.INITIAL_GALLERY) ? window.INITIAL_GALLERY : [];
+  // Solo URLs HTTPS o rutas del origen actual; no usar esquemas ejecutables.
+  const gallery = Array.isArray(window.INITIAL_GALLERY) ? window.INITIAL_GALLERY : [];
+  return gallery.flatMap(item => {
+    if (!item || typeof item.url !== 'string') return [];
+    try {
+      const target = new URL(item.url, window.location.href);
+      const local = target.origin === window.location.origin;
+      if (target.protocol !== 'https:' && !(local && target.protocol === 'http:')) return [];
+      return [{ ...item, url: target.href }];
+    } catch {
+      return [];
+    }
+  });
 }
 
 /* ─── Emojis por categoría (fallback) ───────────────────────── */
@@ -75,7 +87,7 @@ function renderServiceList() {
 
   list.innerHTML = filtered.map(s => `
     <div class="svc-row" data-id="${esc(s.id)}">
-      <div class="svc-ico">${s.emoji || CAT_EMOJI[s.category] || '💅'}</div>
+      <div class="svc-ico">${esc(s.emoji || CAT_EMOJI[s.category] || '💅')}</div>
       <div class="svc-info">
         <p class="svc-name">${esc(s.name)}${s.popular ? ' <span class="badge-pop">⭐ Popular</span>' : ''}</p>
         <p class="svc-dur">${esc(s.duration || '')}</p>
@@ -85,7 +97,7 @@ function renderServiceList() {
           s.price && s.price.toLowerCase().includes('consultar')
             ? esc(s.price)
             : s.price
-              ? 'Desde $' + esc(s.price)
+              ? '$' + esc(s.price)
               : '—'
         }</span>
       </div>
@@ -220,29 +232,6 @@ function openSlideshow(items, startIdx) {
   document.body.appendChild(ov);
 }
 
-/* ─── Testimonios ────────────────────────────────────────────── */
-function initTestimonios() {
-  const track = document.getElementById('testTrack');
-  if (!track) return;
-  const cards = track.querySelectorAll('.test-card');
-  if (cards.length <= 1) return;
-
-  let idx = 0;
-  const total = cards.length;
-
-  function goTo(n) {
-    idx = (n + total) % total;
-    track.style.transform = `translateX(-${idx * 100}%)`;
-  }
-
-  const prev = document.getElementById('testPrev');
-  const next = document.getElementById('testNext');
-  if (prev) prev.addEventListener('click', () => goTo(idx - 1));
-  if (next) next.addEventListener('click', () => goTo(idx + 1));
-
-  setInterval(() => goTo(idx + 1), 5000);
-}
-
 /* ─── Reveal on scroll ───────────────────────────────────────── */
 function initReveal() {
   if (!('IntersectionObserver' in window)) {
@@ -330,7 +319,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initFooterYear();
   renderServices();
   renderGallery();
-  initTestimonios();
   initReveal();
   initFabBubble();
 

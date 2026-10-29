@@ -24,5 +24,8 @@ jobs:
           node tests/security.mjs
           node tests/rls-contract.mjs
           node tests/layout-contract.mjs
+          node tests/gitignore-security.mjs
+          node tests/no-tracked-secrets.mjs
+          node tests/public-hardening.mjs
       - name: Comprobar paquete distribuible
         run: bash build.sh
