@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://burbujasnails.cl/</loc>
     <lastmod>2026-10-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <image:image><image:loc>https://burbujasnails.cl/gallery/trabajo-02.webp</image:loc></image:image>
+    <image:image><image:loc>https://burbujasnails.cl/gallery/trabajo-03.webp</image:loc></image:image>
+    <image:image><image:loc>https://burbujasnails.cl/gallery/trabajo-04.webp</image:loc></image:image>
+    <image:image><image:loc>https://burbujasnails.cl/gallery/trabajo-05.webp</image:loc></image:image>
+    <image:image><image:loc>https://burbujasnails.cl/gallery/trabajo-06.webp</image:loc></image:image>
+    <image:image><image:loc>https://burbujasnails.cl/gallery/trabajo-07.webp</image:loc></image:image>
+    <image:image><image:loc>https://burbujasnails.cl/gallery/trabajo-08.webp</image:loc></image:image>
+    <image:image><image:loc>https://burbujasnails.cl/gallery/trabajo-09.webp</image:loc></image:image>
+    <image:image><image:loc>https://burbujasnails.cl/gallery/trabajo-10.webp</image:loc></image:image>
+    <image:image><image:loc>https://burbujasnails.cl/gallery/trabajo-01.webp</image:loc></image:image>
   </url>
   <url>
     <loc>https://burbujasnails.cl/privacidad.html</loc>
