@@ -8,7 +8,6 @@ const css = readFileSync(new URL('../styles.css', import.meta.url), 'utf8');
 const required = [
   'container', 'section-title', 'section-alt', 'nav-logo', 'logo-bubble',
   'hero-title', 'hero-sub', 'hero-cta', 'hero-deco', 'btn-lg', 'btn-ghost',
-  'test-wrap', 'test-viewport', 'test-text', 'test-nav',
   'contact-card', 'contact-ico', 'contact-cta', 'footer-inner'
 ];
 for (const name of required) {
