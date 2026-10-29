@@ -151,13 +151,15 @@ function renderGallery() {
 
   grid.innerHTML = '';
   items.forEach((item, idx) => {
-    const el = document.createElement('div');
+    const el = document.createElement('button');
+    el.type = 'button';
     el.className = 'gallery-item reveal';
+    el.setAttribute('aria-label', 'Ampliar foto: ' + (item.title || item.caption || 'trabajo'));
     el.innerHTML = `
-      <img src="${esc(item.url)}" alt="${esc(item.caption || '')}" loading="lazy">
+      <img src="${esc(item.url)}" alt="${esc(item.caption || item.title || '')}" loading="lazy" decoding="async" width="720" height="1280">
       <div class="gallery-caption">
         ${item.category ? `<span class="gallery-cat">${esc(item.category)}</span><br>` : ''}
-        ${esc(item.caption || '')}
+        ${esc(item.title || item.caption || '')}
       </div>`;
     el.addEventListener('click', () => openSlideshow(items, idx));
     grid.appendChild(el);
