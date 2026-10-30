@@ -88,3 +88,15 @@ footer{background:#3b2935;color:#fff3f5;padding:60px 0 25px}.foot-grid{display:g
  .directory-category{padding:28px 0}
  .directory-item{padding:15px}
 }
+
+/* Navegación y retroalimentación accesible; mantiene la identidad editorial. */
+.directory-breadcrumb{display:flex;align-items:center;gap:10px;margin:25px 0 0;font-size:12px;color:var(--muted);line-height:1.5}
+.directory-breadcrumb a{color:var(--rose-deep);text-decoration:underline;text-underline-offset:3px}
+.directory-breadcrumb [aria-current="page"]{font-weight:700;color:var(--ink)}
+.catalog-empty{grid-column:1/-1;text-align:center;border:1px dashed #dfbfc9;border-radius:14px;padding:25px 16px;color:var(--muted);font-size:13px;line-height:1.6}
+.catalog-list noscript p{padding:15px;font-size:13px;color:var(--muted)}
+.catalog-list noscript a{color:var(--rose-deep);font-weight:700;text-decoration:underline}
+.error-main{min-height:calc(100vh - 170px);display:flex;align-items:center;padding:65px 0}
+.error-content{max-width:660px}
+.error-content h1{font:500 clamp(42px,7vw,78px)/1.1 var(--serif);letter-spacing:-.05em;margin:15px 0;color:var(--cocoa)}
+.error-content p:not(.eye){color:var(--muted);line-height:1.8;margin-bottom:25px}
