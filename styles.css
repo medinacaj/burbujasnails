@@ -11,6 +11,8 @@
   --sans:'DM Sans',system-ui,-apple-system,sans-serif;
   --max-w:1320px;
   --page-gutter:clamp(16px,3.2vw,44px);
+  --icon-rose:#a84d72;--icon-champagne:#d8b38a;
+  --icon-pearl:#fff8fb;--icon-outline:#efd6de;
 }
 *,*::before,*::after{box-sizing:border-box}
 html{width:100%;max-width:100%;scroll-behavior:smooth;scroll-padding-top:94px}
@@ -54,10 +56,24 @@ iframe{max-width:100%}
 /* Iconografía uniforme: SVG locales sin emoji dependiente del sistema. */
 .ui-icon{display:block;width:22px;height:22px;flex:none;stroke:currentColor;stroke-width:1.8}
 .fb .ui-icon{width:16px;height:16px;stroke-width:1.9}
-.svc-ico .ui-icon{width:22px;height:22px;stroke-width:1.7}
-.contact-ico .ui-icon{width:22px;height:22px;stroke-width:1.8}
+.svc-ico .ui-icon{position:relative;z-index:1;width:20px;height:20px;stroke-width:1.8}
+.contact-ico .ui-icon{position:relative;z-index:1;width:20px;height:20px;stroke-width:1.8}
 .btn > span[aria-hidden="true"],.text-link > span[aria-hidden="true"],
 .location-map-heading a > span[aria-hidden="true"]{display:inline-flex;align-items:center;justify-content:center;font-size:1rem;line-height:1}
+
+/* Beauty charms: una paleta por categoría, sin perder elegancia ni contraste. */
+:is(.svc-ico,.fb).is-manos{--tile-ink:#ac4e78;--tile-light:#fff0f6;--tile-deep:#f2d5e1;--tile-border:#eac6d7;--tile-spark:#dcb184}
+:is(.svc-ico,.fb).is-extensiones{--tile-ink:#a36b59;--tile-light:#fff6f0;--tile-deep:#efdbc8;--tile-border:#e7cdb7;--tile-spark:#d6a46d}
+:is(.svc-ico,.fb).is-pies{--tile-ink:#91649b;--tile-light:#faf1ff;--tile-deep:#e9d7ef;--tile-border:#dfc6e7;--tile-spark:#cca5bd}
+:is(.svc-ico,.fb).is-promos{--tile-ink:#93622d;--tile-light:#fff9e9;--tile-deep:#f2e1bf;--tile-border:#e8d4a8;--tile-spark:#d7a35a}
+:is(.svc-ico,.fb).is-retiros{--tile-ink:#a35b7a;--tile-light:#fff3f4;--tile-deep:#f0d9de;--tile-border:#e5c7d3;--tile-spark:#d2a589}
+:is(.svc-ico,.fb).is-cejas{--tile-ink:#96516d;--tile-light:#fff1f6;--tile-deep:#ecd1dd;--tile-border:#e2bed0;--tile-spark:#cfa49a}
+:is(.svc-ico,.fb).is-extras{--tile-ink:#93617b;--tile-light:#fff6f7;--tile-deep:#eddae5;--tile-border:#dec6d4;--tile-spark:#d5ad9a}
+:is(.svc-ico,.fb).is-todos{--tile-ink:#a84d72;--tile-light:#fff2f7;--tile-deep:#efd6de;--tile-border:#e9c9d6;--tile-spark:#d8b38a}
+.svc-ico::after,.contact-ico::after{content:"";position:absolute;top:7px;right:7px;width:7px;height:7px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff 7%,var(--tile-spark,var(--icon-champagne)) 78%);opacity:.8;box-shadow:0 0 5px rgba(255,255,255,.65);pointer-events:none}
+#svcList .svc-row:hover .svc-ico{transform:translateY(-1px);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 8px 17px rgba(168,77,114,.14)}
+.fb:not(.active):not([aria-pressed="true"]) .ui-icon{color:var(--tile-ink,var(--icon-rose))}
+.fb.active .ui-icon,.fb[aria-pressed="true"] .ui-icon{color:#fff}
 
 /* Navigation */
 .site-header{height:88px;position:relative;z-index:100}
@@ -120,15 +136,15 @@ iframe{max-width:100%}
 .service-shell{min-width:0;width:100%;max-width:100%;background:#fff;border:1px solid var(--line);border-radius:28px;padding:30px;box-shadow:var(--shadow)}
 .service-topline{display:flex;justify-content:space-between;gap:20px;padding-bottom:22px;border-bottom:1px solid #f1e7e9;color:var(--soft);font-size:.66rem;font-weight:700;letter-spacing:.12em}
 .frow{display:flex;gap:9px;flex-wrap:wrap;padding:24px 0}
-.fb{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;border:1px solid var(--line);border-radius:99px;padding:10px 16px;background:#fff;color:var(--muted);font-size:.81rem;font-weight:600;white-space:nowrap;transition:background .2s,color .2s,transform .2s,border-color .2s}
-.fb:hover{border-color:var(--rose);color:var(--rose)}
-.fb.active,.fb[aria-pressed="true"]{background:var(--rose);color:#fff;border-color:var(--rose)}
+.fb{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;border:1px solid #e8d7dd;border-radius:99px;padding:10px 16px;background:linear-gradient(160deg,#fff,#fff8fa);color:var(--ink);font-size:.81rem;font-weight:600;white-space:nowrap;transition:background .2s,color .2s,transform .2s,border-color .2s,box-shadow .2s}
+.fb:hover{border-color:#d9a3b7;color:var(--rose-dark);box-shadow:0 4px 14px rgba(168,77,114,.1)}
+.fb.active,.fb[aria-pressed="true"]{background:linear-gradient(135deg,#bf668d,#a84d72);color:#fff;border-color:#a84d72;box-shadow:0 5px 13px rgba(168,77,114,.16)}
 #svcList{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;align-items:start}
 .svc-card{min-width:0}
-#svcList .svc-row{appearance:none;display:grid;grid-template-columns:46px minmax(0,1fr) auto 24px;align-items:center;gap:12px;padding:19px 17px;border:1px solid var(--line);border-radius:18px;background:#fffcfc;width:100%;min-height:102px;text-align:left;color:var(--ink);transition:border-color .2s,box-shadow .2s,background .2s}
+#svcList .svc-row{appearance:none;display:grid;grid-template-columns:48px minmax(0,1fr) auto 24px;align-items:center;gap:12px;padding:19px 17px;border:1px solid var(--line);border-radius:18px;background:#fffcfc;width:100%;min-height:102px;text-align:left;color:var(--ink);transition:border-color .2s,box-shadow .2s,background .2s}
 #svcList .svc-row:hover{border-color:#e6b0c0;background:#fff8fa;box-shadow:0 10px 28px rgba(115,62,82,.08)}
 #svcList .svc-row.open{border-color:#dfafbf;background:#fff8fa;border-bottom-left-radius:0;border-bottom-right-radius:0}
-.svc-ico{width:46px;height:46px;display:grid;place-items:center;background:#f9e8ed;border:1px solid #f2dce4;color:var(--rose-dark);border-radius:13px;flex-shrink:0}
+.svc-ico{position:relative;width:48px;height:48px;display:grid;place-items:center;flex-shrink:0;isolation:isolate;overflow:hidden;border-radius:16px;color:var(--tile-ink,var(--icon-rose));background:radial-gradient(circle at 20% 10%,rgba(255,255,255,.95),transparent 55%),linear-gradient(150deg,var(--tile-light,#fff1f6),var(--tile-deep,#f2d5e1));border:1px solid var(--tile-border,var(--icon-outline));box-shadow:inset 0 1px 0 rgba(255,255,255,.85),0 5px 14px rgba(168,77,114,.09);transition:box-shadow .2s,transform .2s}
 .svc-info{min-width:0}.svc-name{display:block;font-size:.85rem;font-weight:700;line-height:1.4;overflow-wrap:anywhere}.svc-dur{display:block;font-size:.73rem;color:var(--soft);margin-top:5px}
 .svc-right{min-width:66px;text-align:right}
 .svc-price{font-size:.89rem;font-weight:700;color:var(--rose-dark);white-space:nowrap}
@@ -239,7 +255,7 @@ body.gallery-modal-open{overflow:hidden}
 .contact-cta{margin-top:30px}
 .contact-grid{display:grid;grid-template-columns:1fr;gap:11px}
 .contact-card{display:flex;align-items:center;gap:17px;padding:21px 25px;border:1px solid #e9dadd;border-radius:18px;background:#fff;min-width:0}
-.contact-ico{height:46px;width:46px;flex-shrink:0;display:grid;place-items:center;border-radius:13px;background:#f9e8ed;border:1px solid #f2dce4;color:var(--rose-dark)}
+.contact-ico{position:relative;height:48px;width:48px;flex-shrink:0;display:grid;place-items:center;isolation:isolate;overflow:hidden;border-radius:16px;background:radial-gradient(circle at 22% 12%,rgba(255,255,255,.95),transparent 56%),linear-gradient(155deg,#fff1f6,#f1d4e0);border:1px solid var(--icon-outline);color:var(--icon-rose);box-shadow:inset 0 1px 0 rgba(255,255,255,.82),0 5px 14px rgba(168,77,114,.09)}
 .contact-card h3{font-size:.82rem;font-weight:700;margin-bottom:4px}
 .contact-card p{font-size:.84rem;color:var(--muted);overflow-wrap:anywhere}
 .contact-card a{color:var(--rose-dark);font-weight:600}
@@ -332,11 +348,11 @@ body.gallery-modal-open{overflow:hidden}
   .frow::-webkit-scrollbar{display:none}
   .fb{flex-shrink:0;min-height:42px;padding:9px 13px;font-size:.74rem;gap:7px}
   #svcList{gap:9px}
-  #svcList .svc-row{grid-template-columns:40px minmax(0,1fr) auto 20px;gap:7px;padding:14px 9px;min-height:88px}
-  .svc-ico{height:40px;width:40px;border-radius:11px}
-  .svc-ico .ui-icon{width:19px;height:19px}
-  .contact-ico{width:42px;height:42px;border-radius:12px}
-  .contact-ico .ui-icon{width:20px;height:20px}
+  #svcList .svc-row{grid-template-columns:42px minmax(0,1fr) auto 20px;gap:7px;padding:14px 9px;min-height:88px}
+  .svc-ico{height:42px;width:42px;border-radius:14px}
+  .svc-ico .ui-icon{width:18px;height:18px}
+  .contact-ico{width:42px;height:42px;border-radius:14px}
+  .contact-ico .ui-icon{width:18px;height:18px}
   .fb .ui-icon{width:15px;height:15px}
   .svc-name{font-size:.78rem}
   .svc-price{font-size:.77rem}
@@ -368,5 +384,6 @@ body.gallery-modal-open{overflow:hidden}
   #svcList .svc-row{grid-template-columns:34px minmax(0,1fr) auto 18px;gap:6px}
   .svc-ico{height:34px;width:34px;border-radius:9px}
   .svc-ico .ui-icon{width:17px;height:17px}
+  .svc-ico::after{width:5px;height:5px;top:5px;right:5px}
   .svc-price{font-size:.68rem}
 }
