@@ -23,8 +23,8 @@ assert(css.includes('min-height:440px'),'La portada debe tener menos altura en e
 assert(css.includes('.hero-deco{height:250px;width:100%;max-width:420px'),'La decoración debe ser discreta en escritorio');
 assert(css.includes('.hero-deco{display:none}'),'La decoración debe estar oculta en móvil');
 assert(css.includes('.hero-wrap{display:block;min-height:0;margin-top:0}'),'La portada móvil no debe reservar espacio a la decoración');
-assert(html.includes('styles.css?v=heroDiscreto20261029'),'Invalidar caché de la portada');
-assert(privacy.includes('styles.css?v=heroDiscreto20261029'),'Invalidar caché de privacidad');
+assert(html.includes('styles.css?v=icons20261029'),'Invalidar caché de la portada');
+assert(privacy.includes('styles.css?v=icons20261029'),'Invalidar caché de privacidad');
 
 // Comprobación numérica de que el contenedor nunca supera el ancho del viewport.
 // Es complementaria a la revisión visual, no una prueba real de navegador.

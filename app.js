@@ -9,10 +9,11 @@ const esc = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').repl
  * contenido local de un antiguo panel "administrativo".
  */
 function loadServices() {
-  const services = window.INITIAL_SERVICES || [];
+  const services = Array.isArray(window.INITIAL_SERVICES) ? window.INITIAL_SERVICES : [];
+  // La iconografía es local, tipada y no depende de la plataforma.
   return services.map(service => ({
     ...service,
-    emoji: service.emoji || CAT_EMOJI[service.category] || '💅'
+    icon: ICON_PATHS[service.icon] ? service.icon : (CAT_ICON[service.category] || 'sparkles')
   }));
 }
 function loadGallery() {
@@ -31,16 +32,48 @@ function loadGallery() {
   });
 }
 
-/* ─── Emojis por categoría (fallback) ───────────────────────── */
-const CAT_EMOJI = {
-  'Uñas manos':      '💅',
-  'Extensiones':     '💎',
-  'Uñas pies':       '🦶',
-  'Promociones':     '🎀',
-  'Retiros':         '🧼',
-  'Pestañas y cejas':'👁️',
-  'Extras':          '🧴'
-};
+/* ─── Sistema de iconos vectoriales Burbujas Nails ────────────
+ * Iconos SVG locales, trazos homogéneos y sin peticiones externas.
+ * Las rutas son constantes, nunca HTML proporcionado por clientes.
+ */
+const ICON_PATHS = Object.freeze({
+  polish: '<rect x="7" y="10" width="10" height="11" rx="2.5"/><path d="M9 10V7h6v3M10 7V3h4v4M10 15h4"/>',
+  layers: '<path d="m12 3 9 5-9 5-9-5 9-5ZM3 12l9 5 9-5M3 16l9 5 9-5"/>',
+  sparkles: '<path d="m12 3 1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3ZM19 17l.6 1.4L21 19l-1.4.6L19 21l-.6-1.4L17 19l1.4-.6L19 17ZM5 3l.6 1.4L7 5l-1.4.6L5 7l-.6-1.4L3 5l1.4-.6L5 3Z"/>',
+  brush: '<path d="m14 6 4 4M4 20c2.5.5 4.5-1 4-3l8.7-8.7a2.1 2.1 0 0 0-3-3L5 14c-2.5-.5-4 1.5-4 4 0 1 .5 2 3 2Z"/><path d="m17 3 .5-1M20 6l1-.5"/>',
+  hand: '<path d="M8 12V6a1.5 1.5 0 0 1 3 0v5-7a1.5 1.5 0 0 1 3 0v7-5a1.5 1.5 0 0 1 3 0v6-3a1.5 1.5 0 0 1 3 0v7c0 4-2.5 6-6 6h-2c-2.5 0-4.5-1.5-6-4L3 15a1.8 1.8 0 0 1 2.5-2.5L8 15"/>',
+  shield: '<path d="M12 2 20 6v6c0 5-3.4 8-8 10-4.6-2-8-5-8-10V6l8-4Z"/><path d="m9 12 2 2 4-4"/>',
+  gem: '<path d="M6 4h12l4 6-10 11L2 10l4-6Z"/><path d="M2 10h20M9 4l-3 6 6 11 6-11-3-6"/>',
+  refresh: '<path d="M20 11a8 8 0 0 0-14-5L4 8M4 4v4h4M4 13a8 8 0 0 0 14 5l2-2M20 20v-4h-4"/>',
+  ruler: '<path d="M3 17 17 3l4 4L7 21l-4-4ZM12 8l3 3M9 11l2 2M6 14l3 3"/>',
+  footprints: '<path d="M7 13c-2 1-3 3-3 5a3 3 0 0 0 6 0c0-2-1-4-3-5ZM17 10c-2 1-3 3-3 5a3 3 0 0 0 6 0c0-2-1-4-3-5Z"/><path d="M5 9V7M8 8V5M10 10V8M15 6V4M18 5V2M21 8V6"/>',
+  flower: '<circle cx="12" cy="12" r="2"/><path d="M12 10c-5-7 5-9 4-3M14 11c7-6 9 4 3 4M13 14c5 7-5 9-5 3M10 13c-7 5-9-5-3-5M10 10c-2-8 7-7 6-3"/>',
+  gift: '<rect x="3" y="9" width="18" height="12" rx="2"/><path d="M2 9h20M12 9v12M12 9c-4 0-7-1-7-4 0-2 3-3 5-1l2 5ZM12 9c4 0 7-1 7-4 0-2-3-3-5-1l-2 5Z"/>',
+  droplet: '<path d="M12 2C9 7 5 11 5 15a7 7 0 0 0 14 0c0-4-4-8-7-13Z"/><path d="M9 16a3 3 0 0 0 3 3"/>',
+  scissors: '<circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="m8 8 12 12M8 16 20 4"/>',
+  eye: '<path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>',
+  leaf: '<path d="M20 3C9 3 4 8 4 15a6 6 0 0 0 6 6c7 0 12-5 10-18Z"/><path d="M4 20c4-4 7-7 13-10"/>',
+  heart: '<path d="M20.8 5.8c-2-2-5.2-2-7.2 0L12 7.4l-1.6-1.6a5.1 5.1 0 0 0-7.2 7.2l.5.5L12 21l8.3-8.3a5 5 0 0 0 .5-6.9Z"/>',
+  pin: '<path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.7"/>',
+  message: '<path d="M20 11.5a8 8 0 0 1-8 8c-1.3 0-2.6-.3-3.7-.9L3 20l1.4-5.3A8 8 0 1 1 20 11.5Z"/><path d="M8 11h8M8 14h5"/>',
+  card: '<rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M3 10h18M7 15h4"/>'
+});
+const CAT_ICON = Object.freeze({
+  'Uñas manos': 'polish',
+  'Extensiones': 'gem',
+  'Uñas pies': 'footprints',
+  'Promociones': 'gift',
+  'Retiros': 'scissors',
+  'Pestañas y cejas': 'eye',
+  'Extras': 'heart',
+  'Todos': 'sparkles'
+});
+function iconSvg(name) {
+  const paths = ICON_PATHS[name] || ICON_PATHS.sparkles;
+  return '<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+    'stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ' +
+    'aria-hidden="true" focusable="false">' + paths + '</svg>';
+}
 
 /* ─── Estado ─────────────────────────────────────────────────── */
 let ALL_SERVICES = [];
@@ -58,7 +91,7 @@ function renderServices() {
   const frow = container.querySelector('.frow') || document.querySelector('.frow');
   if (frow) {
     frow.innerHTML = cats.map(c => `
-      <button class="fb${c === activeFilter ? ' active' : ''}" data-cat="${esc(c)}" aria-pressed="${c === activeFilter}">${esc(c)}</button>
+      <button class="fb${c === activeFilter ? ' active' : ''}" data-cat="${esc(c)}" aria-pressed="${c === activeFilter}">${iconSvg(CAT_ICON[c])}<span>${esc(c)}</span></button>
     `).join('');
     frow.querySelectorAll('.fb').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -93,7 +126,7 @@ function renderServiceList() {
       <button type="button" class="svc-row" data-id="${esc(s.id)}"
         aria-expanded="false" aria-controls="det-${esc(s.id)}"
         aria-label="Detalles de ${esc(s.name)}">
-        <span class="svc-ico" aria-hidden="true">${esc(s.emoji || CAT_EMOJI[s.category] || '💅')}</span>
+        <span class="svc-ico" aria-hidden="true">${iconSvg(s.icon)}</span>
         <span class="svc-info">
           <span class="svc-name">${esc(s.name)}${s.popular ? ' <span class="badge-pop">Popular</span>' : ''}</span>
           <span class="svc-dur">${esc(s.duration || '')}</span>

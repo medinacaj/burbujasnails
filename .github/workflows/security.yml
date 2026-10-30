@@ -28,6 +28,7 @@ jobs:
           node tests/seo-gallery-map.mjs
           node tests/gallery-modal.mjs
           node tests/responsive-width.mjs
+          node tests/iconography.mjs
           node tests/gitignore-security.mjs
           node tests/no-tracked-secrets.mjs
           node tests/public-hardening.mjs
