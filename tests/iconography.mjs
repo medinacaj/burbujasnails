@@ -27,12 +27,30 @@ assert((html.match(/class="contact-ico"/g)||[]).length===3,'Conservar 3 iconos d
 for(const name of ['Visítanos','WhatsApp','Pago en línea'])assert(html.includes(name),'Falta bloque de contacto: '+name);
 assert((html.match(/class="contact-ico" aria-hidden="true"><svg class="ui-icon"/g)||[]).length===3,'Usar SVG en los 3 contactos');
 assert(!html.includes('aria-hidden="true">⌖')&&!html.includes('aria-hidden="true">✉')&&!html.includes('aria-hidden="true">◇'),'Eliminar símbolos incompatibles');
-for(const rule of ['.ui-icon{display:block;width:22px;height:22px','.fb .ui-icon{width:16px;height:16px','.svc-ico .ui-icon{width:22px;height:22px','.contact-ico .ui-icon{width:22px;height:22px','.svc-ico .ui-icon{width:19px;height:19px','.svc-ico .ui-icon{width:17px;height:17px']){
+for(const rule of ['.ui-icon{display:block;width:22px;height:22px','.fb .ui-icon{width:16px;height:16px','.svc-ico .ui-icon{position:relative;z-index:1;width:20px;height:20px','.contact-ico .ui-icon{position:relative;z-index:1;width:20px;height:20px','.svc-ico .ui-icon{width:18px;height:18px','.svc-ico .ui-icon{width:17px;height:17px']){
   assert(css.includes(rule),'Falta ajuste de tamaño: '+rule);
 }
 assert(css.includes('min-height:44px'),'Filtros deben disponer de superficie táctil cómoda');
-assert(html.includes('styles.css?v=icons20261029'),'Actualizar versión de CSS');
+assert(html.includes('styles.css?v=luxurycute20261029'),'Actualizar versión de CSS');
 assert(html.includes('data.js?v=icons20261029'),'Actualizar versión de datos');
-assert(html.includes('app.js?v=icons20261029'),'Actualizar versión JS');
+assert(html.includes('app.js?v=luxurycute20261029'),'Actualizar versión JS');
 assert(!app.includes('https://cdn')&&!app.includes('https://unpkg'),'Los iconos no dependen de bibliotecas externas');
+
+// Luxury-cute: cada categoría tiene una clase segura y una paleta semántica.
+assert(app.includes('const CAT_THEME = Object.freeze('),'Definir temas locales, sin categorías arbitrarias');
+assert(app.includes('categoryTheme(s.category)'),'Cada tarjeta debe aplicar su paleta');
+assert(app.includes('categoryTheme(c)'),'Los filtros deben aplicar su paleta');
+for(const clazz of ['is-manos','is-extensiones','is-pies','is-promos','is-retiros','is-cejas','is-extras']){
+  assert(app.includes("'"+clazz+"'"),'Falta categoría JS '+clazz);
+  assert(css.includes('.'+clazz),'Falta categoría CSS '+clazz);
+}
+assert(css.includes('--icon-rose:#a84d72') && css.includes('--icon-champagne:#d8b38a'),'Faltan tonos de marca');
+assert(css.includes('linear-gradient(150deg,var(--tile-light') && css.includes('.svc-ico::after'),'Falta acabado perlado y brillo champagne');
+assert(css.includes('width:48px;height:48px;display:grid'),'Contenedor de servicio desktop 48px');
+assert(css.includes('width:20px;height:20px;stroke-width:1.8'),'Íconos internos de servicio 20px');
+assert(css.includes('.svc-ico{height:42px;width:42px'),'Contenedor de servicio móvil 42px');
+assert(css.includes('.contact-ico{width:42px;height:42px'),'Contacto móvil 42px');
+assert(css.includes('.fb.active .ui-icon,.fb[aria-pressed="true"] .ui-icon{color:#fff}'),'Filtros activos deben mantener contraste');
+assert(!app.includes('CAT_EMOJI'),'Evitar regresar a emojis dependientes de plataforma');
+
 console.log('Iconografía: 27 servicios, 7 categorías, 3 contactos, responsive y SVG seguros OK');
