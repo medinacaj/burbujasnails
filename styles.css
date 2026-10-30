@@ -46,6 +46,11 @@ footer{background:#3b2935;color:#fff3f5;padding:60px 0 25px}.foot-grid{display:g
 .local-intro-links a{font-size:12px;border:1px solid #e9cbd6;border-radius:22px;padding:9px 14px;background:#fff}
 .catalog-directory-link{margin-top:12px;text-align:center;font-size:12px;color:var(--muted);line-height:1.6}
 .directory-page{background:var(--bg);min-height:100vh}
+.directory-header{display:flex;align-items:center;justify-content:space-between;gap:15px;min-height:78px}
+.directory-header-nav{display:flex;align-items:center;gap:18px}
+.directory-header-nav>a:not(.cta){font-size:12px;font-weight:700;color:var(--cocoa)}
+.directory-header-nav .cta{min-height:42px;font-size:11px;padding:10px 18px}
+@media(max-width:480px){.directory-header{min-height:68px}.directory-header-nav{gap:8px}.directory-header-nav>a:not(.cta){display:none}.directory-header-nav .cta{padding:10px 12px;font-size:10px}}
 .directory-head{padding:56px 0 36px}
 .directory-head .eye{color:var(--rose)}
 .directory-head h1{font:500 clamp(34px,5.2vw,65px)/1.11 var(--serif);letter-spacing:-.052em;color:var(--cocoa);max-width:820px;margin:12px 0 20px}
