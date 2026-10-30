@@ -1,23 +1,14 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
-
-const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-const css = readFileSync(new URL('../styles.css', import.meta.url), 'utf8');
-
-// Evitar publicar otra portada cuyo HTML no coincida con el tema activo.
-const required = [
-  'container', 'section-title', 'section-alt', 'nav-logo', 'logo-bubble',
-  'hero-title', 'hero-sub', 'hero-cta', 'hero-deco', 'btn-lg', 'btn-ghost',
-  'contact-card', 'contact-ico', 'contact-cta', 'footer-inner'
-];
-for (const name of required) {
-  assert(new RegExp('class="[^"]*\\b' + name + '\\b').test(html),
-    'Falta elemento de portada: ' + name);
-  assert(css.includes('.' + name), 'Falta estilo para: ' + name);
+import {readFileSync} from 'node:fs';
+const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
+const html=read('index.html'),css=read('styles.css');
+for(const id of ['inicio','inspiracion','servicios','reserva','galeria','esencia','visitanos','filters','serviceList','galleryGrid','bookingForm','lightbox']){
+  assert(html.includes('id="'+id+'"'),'Falta sección/control: '+id);
 }
-assert(css.includes('.nav-mobile[hidden]'), 'El menú móvil debe respetar hidden');
-assert(css.includes('#svcList .svc-row'), 'El catálogo requiere estilos de tarjeta');
-assert(css.includes('#svcList .svc-detail:not([hidden])'),
-  'El detalle desplegado necesita estilos propios');
-
-console.log('Contrato visual de portada: OK');
+for(const selector of ['.hero','.featured-grid','.catalog-panel','.service-top','.booking-card','.gallery-grid','.story-grid','.visit-grid','.lightbox','.wrap']){
+  assert(css.includes(selector),'Falta estilo de la vista aprobada: '+selector);
+}
+assert(html.includes('class="skip-link"'),'Acceso rápido mediante teclado');
+assert(html.includes('id="menuButton"')&&html.includes('id="mobilelinks"'),'Menú móvil');
+assert(!html.includes('Diseño conceptual para evaluación'),'No publicar avisos de maqueta');
+console.log('Contrato visual editorial y navegación: OK');
