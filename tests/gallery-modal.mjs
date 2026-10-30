@@ -6,8 +6,8 @@ const css=read('styles.css'),js=read('app.js'),html=read('index.html'),data=read
 assert(css.includes('grid-template-columns:repeat(5,minmax(0,1fr))'),'Escritorio: miniaturas en 5 columnas');
 assert(css.includes('grid-template-columns:repeat(3,minmax(0,1fr))'),'Tableta: miniaturas en 3 columnas');
 assert(css.includes('grid-template-columns:repeat(2,minmax(0,1fr))'),'Móvil: miniaturas en 2 columnas');
-assert(css.includes('.gallery-item') && css.includes('aspect-ratio:4/5'),'Mantener miniaturas uniformes');
-assert(css.includes('width:min(100%,1000px)'),'Limitar ancho del conjunto de fotos');
+assert(css.includes('.gallery-item') && css.includes('aspect-ratio:4/3'),'Mantener miniaturas uniformes');
+assert(css.includes('width:100%;max-width:100%'),'Galería debe usar todo el ancho disponible');
 assert(css.includes('.lb-dialog') && css.includes('max-height:min(68dvh,680px)'),'Limitar altura del modal');
 assert(css.includes('body.gallery-modal-open{overflow:hidden}'),'Bloquear scroll tras abrir modal');
 assert(js.includes('document.createElement(\'button\')'),'Galería accesible mediante botones');
