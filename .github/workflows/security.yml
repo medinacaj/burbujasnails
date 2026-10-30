@@ -27,6 +27,7 @@ jobs:
           node tests/modern-ui.mjs
           node tests/seo-gallery-map.mjs
           node tests/seo-local.mjs
+          node tests/site-quality.mjs
           node tests/gallery-modal.mjs
           node tests/responsive-width.mjs
           node tests/iconography.mjs
