@@ -37,26 +37,26 @@ function loadGallery() {
  * Las rutas son constantes, nunca HTML proporcionado por clientes.
  */
 const ICON_PATHS = Object.freeze({
-  polish: '<rect x="7" y="10" width="10" height="11" rx="2.5"/><path d="M9 10V7h6v3M10 7V3h4v4M10 15h4"/>',
-  layers: '<path d="m12 3 9 5-9 5-9-5 9-5ZM3 12l9 5 9-5M3 16l9 5 9-5"/>',
-  sparkles: '<path d="m12 3 1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3ZM19 17l.6 1.4L21 19l-1.4.6L19 21l-.6-1.4L17 19l1.4-.6L19 17ZM5 3l.6 1.4L7 5l-1.4.6L5 7l-.6-1.4L3 5l1.4-.6L5 3Z"/>',
-  brush: '<path d="m14 6 4 4M4 20c2.5.5 4.5-1 4-3l8.7-8.7a2.1 2.1 0 0 0-3-3L5 14c-2.5-.5-4 1.5-4 4 0 1 .5 2 3 2Z"/><path d="m17 3 .5-1M20 6l1-.5"/>',
-  hand: '<path d="M8 12V6a1.5 1.5 0 0 1 3 0v5-7a1.5 1.5 0 0 1 3 0v7-5a1.5 1.5 0 0 1 3 0v6-3a1.5 1.5 0 0 1 3 0v7c0 4-2.5 6-6 6h-2c-2.5 0-4.5-1.5-6-4L3 15a1.8 1.8 0 0 1 2.5-2.5L8 15"/>',
-  shield: '<path d="M12 2 20 6v6c0 5-3.4 8-8 10-4.6-2-8-5-8-10V6l8-4Z"/><path d="m9 12 2 2 4-4"/>',
-  gem: '<path d="M6 4h12l4 6-10 11L2 10l4-6Z"/><path d="M2 10h20M9 4l-3 6 6 11 6-11-3-6"/>',
-  refresh: '<path d="M20 11a8 8 0 0 0-14-5L4 8M4 4v4h4M4 13a8 8 0 0 0 14 5l2-2M20 20v-4h-4"/>',
-  ruler: '<path d="M3 17 17 3l4 4L7 21l-4-4ZM12 8l3 3M9 11l2 2M6 14l3 3"/>',
-  footprints: '<path d="M7 13c-2 1-3 3-3 5a3 3 0 0 0 6 0c0-2-1-4-3-5ZM17 10c-2 1-3 3-3 5a3 3 0 0 0 6 0c0-2-1-4-3-5Z"/><path d="M5 9V7M8 8V5M10 10V8M15 6V4M18 5V2M21 8V6"/>',
-  flower: '<circle cx="12" cy="12" r="2"/><path d="M12 10c-5-7 5-9 4-3M14 11c7-6 9 4 3 4M13 14c5 7-5 9-5 3M10 13c-7 5-9-5-3-5M10 10c-2-8 7-7 6-3"/>',
-  gift: '<rect x="3" y="9" width="18" height="12" rx="2"/><path d="M2 9h20M12 9v12M12 9c-4 0-7-1-7-4 0-2 3-3 5-1l2 5ZM12 9c4 0 7-1 7-4 0-2-3-3-5-1l-2 5Z"/>',
-  droplet: '<path d="M12 2C9 7 5 11 5 15a7 7 0 0 0 14 0c0-4-4-8-7-13Z"/><path d="M9 16a3 3 0 0 0 3 3"/>',
-  scissors: '<circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="m8 8 12 12M8 16 20 4"/>',
-  eye: '<path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>',
-  leaf: '<path d="M20 3C9 3 4 8 4 15a6 6 0 0 0 6 6c7 0 12-5 10-18Z"/><path d="M4 20c4-4 7-7 13-10"/>',
-  heart: '<path d="M20.8 5.8c-2-2-5.2-2-7.2 0L12 7.4l-1.6-1.6a5.1 5.1 0 0 0-7.2 7.2l.5.5L12 21l8.3-8.3a5 5 0 0 0 .5-6.9Z"/>',
-  pin: '<path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.7"/>',
-  message: '<path d="M20 11.5a8 8 0 0 1-8 8c-1.3 0-2.6-.3-3.7-.9L3 20l1.4-5.3A8 8 0 1 1 20 11.5Z"/><path d="M8 11h8M8 14h5"/>',
-  card: '<rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M3 10h18M7 15h4"/>'
+  polish: "<rect class=\"art-gold\" x=\"9\" y=\"2.2\" width=\"6\" height=\"5\" rx=\"1.3\"/><path class=\"art-main\" d=\"M7.2 9.8A2 2 0 0 1 9.2 7.8h5.6a2 2 0 0 1 2 2V20a2 2 0 0 1-2 2H9.2a2 2 0 0 1-2-2Z\"/><rect class=\"art-light\" x=\"9.4\" y=\"11\" width=\"2.2\" height=\"7\" rx=\"1\"/><path class=\"art-ink\" d=\"M9.2 7.9V5.3h5.6v2.6\"/>",
+  layers: "<path class=\"art-gold\" d=\"M12 2.6 21.2 8 12 13.4 2.8 8Z\"/><path class=\"art-main\" d=\"m3 11 9 5.5 9-5.5v4.1L12 20.8l-9-5.7Z\"/><path class=\"art-secondary\" d=\"m3 7.8 9 5.5 9-5.5v3.3L12 16.7 3 11.1Z\"/><path class=\"art-light\" d=\"m12 5 5 3-5 3-5-3Z\"/>",
+  sparkles: "<path class=\"art-gold\" d=\"m11.7 1.5 2.2 6.2 6.2 2.2-6.2 2.1-2.2 6.4-2.2-6.4-6.2-2.1 6.2-2.2Z\"/><path class=\"art-main\" d=\"m19 14.4 1.3 2.7 2.7 1.3-2.7 1.2L19 22.5l-1.3-2.9-2.7-1.2 2.7-1.3Z\"/><circle class=\"art-secondary\" cx=\"4.7\" cy=\"19.2\" r=\"2.1\"/><path class=\"art-light\" d=\"m11.6 4.7 1.1 3.2-1.1 1.6-1-1.6Z\"/>",
+  brush: "<path class=\"art-gold\" d=\"M5.4 17.5 16.6 6.3l2.6 2.6L8 20.1a3.1 3.1 0 0 1-3.4.7Z\"/><path class=\"art-main\" d=\"M15.9 6.2 18.1 4a2 2 0 0 1 2.8 2.8L18.7 9Z\"/><path class=\"art-secondary\" d=\"M5.5 16.2c-2.4-.4-4 1.4-3.5 3.2.5 2 3.3 2.6 4.8.9Z\"/><path class=\"art-light\" d=\"m16.9 6 2.5-2.5\"/><circle class=\"art-gold\" cx=\"20.5\" cy=\"2.8\" r=\"1\"/>",
+  hand: "<path class=\"art-secondary\" d=\"M5 13.1a1.8 1.8 0 0 1 2.6-.2l1.7 1.4V5.6a1.3 1.3 0 0 1 2.6 0V10 4a1.3 1.3 0 0 1 2.6 0v6-4.4a1.3 1.3 0 0 1 2.6 0v5.1-2.4a1.3 1.3 0 0 1 2.6 0v6c0 4-2.3 7-6.5 7-3.3 0-5.4-1.5-6.9-4l-1.9-2.9a1.7 1.7 0 0 1 .6-2.3Z\"/><path class=\"art-main\" d=\"M10.9 4.3h1.5v2.3h-1.5zm3-1.2h1.5v2.3h-1.5zm3 1.4h1.5v2.1h-1.5z\"/><path class=\"art-light\" d=\"M8.6 16.2q2 2.4 4.9 2.5\"/>",
+  shield: "<path class=\"art-secondary\" d=\"M12 2.1 20.3 6v6.1c0 5.4-3.4 8.3-8.3 10.4C7.1 20.4 3.7 17.5 3.7 12.1V6Z\"/><path class=\"art-main\" d=\"M12 5.3 17.5 8v4.3c0 3.6-2.5 5.5-5.5 7-3-1.5-5.5-3.4-5.5-7V8Z\"/><path class=\"art-light\" d=\"m8.7 12.2 2.1 2.2 4.4-4.7\"/><circle class=\"art-gold\" cx=\"17.8\" cy=\"5.1\" r=\"1.3\"/>",
+  gem: "<path class=\"art-main\" d=\"M6 4.2h12l4.2 5.5L12 22 1.8 9.7Z\"/><path class=\"art-secondary\" d=\"M6 4.2h12l4.2 5.5H1.8Z\"/><path class=\"art-light\" d=\"m9 4.2 3 5.5 3-5.5zM9 9.7h6L12 22Z\"/><path class=\"art-gold\" d=\"m17.6 1 .8 1.7 1.7.8-1.7.8-.8 1.7-.8-1.7-1.7-.8 1.7-.8Z\"/>",
+  refresh: "<path class=\"art-main\" d=\"M19.5 9a8 8 0 0 0-13.7-3.2L3.5 8l3.2.1A5.5 5.5 0 0 1 17 9Z\"/><path class=\"art-secondary\" d=\"M4.5 15a8 8 0 0 0 13.7 3.2l2.3-2.2-3.2-.1A5.5 5.5 0 0 1 7 15Z\"/><path class=\"art-gold\" d=\"m3 3 .5 5.3 5.2.4-2.5 1.8L2 9.8Z\"/><path class=\"art-light\" d=\"m21 21-.5-5.3-5.2-.4 2.5-1.8 4.2.7Z\"/>",
+  ruler: "<path class=\"art-secondary\" d=\"M3 16.4 16.4 3l4.6 4.6L7.6 21Z\"/><path class=\"art-gold\" d=\"M15.8 3.6 20.4 8 18.6 9.8l-4.4-4.5Z\"/><path class=\"art-ink\" d=\"m9.5 11.7 3 3m.1-6.2 2.9 3m-9.1 3.1 3 3\"/><circle class=\"art-main\" cx=\"19.6\" cy=\"3.3\" r=\"2\"/>",
+  footprints: "<ellipse class=\"art-main\" cx=\"7.2\" cy=\"16.8\" rx=\"3.6\" ry=\"5.4\" transform=\"rotate(-14 7.2 16.8)\"/><ellipse class=\"art-secondary\" cx=\"17.1\" cy=\"15.4\" rx=\"3.6\" ry=\"5.4\" transform=\"rotate(15 17.1 15.4)\"/><circle class=\"art-gold\" cx=\"4\" cy=\"9.2\" r=\"1.65\"/><circle class=\"art-main\" cx=\"7\" cy=\"8.1\" r=\"1.4\"/><circle class=\"art-secondary\" cx=\"10\" cy=\"8.4\" r=\"1.2\"/><circle class=\"art-gold\" cx=\"14.4\" cy=\"7.3\" r=\"1.65\"/><circle class=\"art-main\" cx=\"17.4\" cy=\"6.2\" r=\"1.4\"/><circle class=\"art-secondary\" cx=\"20.3\" cy=\"7.2\" r=\"1.2\"/><ellipse class=\"art-light\" cx=\"6\" cy=\"16\" rx=\"1\" ry=\"2\"/>",
+  flower: "<ellipse class=\"art-main\" cx=\"12\" cy=\"6.3\" rx=\"3.3\" ry=\"5\"/><ellipse class=\"art-secondary\" cx=\"17.4\" cy=\"10\" rx=\"3.3\" ry=\"5\" transform=\"rotate(72 17.4 10)\"/><ellipse class=\"art-main\" cx=\"15.5\" cy=\"16.6\" rx=\"3.3\" ry=\"5\" transform=\"rotate(145 15.5 16.6)\"/><ellipse class=\"art-secondary\" cx=\"8.5\" cy=\"16.6\" rx=\"3.3\" ry=\"5\" transform=\"rotate(215 8.5 16.6)\"/><ellipse class=\"art-main\" cx=\"6.6\" cy=\"10\" rx=\"3.3\" ry=\"5\" transform=\"rotate(290 6.6 10)\"/><circle class=\"art-gold\" cx=\"12\" cy=\"12\" r=\"3.4\"/><circle class=\"art-light\" cx=\"11.3\" cy=\"11\" r=\".9\"/>",
+  gift: "<rect class=\"art-main\" x=\"3\" y=\"9\" width=\"18\" height=\"12\" rx=\"2\"/><rect class=\"art-secondary\" x=\"2\" y=\"7\" width=\"20\" height=\"4.5\" rx=\"1.2\"/><path class=\"art-gold\" d=\"M10 7h4v14h-4Z\"/><path class=\"art-light\" d=\"M12 7C8 7 5 5.8 5 3.5 5 1 9 1 12 7Zm0 0c4 0 7-1.2 7-3.5C19 1 15 1 12 7Z\"/><path class=\"art-ink\" d=\"M10 7h4\"/>",
+  droplet: "<path class=\"art-main\" d=\"M12 2c-3.2 5-7 9.4-7 13.2a7 7 0 0 0 14 0C19 11.4 15.2 7 12 2Z\"/><path class=\"art-light\" d=\"M8.1 15.3c0-2.3 1.3-4.4 2.7-6.7-1.3 4.2-.2 7.5 2 9-2.6.4-4.7-.9-4.7-3.3Z\"/><circle class=\"art-gold\" cx=\"18.7\" cy=\"5.5\" r=\"2.2\"/>",
+  scissors: "<circle class=\"art-main\" cx=\"5.7\" cy=\"6\" r=\"3.7\"/><circle class=\"art-secondary\" cx=\"5.7\" cy=\"18\" r=\"3.7\"/><circle class=\"art-light\" cx=\"5.7\" cy=\"6\" r=\"1.5\"/><circle class=\"art-light\" cx=\"5.7\" cy=\"18\" r=\"1.5\"/><path class=\"art-gold\" d=\"m8.3 9.1 12.8 11.4-2 2L7 12.1Zm0 5.8 12.8-11.4-2-2L7 11.9Z\"/>",
+  eye: "<path class=\"art-secondary\" d=\"M1 12s4-7.2 11-7.2S23 12 23 12s-4 7.2-11 7.2S1 12 1 12Z\"/><circle class=\"art-main\" cx=\"12\" cy=\"12\" r=\"5\"/><circle class=\"art-ink-fill\" cx=\"12\" cy=\"12\" r=\"2.4\"/><circle class=\"art-light\" cx=\"10.7\" cy=\"10.5\" r=\"1.5\"/><path class=\"art-ink\" d=\"m5 8-1.4-2.3M9 5.6 8.4 3M15 5.5l.8-2.4M19 8l1.4-2.3\"/>",
+  leaf: "<path class=\"art-main\" d=\"M21.7 2.7C10 2.4 3 7.9 3 15a6.3 6.3 0 0 0 6.2 6.3c7.2 0 12.2-5.6 12.5-18.6Z\"/><path class=\"art-light\" d=\"M6 18c4.7-5.5 7.7-7.5 12.4-10.3\"/><path class=\"art-gold\" d=\"m17.3 2.5 1-1.5.9 1.5 1.5 1-.9.9Z\"/>",
+  heart: "<path class=\"art-main\" d=\"M20.9 5.8a5.4 5.4 0 0 0-7.6 0L12 7.2l-1.3-1.4a5.4 5.4 0 0 0-7.6 7.6L12 22l8.9-8.6a5.4 5.4 0 0 0 0-7.6Z\"/><path class=\"art-light\" d=\"M6.4 7a3 3 0 0 1 4 0\"/><path class=\"art-gold\" d=\"m18.6 1.6.8 1.6 1.6.8-1.6.8-.8 1.6-.8-1.6-1.6-.8 1.6-.8Z\"/>",
+  pin: "<path class=\"art-main\" d=\"M12 1.5A8.5 8.5 0 0 0 3.5 10c0 5.5 8.5 12.5 8.5 12.5s8.5-7 8.5-12.5A8.5 8.5 0 0 0 12 1.5Z\"/><circle class=\"art-secondary\" cx=\"12\" cy=\"10\" r=\"4.2\"/><circle class=\"art-light\" cx=\"12\" cy=\"10\" r=\"1.8\"/>",
+  message: "<path class=\"art-main\" d=\"M20.6 11A8.7 8.7 0 0 1 8.3 19L3 21l1.6-5.2A8.7 8.7 0 1 1 20.6 11Z\"/><path class=\"art-light\" d=\"M7 10.5h10M7 14h7\"/><circle class=\"art-gold\" cx=\"19.1\" cy=\"4.2\" r=\"2.4\"/>",
+  card: "<rect class=\"art-main\" x=\"1.8\" y=\"4.7\" width=\"20.4\" height=\"14.6\" rx=\"3\"/><path class=\"art-gold\" d=\"M1.8 8.4h20.4v4H1.8Z\"/><rect class=\"art-light\" x=\"5\" y=\"15\" width=\"6.5\" height=\"1.7\" rx=\".7\"/><circle class=\"art-secondary\" cx=\"18.5\" cy=\"15.7\" r=\"1.8\"/>"
 });
 const CAT_ICON = Object.freeze({
   'Uñas manos': 'polish',
@@ -85,8 +85,8 @@ function categoryTheme(category) {
 
 function iconSvg(name) {
   const paths = ICON_PATHS[name] || ICON_PATHS.sparkles;
-  return '<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
-    'stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ' +
+  return '<svg class="ui-icon ui-icon-color" viewBox="0 0 24 24" fill="none" stroke="none" ' +
+    'stroke-linecap="round" stroke-linejoin="round" ' +
     'aria-hidden="true" focusable="false">' + paths + '</svg>';
 }
 
