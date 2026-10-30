@@ -6,6 +6,6 @@ for(const id of ['lightbox','lbImage','lbCaption','lbClose','lbPrev','lbNext'])a
 for(const token of ['gallery-grid','gallery-btn','.lightbox','.lightbox-box','noscroll'])assert(css.includes(token),'Falta estilo de galería: '+token);
 for(const token of ["e.key==='Escape'","e.key==='ArrowLeft'","e.key==='ArrowRight'","e.key==='Tab'",'priorFocus?.focus()','touchstart','touchend'])assert(js.includes(token),'Falta control modal: '+token);
 assert(js.includes('loading="lazy"'),'Cargar fotos diferidas');
-assert(html.includes('styles.css?v=editorial20261030'),'Versión de CSS para evitar caché');
+assert(html.includes('styles.css?v=seoLocal20261030'),'Versión de CSS para evitar caché');
 assert(html.includes('app.js?v=editorial20261030'),'Versión de JS para evitar caché');
 console.log('Galería de miniaturas y modal de foto accesible: OK');
