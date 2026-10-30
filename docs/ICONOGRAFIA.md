@@ -38,3 +38,22 @@ Se migraron los 27 servicios a **17 pictogramas SVG locales**, de trazos homogé
 - Los botones conservan etiquetas accesibles, estados de filtro y control de expansión.
 - Los enlaces emplean flechas tipográficas discretas; no se agregan emojis a títulos ni promociones, evitando ruido visual.
 - La comprobación automatizada valida los 27 servicios, las siete categorías, los tres iconos de contacto y las reglas de tamaños. Una revisión visual en navegador real sigue siendo necesaria para evaluar la geometría de cada símbolo y posibles diferencias de renderizado.
+
+## Actualización: Luxury Cute Boutique
+**Estado:** Implementada en la rama de diseño 2026-10-29. Esta actualización sustituye los fondos monocromáticos planos, sin cambiar el repertorio SVG seguro.
+
+**Dirección estética:** rosa empolvado perlado, champagne/rose-gold y variaciones suaves por categoría; fondo con gradiente doble, reflejo mínimo en cada tile, sombra ligera y contraste suficiente para identificar los pictogramas sin depender del color.
+
+| Categoría | Tono principal | Superficie | Intención |
+| --- | --- | --- | --- |
+| Manicure y uñas | `#AC4E78` | rosa maquillaje | Dulce y delicado |
+| Extensiones | `#A36B59` | champagne | Acabado lujoso |
+| Pedicura | `#91649B` | malva suave | Spa floral |
+| Promociones | `#93622D` | dorado crema | Destacar sin saturar |
+| Retiros | `#A35B7A` | rosa neutro | Cuidado y mantenimiento |
+| Pestañas y cejas | `#96516D` | berry | Mirada y precisión |
+| Extras | `#93617B` | rosa perlado | Bienestar |
+
+**Escala final:** servicios escritorio 48/20 px (contenedor/vector), móviles 42/18 px, móviles estrechos 34/17 px. Contacto 48/20 px en escritorio y 42/18 px móvil. Filtros 16 px en escritorio y 15 px móvil; superficie táctil de al menos 44 px en escritorio y 42 px en móvil.
+
+**Implementación:** `categoryTheme` asigna exclusivamente clases de una lista cerrada para servicio y filtro. El SVG sigue siendo local y decorativo; nombres, precios, estados accesibles y enlaces conservan su semántica. Las sombras y los gradientes no transmiten información imprescindible. Los gráficos de trabajo real siguen siendo los protagonistas del sitio.
