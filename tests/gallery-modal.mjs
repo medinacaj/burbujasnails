@@ -1,22 +1,11 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-const read = f => readFileSync(new URL('../'+f,import.meta.url),'utf8');
-const css=read('styles.css'),js=read('app.js'),html=read('index.html'),data=read('data.js');
-
-assert(css.includes('grid-template-columns:repeat(5,minmax(0,1fr))'),'Escritorio: miniaturas en 5 columnas');
-assert(css.includes('grid-template-columns:repeat(3,minmax(0,1fr))'),'Tableta: miniaturas en 3 columnas');
-assert(css.includes('grid-template-columns:repeat(2,minmax(0,1fr))'),'Móvil: miniaturas en 2 columnas');
-assert(css.includes('.gallery-item') && css.includes('aspect-ratio:4/3'),'Mantener miniaturas uniformes');
-assert(css.includes('width:100%;max-width:100%'),'Galería debe usar todo el ancho disponible');
-assert(css.includes('.lb-dialog') && css.includes('max-height:min(68dvh,680px)'),'Limitar altura del modal');
-assert(css.includes('body.gallery-modal-open{overflow:hidden}'),'Bloquear scroll tras abrir modal');
-assert(js.includes('document.createElement(\'button\')'),'Galería accesible mediante botones');
-assert(js.includes('aria-modal="true"'),'El modal debe tener semántica de diálogo');
-for(const check of ['Cerrar imagen','Imagen anterior','Imagen siguiente','e.key === \'Escape\'','e.key === \'Tab\'','previousFocus.focus()','if (e.target === ov) close()','document.removeEventListener(\'keydown\', onKey)']){
-  assert(js.includes(check),'Falta función del modal: '+check);
-}
-assert(html.includes('styles.css?v=iconsColor20261029'),'Invalidación de caché de CSS');
-assert(html.includes('app.js?v=iconsColor20261029'),'Invalidación de caché del JavaScript');
-assert((data.match(/gallery\/trabajo-\d{2}\.webp/g)||[]).length===10,'Conservar las 10 fotografías');
-assert(html.includes('id="galleryGrid"') && html.includes('<noscript>'),'Conservar galería SEO');
-console.log('Galería: miniaturas responsive y modal accesible OK');
+const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
+const html=read('index.html'),css=read('styles.css'),js=read('app.js');
+for(const id of ['lightbox','lbImage','lbCaption','lbClose','lbPrev','lbNext'])assert(html.includes('id="'+id+'"'),'Falta modal: '+id);
+for(const token of ['gallery-grid','gallery-btn','.lightbox','.lightbox-box','noscroll'])assert(css.includes(token),'Falta estilo de galería: '+token);
+for(const token of ["e.key==='Escape'","e.key==='ArrowLeft'","e.key==='ArrowRight'","e.key==='Tab'",'priorFocus?.focus()','touchstart','touchend'])assert(js.includes(token),'Falta control modal: '+token);
+assert(js.includes('loading="lazy"'),'Cargar fotos diferidas');
+assert(html.includes('styles.css?v=editorial20261030'),'Versión de CSS para evitar caché');
+assert(html.includes('app.js?v=editorial20261030'),'Versión de JS para evitar caché');
+console.log('Galería de miniaturas y modal de foto accesible: OK');

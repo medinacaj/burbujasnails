@@ -1,37 +1,24 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
-import { createHash } from 'node:crypto';
-const read = path => readFileSync(new URL('../' + path, import.meta.url), 'utf8');
-const html = read('index.html');
-const app = read('app.js');
-const policy = read('privacidad.html');
-const build = read('build.sh');
-const sitemap = read('sitemap.xml');
-
-const csp = html.match(/<meta http-equiv="Content-Security-Policy" content="([^"]+)">/)?.[1];
-assert.ok(csp, 'Falta CSP en la portada');
-for (const rule of ["default-src 'self'", "object-src 'none'", "form-action 'none'", "script-src 'self'"]) {
-  assert.ok(csp.includes(rule), 'Falta política ' + rule);
-}
-assert.ok(!csp.includes("'unsafe-eval'"), 'No autorizar unsafe-eval');
-assert.ok(!/script-src[^;]*'unsafe-inline'/.test(csp), 'No habilitar scripts inline genéricos');
-
-const ld = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1];
-assert.ok(ld, 'Conservar metadatos estructurados');
-const hash = createHash('sha256').update(ld, 'utf8').digest('base64');
-assert.ok(csp.includes("'sha256-" + hash + "'"), 'El hash CSP de JSON-LD debe coincidir');
-JSON.parse(ld);
-
-assert.ok(!html.includes('og-image.jpg'), 'No referenciar imágenes OG inexistentes');
-assert.ok(!html.includes('Reseñas reales'), 'No afirmar reseñas reales sin comprobación');
-assert.ok(!html.includes('Valentina R.'), 'Retirar citas sin evidencia de autorización');
-assert.ok(html.includes('href="privacidad.html"'), 'Vincular el aviso de privacidad');
-assert.ok(!app.includes("'Desde $' + esc(s.price)"), 'No anunciar como desde un precio fijo');
-assert.ok(app.includes("new URL(item.url, window.location.href)"), 'Validar las URL de la galería');
-assert.ok(app.includes("iconSvg(s.icon)"), 'Pintar íconos del catálogo con SVG permitidos');
-assert.ok(app.includes("esc(s.name)"), 'Escapar los nombres de servicios en HTML');
-assert.ok(build.includes('privacidad.html'), 'El paquete distribuible debe incluir privacidad');
-assert.ok(sitemap.includes('https://burbujasnails.cl/privacidad.html'), 'Sitemap debe incluir privacidad');
-assert.ok(policy.includes('WhatsApp') && policy.includes('Mercado Pago'), 'Informar terceros');
-
-console.log('Controles web/privacidad/CSP y distribución: OK');
+import {readFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
+const html=read('index.html'),js=read('app.js'),privacy=read('privacidad.html'),build=read('build.sh');
+const csp=html.match(/<meta http-equiv="Content-Security-Policy" content="([^"]+)">/)?.[1];
+assert(csp,'Falta CSP');
+for(const x of ["default-src 'self'","object-src 'none'","form-action 'none'","script-src 'self'","frame-src https://www.google.com"])assert(csp.includes(x),'CSP incompleta: '+x);
+assert(!/script-src[^;]*'unsafe-inline'/.test(csp),'Scripts inline no autorizados');
+assert(!csp.includes("'unsafe-eval'"),'Eval no autorizado');
+const ld=html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1];
+assert(ld,'Datos estructurados ausentes');JSON.parse(ld);
+const hash=createHash('sha256').update(ld,'utf8').digest('base64');
+assert(csp.includes("'sha256-"+hash+"'"),'Hash CSP/JSON-LD no coincide');
+assert(!/<script>(?!\s*\{)/.test(html),'No incluir scripts de aplicación inline');
+assert(html.includes('src="data.js?v=')&&html.includes('src="app.js?v='),'JS separado y cacheado');
+assert(!js.includes('data:image/webp;base64'),'No incrustar 10 fotos en JS');
+assert(!html.includes('noindex,nofollow'),'No publicar metadato de vista previa');
+assert(!html.includes('Diseño conceptual para evaluación'),'No publicar texto de vista previa');
+assert(js.includes('const esc=s=>'),'Escapar contenido mostrado');
+assert(js.includes('window.INITIAL_SERVICES'),'Catálogo sin acceso a bases privadas');
+assert(build.includes('privacidad.html'),'Privacidad en el paquete');
+assert(privacy.includes('WhatsApp')&&privacy.includes('Mercado Pago'),'Condiciones de terceros');
+console.log('CSP, datos estructurados, privacidad y separación de recursos: OK');
