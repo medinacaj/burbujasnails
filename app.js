@@ -169,25 +169,33 @@ function renderGallery() {
 }
 
 function openSlideshow(items, startIdx) {
+  if (!Array.isArray(items) || !items.length) return;
+
   let current = startIdx;
+  let closed = false;
+  const previousFocus = document.activeElement;
 
   const ov = document.createElement('div');
   ov.className = 'lb-overlay';
   ov.innerHTML = `
-    <button class="lb-close" aria-label="Cerrar">×</button>
-    <button class="lb-prev" aria-label="Anterior">&#8249;</button>
-    <div class="lb-img-wrap">
-      <img class="lb-img" src="" alt="">
-      <p class="lb-caption"></p>
-    </div>
-    <button class="lb-next" aria-label="Siguiente">&#8250;</button>
-    <div class="lb-dots"></div>`;
+    <div class="lb-dialog" role="dialog" aria-modal="true"
+      aria-label="Galería de trabajos de Burbujas Nails" tabindex="-1">
+      <button type="button" class="lb-close" aria-label="Cerrar imagen">×</button>
+      <button type="button" class="lb-prev" aria-label="Imagen anterior">&#8249;</button>
+      <div class="lb-img-wrap">
+        <img class="lb-img" src="" alt="">
+        <p class="lb-caption"></p>
+      </div>
+      <button type="button" class="lb-next" aria-label="Imagen siguiente">&#8250;</button>
+      <div class="lb-dots" aria-hidden="true"></div>
+    </div>`;
 
-  const imgEl   = ov.querySelector('.lb-img');
-  const capEl   = ov.querySelector('.lb-caption');
-  const dotsEl  = ov.querySelector('.lb-dots');
+  const imgEl = ov.querySelector('.lb-img');
+  const capEl = ov.querySelector('.lb-caption');
+  const dotsEl = ov.querySelector('.lb-dots');
   const prevBtn = ov.querySelector('.lb-prev');
   const nextBtn = ov.querySelector('.lb-next');
+  const closeBtn = ov.querySelector('.lb-close');
 
   dotsEl.innerHTML = items.map((_, i) =>
     `<span class="lb-dot${i === startIdx ? ' active' : ''}"></span>`
@@ -198,42 +206,68 @@ function openSlideshow(items, startIdx) {
     current = (idx + items.length) % items.length;
     const item = items[current];
     imgEl.src = item.url;
-    imgEl.alt = item.caption || '';
-    capEl.textContent = item.caption || '';
-    dots.forEach((d, i) => d.classList.toggle('active', i === current));
-    prevBtn.style.display = items.length <= 1 ? 'none' : '';
-    nextBtn.style.display = items.length <= 1 ? 'none' : '';
+    imgEl.alt = item.caption || item.title || 'Trabajo de manicura';
+    capEl.textContent = item.title || item.caption || '';
+    dots.forEach((dot, i) => dot.classList.toggle('active', i === current));
+    prevBtn.hidden = nextBtn.hidden = items.length <= 1;
   }
 
-  goTo(startIdx);
+  function close() {
+    if (closed) return;
+    closed = true;
+    document.removeEventListener('keydown', onKey);
+    document.body.classList.remove('gallery-modal-open');
+    ov.remove();
+    if (previousFocus && typeof previousFocus.focus === 'function') {
+      previousFocus.focus();
+    }
+  }
 
-  const close = () => {
-    ov.classList.add('closing');
-    setTimeout(() => ov.remove(), 220);
-  };
+  function onKey(e) {
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      close();
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      goTo(current + 1);
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      goTo(current - 1);
+    } else if (e.key === 'Tab') {
+      const buttons = [...ov.querySelectorAll('button:not([hidden])')];
+      if (!buttons.length) return;
+      const first = buttons[0], last = buttons[buttons.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  }
 
-  ov.querySelector('.lb-close').addEventListener('click', close);
-  prevBtn.addEventListener('click', e => { e.stopPropagation(); goTo(current - 1); });
-  nextBtn.addEventListener('click', e => { e.stopPropagation(); goTo(current + 1); });
+  closeBtn.addEventListener('click', close);
+  prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => goTo(current + 1));
   ov.addEventListener('click', e => { if (e.target === ov) close(); });
 
-  // Swipe táctil
   let touchX = null;
-  ov.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+  ov.addEventListener('touchstart', e => {
+    touchX = e.changedTouches[0].clientX;
+  }, { passive: true });
   ov.addEventListener('touchend', e => {
     if (touchX === null) return;
     const dx = e.changedTouches[0].clientX - touchX;
-    if (Math.abs(dx) > 40) goTo(current + (dx < 0 ? 1 : -1));
+    if (Math.abs(dx) > 45 && !closed) goTo(current + (dx < 0 ? 1 : -1));
     touchX = null;
-  });
+  }, { passive: true });
 
-  document.addEventListener('keydown', function onKey(e) {
-    if (e.key === 'Escape')     { close(); document.removeEventListener('keydown', onKey); }
-    if (e.key === 'ArrowRight') goTo(current + 1);
-    if (e.key === 'ArrowLeft')  goTo(current - 1);
-  });
-
+  goTo(startIdx);
+  document.body.classList.add('gallery-modal-open');
   document.body.appendChild(ov);
+  document.addEventListener('keydown', onKey);
+  closeBtn.focus();
 }
 
 /* ─── Reveal on scroll ───────────────────────────────────────── */
