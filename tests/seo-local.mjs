@@ -20,7 +20,7 @@ assert(dir.includes('rel="canonical" href="https://burbujasnails.cl/servicios.ht
 assert(dir.includes('name="robots" content="index, follow, max-image-preview:large"'),'Servicios deben ser indexables');
 assert(dir.includes('Maipú 1020, oficina 4'),'La dirección debe concordar con la web principal');
 assert(dir.includes('query_place_id=ChIJcV6iZwC1aZYRHvw-7mt7No0'),'Enlace a ficha de negocio erróneo');
-assert(dir.includes('href="index.html#reserva"'),'Debe incluir enlace de reserva al sitio');
+assert(dir.includes('href="/#reserva"'),'Debe incluir enlace de reserva al sitio');
 assert(dir.includes('script-src \'none\''),'La página estática no necesita ejecutar JavaScript');
 assert((dir.match(/<img /g)||[]).length>=4,'Incluir imágenes reales con texto alternativo');
 assert(sitemap.includes('<loc>https://burbujasnails.cl/servicios.html</loc>'),'Sitemap debe incluir los servicios');
