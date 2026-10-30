@@ -26,6 +26,7 @@ jobs:
           node tests/layout-contract.mjs
           node tests/modern-ui.mjs
           node tests/seo-gallery-map.mjs
+          node tests/gallery-modal.mjs
           node tests/gitignore-security.mjs
           node tests/no-tracked-secrets.mjs
           node tests/public-hardening.mjs
