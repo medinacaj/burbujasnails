@@ -17,7 +17,11 @@ assert(html.includes('og:image')&&html.includes('gallery/burbujas-nails-comparti
 assert(html.includes('name="description"'),'Meta descripción');
 assert(html.includes('Maipú 1020, oficina 4'),'Dirección visible');
 assert(html.includes('query_place_id=ChIJcV6iZwC1aZYRHvw-7mt7No0'),'Mapa al negocio');
-assert(js.includes("document.createElement('iframe')"),'Mapa cargado a petición');
+assert(/<a class="map-frame map-link" id="mapFrame" href="https:\/\/www\.google\.com\/maps\/search\/\?api=1&query_place_id=ChIJcV6iZwC1aZYRHvw-7mt7No0/.test(html),'Toda el área del mapa debe enlazar a la ficha correcta de Google Maps');
+assert(html.includes('aria-label="Abrir la ubicación de Burbujas Nails en Google Maps: Maipú 1020, oficina 4, Concepción"'),'El enlace del mapa debe tener un nombre accesible');
+assert(html.includes('class="map-open" aria-hidden="true"')&&!html.includes('id="mapOpen"'),'El indicador visual no debe ser un segundo botón');
+assert(!js.includes("createElement('iframe')")&&!js.includes("getElementById('mapOpen')"),'No incrustar un iframe ni duplicar el control del mapa');
+assert(css.includes('.map-link{display:block')&&css.includes('.map-link:focus-visible'),'La zona del mapa debe cubrir toda el área y poder enfocarse con teclado');
 assert(css.includes('.map-frame'),'Estilo del mapa');
 assert(policy.includes('Google Maps'),'Aviso de privacidad de terceros');
 console.log('SEO, 10 imágenes y mapa: OK');
