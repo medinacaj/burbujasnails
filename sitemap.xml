@@ -3,7 +3,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://burbujasnails.cl/</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <image:image><image:loc>https://burbujasnails.cl/gallery/trabajo-02.webp</image:loc></image:image>
     <image:image><image:loc>https://burbujasnails.cl/gallery/trabajo-03.webp</image:loc></image:image>
     <image:image><image:loc>https://burbujasnails.cl/gallery/trabajo-04.webp</image:loc></image:image>
@@ -16,7 +16,11 @@
     <image:image><image:loc>https://burbujasnails.cl/gallery/trabajo-01.webp</image:loc></image:image>
   </url>
   <url>
+    <loc>https://burbujasnails.cl/servicios.html</loc>
+    <lastmod>2026-10-30</lastmod>
+  </url>
+  <url>
     <loc>https://burbujasnails.cl/privacidad.html</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
 </urlset>
