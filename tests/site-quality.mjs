@@ -7,7 +7,7 @@ const home=read('index.html'),services=read('servicios.html'),app=read('app.js')
 const count=(s,token)=>s.split(token).length-1;
 for(const [page,html] of [['portada',home],['servicios',services],['privacidad',privacy],['404',page404]]){
   assert(html.includes('href="/favicon.svg"'),'Sin favicon: '+page);
-  assert(html.includes('styles.css?v=mapaTotal20261030'),'CSS desactualizado: '+page);
+  assert(html.includes('styles.css?v=seoOpt20261030'),'CSS desactualizado: '+page);
 }
 assert(favicon.includes('<svg')&&favicon.includes('viewBox="0 0 64 64"'),'SVG de marca inválido');
 assert(!/\b(?:href|src)=["']https?:\/\//.test(favicon),'El favicon no debe solicitar recursos externos');
