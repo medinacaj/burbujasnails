@@ -15,7 +15,7 @@ assert(js.includes('aria-modal="true"'),'El modal debe tener semántica de diál
 for(const check of ['Cerrar imagen','Imagen anterior','Imagen siguiente','e.key === \'Escape\'','e.key === \'Tab\'','previousFocus.focus()','if (e.target === ov) close()','document.removeEventListener(\'keydown\', onKey)']){
   assert(js.includes(check),'Falta función del modal: '+check);
 }
-assert(html.includes('styles.css?v=fluid20261029'),'Invalidación de caché de CSS');
+assert(html.includes('styles.css?v=heroDiscreto20261029'),'Invalidación de caché de CSS');
 assert(html.includes('app.js?v=modal20261029'),'Invalidación de caché del JavaScript');
 assert((data.match(/gallery\/trabajo-\d{2}\.webp/g)||[]).length===10,'Conservar las 10 fotografías');
 assert(html.includes('id="galleryGrid"') && html.includes('<noscript>'),'Conservar galería SEO');
