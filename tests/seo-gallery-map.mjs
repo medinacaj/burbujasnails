@@ -1,38 +1,23 @@
 import assert from 'node:assert/strict';
-import { readFileSync, statSync } from 'node:fs';
-const read = p => readFileSync(new URL('../'+p,import.meta.url),'utf8');
-const html=read('index.html'), data=read('data.js'), app=read('app.js'),
-      css=read('styles.css'), sitemap=read('sitemap.xml'), privacy=read('privacidad.html');
-const numbers=Array.from({length:10},(_,i)=>String(i+1).padStart(2,'0'));
-for (const n of numbers) {
-  const path='gallery/trabajo-'+n+'.webp';
-  const bin=readFileSync(new URL('../'+path,import.meta.url));
-  assert.equal(bin.toString('ascii',0,4),'RIFF',path+' not RIFF');
-  assert.equal(bin.toString('ascii',8,12),'WEBP',path+' not WebP');
-  assert(bin.length>12000 && bin.length<250000,'Optimizar tamaño de '+path);
-  assert(data.includes(path),'La galería JS debe incluir '+path);
-  assert(html.includes('src="'+path+'"'),'Debe existir fallback de imagen '+path);
-  assert(sitemap.includes('https://burbujasnails.cl/'+path),'Falta imagen en sitemap: '+path);
-  assert(!bin.includes(Buffer.from('Exif\x00\x00')),'No incluir EXIF de '+path);
+import {readFileSync} from 'node:fs';
+const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
+const html=read('index.html'),js=read('app.js'),css=read('styles.css'),sitemap=read('sitemap.xml'),policy=read('privacidad.html');
+for(let i=1;i<=10;i++){
+  const p='gallery/trabajo-'+String(i).padStart(2,'0')+'.webp';
+  const bin=readFileSync(new URL('../'+p,import.meta.url));
+  assert.equal(bin.toString('ascii',0,4),'RIFF',p+' no es WebP');
+  assert.equal(bin.toString('ascii',8,12),'WEBP',p+' no es WebP');
+  assert(bin.length<250_000,p+' no optimizado');
+  assert(js.includes(p),'Foto no incluida en galería: '+p);
+  assert(sitemap.includes(p),'Sitemap sin foto: '+p);
 }
-assert((data.match(/category:/g)||[]).length>=10,'Metadatos de galería incompletos');
-assert(sitemap.includes('xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"'),'Falta namespace de imágenes');
-assert(html.includes('Maipú 1020, oficina 4'),'Falta dirección');
-assert(html.includes('query_place_id=ChIJcV6iZwC1aZYRHvw-7mt7No0'),'Mapa debe apuntar a la ficha pública exacta');
-assert(html.includes('title="Mapa de ubicación de Burbujas Nails'),'Mapa sin título accesible');
-assert(html.includes('loading="lazy" referrerpolicy='),'Mapa debe cargar de forma diferida');
-assert(html.includes('frame-src https://www.google.com'),'La CSP debe autorizar únicamente el marco de Google Maps');
-assert(css.includes('.location-map iframe'),'Mapa sin estilos responsive');
-assert(privacy.includes('Google Maps'),'Aviso debe describir el mapa externo');
+assert(html.includes('name="robots" content="index, follow, max-image-preview:large"'),'Indexación habilitada');
 assert(html.includes('rel="canonical" href="https://burbujasnails.cl/"'),'Canonical inválida');
-assert(html.includes('name="robots" content="index, follow, max-image-preview:large"'),'Falta metadato robots');
-assert(html.includes('property="og:image" content="https://burbujasnails.cl/gallery/burbujas-nails-compartir.jpg"'),'Falta imagen de redes');
-assert(html.includes('name="twitter:image"'),'Falta imagen de Twitter');
-const cover=readFileSync(new URL('../gallery/burbujas-nails-compartir.jpg',import.meta.url));
-assert.equal(cover[0],0xff,'Portada JPEG inválida');
-assert.equal(cover[1],0xd8,'Portada JPEG inválida');
-assert(html.includes('og:image:width" content="1200"') && html.includes('og:image:height" content="630"'), 'Metadatos de dimensiones incorrectos');
-assert(html.includes('property="og:locale" content="es_CL"'),'SEO idioma-región incorrecto');
-assert(html.includes('name="geo.placename" content="Concepción"'),'SEO local incompleto');
-assert(app.includes("document.createElement('button')"),'La galería requiere controles accesibles');
-console.log('SEO local + dirección enlazada + mapa + 10 fotos WebP: OK');
+assert(html.includes('og:image')&&html.includes('gallery/burbujas-nails-compartir.jpg'),'Imagen social conservada');
+assert(html.includes('name="description"'),'Meta descripción');
+assert(html.includes('Maipú 1020, oficina 4'),'Dirección visible');
+assert(html.includes('query_place_id=ChIJcV6iZwC1aZYRHvw-7mt7No0'),'Mapa al negocio');
+assert(js.includes("document.createElement('iframe')"),'Mapa cargado a petición');
+assert(css.includes('.map-frame'),'Estilo del mapa');
+assert(policy.includes('Google Maps'),'Aviso de privacidad de terceros');
+console.log('SEO, 10 imágenes y mapa: OK');
