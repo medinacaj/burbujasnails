@@ -16,7 +16,7 @@ for(const check of ['Cerrar imagen','Imagen anterior','Imagen siguiente','e.key 
   assert(js.includes(check),'Falta función del modal: '+check);
 }
 assert(html.includes('styles.css?v=luxurycute20261029'),'Invalidación de caché de CSS');
-assert(html.includes('app.js?v=icons20261029'),'Invalidación de caché del JavaScript');
+assert(html.includes('app.js?v=luxurycute20261029'),'Invalidación de caché del JavaScript');
 assert((data.match(/gallery\/trabajo-\d{2}\.webp/g)||[]).length===10,'Conservar las 10 fotografías');
 assert(html.includes('id="galleryGrid"') && html.includes('<noscript>'),'Conservar galería SEO');
 console.log('Galería: miniaturas responsive y modal accesible OK');
