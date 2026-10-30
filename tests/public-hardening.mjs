@@ -28,7 +28,8 @@ assert.ok(!html.includes('Valentina R.'), 'Retirar citas sin evidencia de autori
 assert.ok(html.includes('href="privacidad.html"'), 'Vincular el aviso de privacidad');
 assert.ok(!app.includes("'Desde $' + esc(s.price)"), 'No anunciar como desde un precio fijo');
 assert.ok(app.includes("new URL(item.url, window.location.href)"), 'Validar las URL de la galería');
-assert.ok(app.includes("esc(s.emoji"), 'Escapar los campos de servicio en HTML');
+assert.ok(app.includes("iconSvg(s.icon)"), 'Pintar íconos del catálogo con SVG permitidos');
+assert.ok(app.includes("esc(s.name)"), 'Escapar los nombres de servicios en HTML');
 assert.ok(build.includes('privacidad.html'), 'El paquete distribuible debe incluir privacidad');
 assert.ok(sitemap.includes('https://burbujasnails.cl/privacidad.html'), 'Sitemap debe incluir privacidad');
 assert.ok(policy.includes('WhatsApp') && policy.includes('Mercado Pago'), 'Informar terceros');
