@@ -10,7 +10,7 @@ for(const [page,html] of [['portada',home],['servicios',services],['privacidad',
   assert(html.includes('styles.css?v=seoOpt20261030'),'CSS desactualizado: '+page);
 }
 assert(favicon.includes('<svg')&&favicon.includes('viewBox="0 0 64 64"'),'SVG de marca inválido');
-assert(!/https?:\/\//.test(favicon),'El favicon no debe depender de recursos externos');
+assert(!/\b(?:href|src)=["']https?:\/\//.test(favicon),'El favicon no debe solicitar recursos externos');
 assert(page404.includes('content="noindex,follow"'),'404 nunca debe indexarse');
 assert(page404.includes('href="/servicios.html"'),'404 debe recuperar navegación al catálogo');
 assert(home.includes('<noscript><p>Para consultar el catálogo completo'),'Falta catálogo sin JavaScript');
