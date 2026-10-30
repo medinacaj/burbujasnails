@@ -68,6 +68,21 @@ const CAT_ICON = Object.freeze({
   'Extras': 'heart',
   'Todos': 'sparkles'
 });
+/* Temas boutique por categoría: constantes locales y clases controladas. */
+const CAT_THEME = Object.freeze({
+  'Uñas manos': 'is-manos',
+  'Extensiones': 'is-extensiones',
+  'Uñas pies': 'is-pies',
+  'Promociones': 'is-promos',
+  'Retiros': 'is-retiros',
+  'Pestañas y cejas': 'is-cejas',
+  'Extras': 'is-extras',
+  'Todos': 'is-todos'
+});
+function categoryTheme(category) {
+  return CAT_THEME[category] || 'is-todos';
+}
+
 function iconSvg(name) {
   const paths = ICON_PATHS[name] || ICON_PATHS.sparkles;
   return '<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
@@ -91,7 +106,7 @@ function renderServices() {
   const frow = container.querySelector('.frow') || document.querySelector('.frow');
   if (frow) {
     frow.innerHTML = cats.map(c => `
-      <button class="fb${c === activeFilter ? ' active' : ''}" data-cat="${esc(c)}" aria-pressed="${c === activeFilter}">${iconSvg(CAT_ICON[c])}<span>${esc(c)}</span></button>
+      <button class="fb ${categoryTheme(c)}${c === activeFilter ? ' active' : ''}" data-cat="${esc(c)}" aria-pressed="${c === activeFilter}">${iconSvg(CAT_ICON[c])}<span>${esc(c)}</span></button>
     `).join('');
     frow.querySelectorAll('.fb').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -126,7 +141,7 @@ function renderServiceList() {
       <button type="button" class="svc-row" data-id="${esc(s.id)}"
         aria-expanded="false" aria-controls="det-${esc(s.id)}"
         aria-label="Detalles de ${esc(s.name)}">
-        <span class="svc-ico" aria-hidden="true">${iconSvg(s.icon)}</span>
+        <span class="svc-ico ${categoryTheme(s.category)}" aria-hidden="true">${iconSvg(s.icon)}</span>
         <span class="svc-info">
           <span class="svc-name">${esc(s.name)}${s.popular ? ' <span class="badge-pop">Popular</span>' : ''}</span>
           <span class="svc-dur">${esc(s.duration || '')}</span>
