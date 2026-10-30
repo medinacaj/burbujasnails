@@ -25,7 +25,7 @@ assert(app.includes('aria-hidden="true" focusable="false"'),'Iconos decorativos 
 assert(app.includes('aria-label="Detalles de'),'Tarjetas de servicios deben conservar nombre accesible');
 assert((html.match(/class="contact-ico"/g)||[]).length===3,'Conservar 3 iconos de contacto');
 for(const name of ['Visítanos','WhatsApp','Pago en línea'])assert(html.includes(name),'Falta bloque de contacto: '+name);
-assert((html.match(/class="contact-ico" aria-hidden="true"><svg class="ui-icon"/g)||[]).length===3,'Usar SVG en los 3 contactos');
+assert((html.match(/class="contact-ico" aria-hidden="true"><svg class="ui-icon ui-icon-color"/g)||[]).length===3,'Usar SVG en los 3 contactos');
 assert(!html.includes('aria-hidden="true">⌖')&&!html.includes('aria-hidden="true">✉')&&!html.includes('aria-hidden="true">◇'),'Eliminar símbolos incompatibles');
 for(const rule of ['.ui-icon{display:block;width:22px;height:22px','.fb .ui-icon{width:19px;height:19px','.svc-ico .ui-icon{position:relative;z-index:1;width:29px;height:29px','.contact-ico .ui-icon{position:relative;z-index:1;width:20px;height:20px','.svc-ico .ui-icon{width:25px;height:25px','.svc-ico .ui-icon{width:22px;height:22px']){
   assert(css.includes(rule),'Falta ajuste de tamaño: '+rule);
