@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="es-CL"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer"><meta name="theme-color" content="#fbf7f5">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; frame-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self' https://*.supabase.co; img-src 'self'; upgrade-insecure-requests">
+<title>Gestión de precios | Burbujas Nails</title><link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="stylesheet" href="/gestion.css"><script src="/bn-config.js" defer></script><script src="/gestion.js" defer></script>
+</head><body>
+<header class="top"><div class="wrap nav"><a class="brand" href="/" aria-label="Burbujas Nails, inicio"><b class="mark">b.</b><span>burbujas <em>nails</em><small>ADMINISTRACIÓN DE SERVICIOS</small></span></a><a class="back" href="/">Volver al sitio ↗</a></div></header>
+<main class="wrap main">
+<p class="eyebrow">GESTIÓN DE CATÁLOGO</p><h1>Servicios y <em>precios.</em></h1><p class="intro">Administración privada de los 27 servicios. Los precios están expresados en pesos chilenos y cada cambio queda protegido por los permisos de la base de datos.</p>
+<p role="status" aria-live="polite" id="status" class="status" hidden></p>
+<section class="panel" id="setup" hidden><h2>Panel preparado para conectar</h2><p>La página se encuentra publicada, pero aún no está asociada a una base de datos exclusiva de Burbujas Nails. Los precios del sitio oficial no han cambiado. Para activar el acceso, se deben configurar Supabase y un administrador autorizado.</p><a href="/" class="action">Ver catálogo público</a></section>
+<section class="panel auth" id="login" hidden><h2>Acceso administrativo</h2><p>Inicia sesión con un código de un solo uso enviado a tu correo registrado.</p>
+<form id="request-form"><label for="email">Correo autorizado</label><input id="email" type="email" autocomplete="email" required maxlength="254" placeholder="correo@ejemplo.cl"><button type="submit" id="request-code" class="action">Enviar código seguro</button></form>
+<form id="verify-form" hidden><label for="token">Código de verificación</label><input id="token" type="text" autocomplete="one-time-code" inputmode="numeric" required pattern="[0-9]{6,8}" maxlength="8" placeholder="000000"><button type="submit" id="verify-code" class="action">Ingresar</button></form></section>
+<section id="workspace" hidden><div class="toolbar"><div><p class="eyebrow">CATÁLOGO</p><h2>Servicios <span id="count"></span></h2></div><button type="button" id="logout" class="secondary">Cerrar sesión</button></div>
+<div class="columns"><section class="panel"><h3>Elegir servicio</h3><label for="search">Buscar por nombre o categoría</label><input id="search" type="search" placeholder="Buscar servicio"><div class="items" id="services" role="list"></div></section>
+<section class="panel"><h3>Editar servicio</h3><p id="selected-description" class="hint">Selecciona un servicio.</p><form id="edit-form" hidden>
+<div class="read-only"><b id="edit-name"></b><small id="edit-category"></small></div>
+<label for="price">Precio en pesos chilenos</label><input id="price" type="number" min="0" max="2000000" step="1" inputmode="numeric" placeholder="Vacío = Consultar">
+<label for="duration">Duración orientativa</label><input id="duration" type="text" maxlength="60" required placeholder="60 min">
+<label for="description">Descripción del servicio</label><textarea id="description" maxlength="1200" rows="4"></textarea>
+<button type="submit" id="save" class="action">Guardar cambios</button></form>
+<div class="history"><h3>Historial de precios</h3><div id="history" class="history-list"><p class="hint">Selecciona un servicio.</p></div></div></section></div></section>
+</main><footer>© Burbujas Nails · Administración protegida · Concepción, Chile</footer></body></html>

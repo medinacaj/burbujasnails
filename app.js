@@ -1,6 +1,6 @@
 
 const photoData={"trabajo-01":"gallery/trabajo-01.webp","trabajo-02":"gallery/trabajo-02.webp","trabajo-03":"gallery/trabajo-03.webp","trabajo-04":"gallery/trabajo-04.webp","trabajo-05":"gallery/trabajo-05.webp","trabajo-06":"gallery/trabajo-06.webp","trabajo-07":"gallery/trabajo-07.webp","trabajo-08":"gallery/trabajo-08.webp","trabajo-09":"gallery/trabajo-09.webp","trabajo-10":"gallery/trabajo-10.webp"};
-const services=(Array.isArray(window.INITIAL_SERVICES)?window.INITIAL_SERVICES:[]).map(s=>({category:s.category,name:s.name,price:s.price,duration:s.duration,popular:!!s.popular,description:s.description||''}));
+const services=(Array.isArray(window.INITIAL_SERVICES)?window.INITIAL_SERVICES:[]).map(s=>({id:s.id,category:s.category,name:s.name,price:s.price,duration:s.duration,popular:!!s.popular,description:s.description||''}));
 const gallery=[{"photo":"trabajo-02","title":"Francesa rosada","alt":"Manicura francesa con puntas rosadas y uñas almendradas"},{"photo":"trabajo-03","title":"Invierno en azul","alt":"Uñas esmaltadas en azul claro con copos de nieve decorativos"},{"photo":"trabajo-04","title":"Perlas y relieve","alt":"Diseño de uñas nacaradas blancas con relieve y pequeñas perlas"},{"photo":"trabajo-05","title":"Rojo vino","alt":"Manicura de uñas largas color rojo vino brillante"},{"photo":"trabajo-06","title":"Nude con lunares","alt":"Manicura nude con lunares blancos sobre uñas cortas"},{"photo":"trabajo-07","title":"Diseño gráfico","alt":"Uñas decoradas con dibujos negros y amarillos"},{"photo":"trabajo-08","title":"Naranja artístico","alt":"Nail art naranja y negro con decoración gráfica"},{"photo":"trabajo-09","title":"Azul floral","alt":"Uñas en tonos azules y blancos con motivos florales"},{"photo":"trabajo-10","title":"Brillo oscuro","alt":"Manicura oscura con esmalte negro brillante y destellos"},{"photo":"trabajo-01","title":"El espacio de trabajo","alt":"Material de manicura y esterilización en el estudio"}];
 const mapURL="https://www.google.com/maps/search/?api=1&query_place_id=ChIJcV6iZwC1aZYRHvw-7mt7No0&query=Burbujas%20Nails%2C%20Maip%C3%BA%201020%2C%20Concepci%C3%B3n";
 const cats=['Todos','Uñas manos','Extensiones','Uñas pies','Promociones','Retiros','Pestañas y cejas','Extras'];
@@ -23,6 +23,23 @@ function render(){
  more.style.display=results.length<=6?'none':'block';more.textContent=expanded?'Mostrar menos ↑':`Ver los ${results.length} servicios ↘`;
 }
 render();
+/* Actualización remota opcional, validada contra los 27 servicios originales. */
+window.addEventListener("bn:catalog-updated",e=>{
+ const remote=e.detail;if(!Array.isArray(remote)||remote.length!==27)return;
+ const byId=new Map(remote.map(s=>[s.id,s]));
+ if(services.some(s=>!byId.has(s.id)||byId.get(s.id).name!==s.name))return;
+ for(const s of services){
+  const d=byId.get(s.id);
+  if(d.price_clp!==null&&(!Number.isInteger(d.price_clp)||d.price_clp<0||d.price_clp>2000000))return;
+ }
+ for(const s of services){
+  const d=byId.get(s.id);
+  s.price=d.price_clp===null?"Consultar":new Intl.NumberFormat("es-CL").format(d.price_clp);
+  if(typeof d.duration==="string")s.duration=d.duration;
+  if(typeof d.description==="string")s.description=d.description;
+ }
+ render();
+});
 const select=document.getElementById('serviceSelect');services.forEach(s=>{const o=document.createElement('option');o.textContent=s.name;o.value=s.name;select.append(o)});
 const date=document.getElementById('preferredDate');{const today=new Date();date.min=[today.getFullYear(),String(today.getMonth()+1).padStart(2,'0'),String(today.getDate()).padStart(2,'0')].join('-');}
 document.getElementById('bookingForm').addEventListener('submit',e=>{e.preventDefault();if(!select.value){select.focus();return;}let dateText=date.value?(' Mi día preferido es '+date.value+'.'):'';let name=document.getElementById('bookingName').value.trim();let msg=`Hola, quisiera consultar disponibilidad para ${select.value}.${dateText}${name?' Mi nombre es '+name+'.':''} Muchas gracias.`;window.open(wa(msg),'_blank','noopener,noreferrer')});

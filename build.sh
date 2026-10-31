@@ -18,7 +18,7 @@ done
 
 PKG=/tmp/bn-pkg
 rm -rf "$PKG" && mkdir -p "$PKG"
-cp -R index.html servicios.html admin.html privacidad.html 404.html favicon.svg styles.css app.js data.js robots.txt sitemap.xml gallery "$PKG/"
+cp -R index.html servicios.html gestion.html gestion.css gestion.js bn-config.js catalogo-live.js admin.html privacidad.html 404.html favicon.svg styles.css app.js data.js robots.txt sitemap.xml gallery "$PKG/"
 rm -f "$PKG/gallery/.gitkeep"
 rm -f burbujas-nails.zip
 (cd "$PKG" && zip -qr - .) > burbujas-nails.zip

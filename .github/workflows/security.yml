@@ -19,6 +19,9 @@ jobs:
       - name: Comprobar sintaxis y ausencia de administración insegura
         run: |
           node --check app.js
+          node --check gestion.js
+          node --check bn-config.js
+          node --check catalogo-live.js
           node --check data.js
           node --check admin.js
           node tests/security.mjs
@@ -27,6 +30,7 @@ jobs:
           node tests/modern-ui.mjs
           node tests/seo-gallery-map.mjs
           node tests/seo-local.mjs
+          node tests/gestion-precios.mjs
           node tests/site-quality.mjs
           node tests/gallery-modal.mjs
           node tests/responsive-width.mjs
