@@ -11,6 +11,8 @@
 - Políticas RLS: edición exclusivamente a usuarios autorizados en bn_admin_users.
 - Catálogo de la web con respaldo estático si falla la lectura remota.
 - Diseño y mapa interactivo original preservados.
+- Cierre de sesión con intento de revocación local del refresh token; el JWT de acceso puede seguir válido hasta vencer. La interfaz bloquea nuevas ediciones tras HTTP 401/403 y deshabilita el cierre de sesión mientras se guarda una modificación.
+- Pruebas de navegador con backend simulado para OTP, acceso rechazado, edición autorizada y caducidad de permisos. **Son pruebas de interfaz, no demuestran permisos efectivos de la base de datos.**
 
 ## Activación (requiere autorización del propietario)
 1. Crear un proyecto Supabase exclusivo de Burbujas Nails en la organización seleccionada, informando y confirmando antes cualquier coste.
