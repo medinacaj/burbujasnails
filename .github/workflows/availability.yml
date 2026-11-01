@@ -1,0 +1,24 @@
+name: Disponibilidad pública — Burbujas Nails
+on:
+  push:
+    branches: [master]
+  schedule:
+    - cron: '23 10 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: bn-public-health
+  cancel-in-progress: false
+jobs:
+  production-health:
+    name: HTTPS, catálogo, SEO y recursos públicos
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verificar disponibilidad del sitio publicado
+        run: node tests/production-health.mjs
