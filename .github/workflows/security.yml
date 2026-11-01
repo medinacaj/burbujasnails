@@ -24,6 +24,7 @@ jobs:
           node --check catalogo-live.js
           node --check data.js
           node --check admin.js
+          node scripts/sync-assets.mjs --check
           node tests/security.mjs
           node tests/rls-contract.mjs
           node tests/layout-contract.mjs

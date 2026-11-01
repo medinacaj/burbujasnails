@@ -14,7 +14,7 @@
 
 ## Activación (requiere autorización del propietario)
 1. Crear un proyecto Supabase exclusivo de Burbujas Nails en la organización seleccionada, informando y confirmando antes cualquier coste.
-2. Ejecutar los archivos de preparación supabase/bn_prices_schema.sql y supabase/bn_prices_seed.sql. No ejecutarlos en proyectos compartidos.
+2. Ejecutar exclusivamente `supabase/bn_prices_schema.sql` y `supabase/bn_prices_seed.sql` en el proyecto nuevo y dedicado. `supabase/schema.sql` es un diseño histórico incompatible que no se debe aplicar junto al esquema actual. No ejecutar archivos en proyectos compartidos.
 3. Verificar 27 registros y sus 26 precios numéricos y una cotización «Consultar».
 4. Crear un usuario administrador en Supabase Auth, activar código OTP por correo e insertar su UUID real en bn_admin_users desde SQL Editor autorizado.
 5. Comprobar en la base que anon puede leer solo servicios activos; authenticated sin permisos administrativos no puede editar; el administrador sí; el historial no es público.

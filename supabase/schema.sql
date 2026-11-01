@@ -1,3 +1,5 @@
+-- ARCHIVO LEGADO: esquema general anterior, incompatible con bn_prices_schema.sql.
+-- NO ejecutar ambos scripts en una misma base de datos. Leer supabase/README.md.
 -- Burbujas Nails: persistencia y autorización de edición con RLS.
 -- Ejecutar solo en el proyecto Supabase de Burbujas Nails, verificado por el propietario.
 -- Nunca ejecutar en un proyecto compartido o desconocido.

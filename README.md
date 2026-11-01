@@ -5,7 +5,7 @@ Sitio estático de información de servicios, galería y contacto en Concepción
 **Desde el 18-10-2026 la administración web antigua está deshabilitada.**
 La aplicación anterior incluía autenticación controlada únicamente por JavaScript público. Esa protección no era segura. `admin.html` ahora es una página informativa, y `admin.js` no ejecuta ninguna autenticación ni edición.
 
-Los servicios visibles proceden exclusivamente de `data.js` versionado. Los cambios deben revisarse mediante una rama y un pull request de GitHub, que es el control de acceso actualmente disponible. El sitio publicado no edita información persistente.
+Los servicios visibles proceden de `data.js` versionado. Existe un panel nuevo (`gestion.html`) preparado para Supabase, pero su configuración pública está vacía: no autentica ni permite editar precios hasta validar una base exclusiva, Auth y RLS. Mientras tanto, las actualizaciones requieren una rama y un pull request de GitHub.
 
 **No reutilizar la contraseña antigua:** el secreto original estuvo expuesto públicamente y puede permanecer en el historial de Git y en cachés. Rotar cualquier credencial de otros servicios donde se haya reutilizado. No utilizar la contraseña antigua para un panel futuro.
 
@@ -16,10 +16,10 @@ Para restaurar un panel:
 4. No implementar `ADMIN_PASS`, hash estático o tokens incrustados en JavaScript público.
 
 ## Publicación
-El catálogo público está en `data.js`. Para actualizar precios o servicios: editar el archivo, abrir PR, revisar vista previa y fusionar. `build.sh` genera la distribución sin incluir el panel JavaScript anterior.
+El catálogo público está en `data.js`. Para actualizar precios o servicios: editar el archivo, ejecutar `node scripts/sync-assets.mjs --write`, abrir PR, revisar vista previa y fusionar después de CI. `bash build.sh` comprueba que las versiones CSS/JS corresponden al contenido y crea un ZIP sin modificar los originales. GitHub Pages publica los archivos del repositorio, no el ZIP; la coherencia de las versiones se verifica en CI. El panel antiguo `admin.js` sigue excluido.
 
 ## Controles
-`node tests/security.mjs` revisa que el panel inseguro no reaparezca y que el catálogo deje de depender de localStorage. También se ejecuta en GitHub Actions.
+`node tests/security.mjs` comprueba que la administración antigua no regrese. `node scripts/sync-assets.mjs --check` impide publicar URLs con versiones obsoletas de los recursos. Ambas verificaciones se ejecutan en GitHub Actions.
 
 ## Controles adicionales (2026-10-29)
 

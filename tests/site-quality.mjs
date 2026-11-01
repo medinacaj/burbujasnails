@@ -7,7 +7,7 @@ const home=read('index.html'),services=read('servicios.html'),app=read('app.js')
 const count=(s,token)=>s.split(token).length-1;
 for(const [page,html] of [['portada',home],['servicios',services],['privacidad',privacy],['404',page404]]){
   assert(html.includes('href="/favicon.svg"'),'Sin favicon: '+page);
-  assert(html.includes('styles.css?v=seoOpt20261030'),'CSS desactualizado: '+page);
+  assert(/styles\.css\?v=[a-f0-9]{10}/.test(html),'CSS sin versión de contenido: '+page);
 }
 assert(favicon.includes('<svg')&&favicon.includes('viewBox="0 0 64 64"'),'SVG de marca inválido');
 assert(!/\b(?:href|src)=["']https?:\/\//.test(favicon),'El favicon no debe solicitar recursos externos');
@@ -31,5 +31,5 @@ for(const price of allPrices.filter(v=>v!=='Consultar'))
 assert(services.includes('aria-current="page"'),'Ruta de navegación sin posición actual');
 assert(services.includes('name="twitter:card"'),'Falta tarjeta social de servicios');
 assert(build.includes('404.html favicon.svg'),'Empaquetado incompleto');
-assert(build.includes('servicios.html cejas-concepcion.html privacidad.html 404.html'),'Cache busting incompleto');
+assert(build.includes('node scripts/sync-assets.mjs --check'),'Falta validar versionado real de recursos');
 console.log('Calidad web: iconos, 404, 27 servicios tipados, 26 precios, navegación y galería OK');

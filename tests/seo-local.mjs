@@ -25,7 +25,7 @@ assert(dir.includes("script-src 'self'")&&dir.includes('/catalogo-live.js'),'Scr
 assert((dir.match(/<img /g)||[]).length>=4,'Incluir imágenes reales con texto alternativo');
 assert(sitemap.includes('<loc>https://burbujasnails.cl/servicios.html</loc>'),'Sitemap debe incluir los servicios');
 assert(build.includes('cp -R index.html servicios.html'),'El paquete debe distribuir la página de servicios');
-assert(build.includes('for page in index.html servicios.html'),'Actualizar versión de CSS en la página de servicios');
+assert(build.includes('node scripts/sync-assets.mjs --check'),'Falta comprobar caché en la página de servicios');
 assert(!css.includes('.hero::before{content:""'),'Eliminar halo radial de la portada');
 assert(!css.includes('.hero-photos::before{content:""'),'Eliminar halo tras la foto principal');
 assert(!home.includes('VISTA PREVIA · NO PUBLICADA'),'No etiquetar una página pública como vista previa');
