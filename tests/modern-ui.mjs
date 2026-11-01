@@ -15,4 +15,7 @@ assert(html.includes('https://link.mercadopago.cl/burbujasnails'),'Enlace de pag
 assert(html.includes('href="privacidad.html"'),'Enlace de privacidad');
 assert(css.includes('@media(max-width:380px)'),'Responsive para móvil pequeño');
 assert(css.includes('prefers-reduced-motion:reduce'),'Animación reducida');
+assert(!html.includes('class="hero-meta"'),'Eliminar métricas ornamentales redundantes de la portada');
+assert(!css.includes('.hero-meta'),'Eliminar estilos sin uso de métricas redundantes');
+assert(html.includes('class="hero-actions"')&&html.includes('href="#reserva"')&&html.includes('href="#galeria"'),'Conservar llamados a reserva y galería');
 console.log('Catálogo de 27, reservas, filtros y responsive: OK');
