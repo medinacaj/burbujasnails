@@ -4,7 +4,7 @@
 <meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer"><meta name="theme-color" content="#fbf7f5">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; frame-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self' https://*.supabase.co; img-src 'self'; upgrade-insecure-requests">
 <title>Gestión de precios | Burbujas Nails</title><link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="stylesheet" href="/gestion.css?v=faa6dc98b8"><script src="/bn-config.js?v=20af15d6bc" defer></script><script src="/gestion.js?v=900dad42aa" defer></script>
+<link rel="stylesheet" href="/gestion.css?v=faa6dc98b8"><script src="/bn-config.js?v=20af15d6bc" defer></script><script src="/gestion.js?v=2ab5481a94" defer></script>
 </head><body>
 <header class="top"><div class="wrap nav"><a class="brand" href="/" aria-label="Burbujas Nails, inicio"><b class="mark">b.</b><span>burbujas <em>nails</em><small>ADMINISTRACIÓN DE SERVICIOS</small></span></a><a class="back" href="/">Volver al sitio ↗</a></div></header>
 <main class="wrap main">
@@ -21,6 +21,7 @@
 <label for="price">Precio en pesos chilenos</label><input id="price" type="number" min="0" max="2000000" step="1" inputmode="numeric" placeholder="Vacío = Consultar">
 <label for="duration">Duración orientativa</label><input id="duration" type="text" maxlength="60" required placeholder="60 min">
 <label for="description">Descripción del servicio</label><textarea id="description" maxlength="1200" rows="4"></textarea>
-<button type="submit" id="save" class="action">Guardar cambios</button></form>
+<button type="submit" id="save" class="action">Guardar cambios</button>
+<p class="hint">Importante: los cambios se reflejan en el catálogo web con JavaScript cuando Supabase esté conectado. Los precios del HTML indexable y la versión sin JavaScript deben sincronizarse mediante un despliegue revisado.</p></form>
 <div class="history"><h3>Historial de precios</h3><div id="history" class="history-list"><p class="hint">Selecciona un servicio.</p></div></div></section></div></section>
 </main><footer>© Burbujas Nails · Administración protegida · Concepción, Chile</footer></body></html>
