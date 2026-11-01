@@ -120,7 +120,7 @@ try{
           assert.equal(await map.count(),1,'Mapa interactivo debe existir desde HTML');
           assert(await map.isVisible(),'Mapa interactivo visible por defecto');
           assert(!(await scheme.isVisible()),'Esquema no visible inicialmente');
-          assert.match(await map.getAttribute('src'),/google\\.com\\/maps\\?q=/,'Mapa embebido de Google');
+          assert((await map.getAttribute('src')).startsWith('https://www.google.com/maps?q='),'Mapa embebido de Google');
           assert.match(await toggle.innerText(),/Ver esquema ilustrativo/,'El botón ofrece la vista alternativa');
           await toggle.click();
           assert(!(await map.isVisible()),'Mapa oculto cuando se selecciona esquema');
