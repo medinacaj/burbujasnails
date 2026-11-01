@@ -3,7 +3,8 @@
 ## Alcance y evidencias
 - Proyecto: `medinacaj/burbujasnails`, GitHub Pages; catálogo original estático de 27 servicios, 10 fotografías WebP, dirección Maipú 1020, oficina 4, Concepción.
 - Los controles `tests/site-integrity.mjs` y `tests/browser-smoke.mjs` se ejecutan en PR y `master`. La auditoría automática de accesibilidad comprueba errores de impacto grave/crítico WCAG 2.2 AA en páginas públicas; **no certifica conformidad WCAG**.
-- No se modifican tarifas, horarios, identidad visual, fotografías, ubicación, dominio ni cuentas externas sin verificación de su titular.
+- Se ha reforzado el contraste de textos, etiquetas accesibles y el aviso de privacidad sin alterar precios, servicios, fotografías, ubicación ni cuentas externas.
+- Se configuró `tests/production-health.mjs` mediante `.github/workflows/availability.yml` para comprobar producción diariamente y tras cada fusión. Su ejecución efectiva solo se da por verificada con el resultado de GitHub Actions.
 
 ## Pendientes que requieren acceso a cuentas o aprobación comercial
 

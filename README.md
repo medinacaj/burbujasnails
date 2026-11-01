@@ -19,14 +19,14 @@ Para restaurar un panel:
 El catálogo público está en `data.js`. Para actualizar precios o servicios: editar el archivo, ejecutar `node scripts/sync-assets.mjs --write`, abrir PR, revisar vista previa y fusionar después de CI. `bash build.sh` comprueba que las versiones CSS/JS corresponden al contenido y crea un ZIP sin modificar los originales. GitHub Pages publica los archivos del repositorio, no el ZIP; la coherencia de las versiones se verifica en CI. El panel antiguo `admin.js` sigue excluido.
 
 ## Controles
-`node tests/security.mjs` comprueba que la administración antigua no regrese. `node scripts/sync-assets.mjs --check` impide publicar URLs con versiones obsoletas de los recursos. Ambas verificaciones se ejecutan en GitHub Actions.
+`node tests/security.mjs` comprueba que la administración antigua no regrese. `node scripts/sync-assets.mjs --check` impide publicar URLs con versiones obsoletas de los recursos. Ambas verificaciones se ejecutan en GitHub Actions. `node tests/site-integrity.mjs` revisa rutas y fragmentos internos, canonical, datos estructurados y consistencia del catálogo. En CI se ejecuta Playwright con axe-core sobre las páginas públicas para detectar fallos graves o críticos WCAG automatizables; no sustituye validación manual.
 
 ## Controles adicionales (2026-10-29)
 
 - **Frontend:** política CSP por metaetiqueta con hash para los datos estructurados, comprobada en CI; restricciones de origen para la galería y valores escapados al componer HTML. La CSP por metaetiqueta no sustituye cabeceras HTTP de servidor (`frame-ancestors`, HSTS), que deben configurarse en una infraestructura compatible.
 - **Datos:** aviso de privacidad en `privacidad.html`. Las reseñas previamente incluidas se retiraron hasta comprobar su autenticidad y consentimiento. Los precios del catálogo deben validarse con el negocio.
 - **Repositorio:** `.gitignore` ampliado y pruebas de nombres de archivos sensibles versionados (no sustituyen revisión de secretos dentro de archivos e historial). `SECURITY.md` explica reporte responsable.
-- **Operación:** `docs/OPERACION_ITIL_SOC.md` define incidentes, cambios, activos, continuidad y acciones propuestas de monitoreo; **no existe evidencia de un SOC 24/7 en producción**.
+- **Operación:** `docs/OPERACION_ITIL_SOC.md` define incidentes, cambios, activos y continuidad. `.github/workflows/availability.yml` configura un chequeo diario del dominio principal por HTTPS y también tras push a `master`, con alertas limitadas a notificaciones de GitHub Actions; **no equivale a monitoreo 24/7 ni a un SOC**. `docs/ESTADO_OPERATIVO_INTEGRAL_2026-11.md` documenta las tareas que requieren acceso externo.
 - **Normativa:** `docs/CUMPLIMIENTO_CHILE.md` es una matriz de obligaciones y pendientes a revisar por propietario/profesional legal.
 - **Pruebas:** ejecutar `node tests/security.mjs`, `node tests/rls-contract.mjs`, `node tests/layout-contract.mjs`, `node tests/gitignore-security.mjs`, `node tests/no-tracked-secrets.mjs`, `node tests/public-hardening.mjs`. Se ejecutan en Actions.
 
