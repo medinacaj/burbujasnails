@@ -1,0 +1,46 @@
+name: Diagnóstico Lighthouse — producción
+on:
+  pull_request:
+    branches: [master]
+    paths:
+      - '.github/workflows/lighthouse.yml'
+      - 'scripts/report-lighthouse.mjs'
+      - 'scripts/check-canonical-host.mjs'
+  push:
+    branches: [master]
+    paths:
+      - '.github/workflows/lighthouse.yml'
+      - 'scripts/report-lighthouse.mjs'
+      - 'scripts/check-canonical-host.mjs'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  lighthouse-baseline:
+    name: Lighthouse móvil y escritorio — producción publicada
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Verificar dominio raíz y diagnosticar www
+        run: node scripts/check-canonical-host.mjs
+      - name: Ejecutar Lighthouse 13.6.0 (solo lectura)
+        run: |
+          command -v google-chrome || command -v chromium
+          mkdir -p lighthouse-report
+          npx --yes lighthouse@13.6.0 https://burbujasnails.cl/ --output=json --output-path=./lighthouse-report/mobile.json --only-categories=performance,accessibility,best-practices,seo --chrome-flags="--headless --no-sandbox" --quiet
+          npx --yes lighthouse@13.6.0 https://burbujasnails.cl/ --preset=desktop --output=json --output-path=./lighthouse-report/desktop.json --only-categories=performance,accessibility,best-practices,seo --chrome-flags="--headless --no-sandbox" --quiet
+      - name: Publicar métricas de laboratorio y observaciones
+        run: node scripts/report-lighthouse.mjs
+      - name: Guardar informes originales para revisión
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: lighthouse-burbujas-baseline
+          path: lighthouse-report/*.json
+          if-no-files-found: warn
+          retention-days: 14

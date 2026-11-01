@@ -3,7 +3,7 @@ import {existsSync,readFileSync} from 'node:fs';
 import {resolve,dirname,sep} from 'node:path';
 import {fileURLToPath} from 'node:url';
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
-const pages=['index.html','servicios.html','cejas-concepcion.html','privacidad.html','404.html','gestion.html','admin.html'];
+const pages=['index.html','privacidad.html','404.html','gestion.html','admin.html'];
 const read=(path)=>readFileSync(resolve(root,path),'utf8');
 const failures=[];
 const pathFor=(current,url)=>{
@@ -38,7 +38,13 @@ for(const page of pages){
  }
  if(!/<html\b[^>]*lang=["']es(?:-CL)?["']/.test(html))failures.push(page+': falta idioma');
  if(!/<h1\b/.test(html))failures.push(page+': falta H1');
- if(page==='index.html'||page==='servicios.html'||page==='cejas-concepcion.html'){
+ // Validación estructural de saltos de encabezado h1→h2→h3 (sin imponer niveles dentro de cada sección).
+ const levels=[...html.matchAll(/<h([1-6])\b[^>]*>/gi)].map(match=>Number(match[1]));
+ if(levels.length&&levels[0]!==1)failures.push(page+': primer encabezado no es h1');
+ for(let i=1;i<levels.length;i++)if(levels[i]>levels[i-1]+1)
+   failures.push(page+': salto de encabezado h'+levels[i-1]+' a h'+levels[i]);
+
+ if(page==='index.html'){
   if(!html.includes('rel="canonical"'))failures.push(page+': sin canonical');
   if(!html.includes('name="description"'))failures.push(page+': sin meta description');
  }
@@ -48,6 +54,10 @@ const ld=home.match(/<script type="application\/ld\+json">\s*([\s\S]*?)\s*<\/scr
 assert(ld,'No hay datos estructurados locales');
 const shop=JSON.parse(ld[1]);
 assert.equal(shop['@type'],'NailSalon');
+assert.equal(shop.hasOfferCatalog?.['@type'],'OfferCatalog','Catálogo OnePage estructurado');
+assert.equal(shop.hasOfferCatalog?.itemListElement?.length,27,'27 servicios con datos estructurados en portada');
+assert.equal(shop.hasOfferCatalog.itemListElement.filter(s=>s.offers?.priceCurrency==='CLP').length,26,'26 precios numéricos con CLP');
+for(const path of ['servicios.html','cejas-concepcion.html'])assert(!existsSync(resolve(root,path)),'Eliminar página comercial duplicada: '+path);
 assert.equal(shop.address.addressLocality,'Concepción');
 assert.equal(shop.telephone,'+56930912644');
 assert(!('aggregateRating' in shop),'No publicar ratings no verificados');

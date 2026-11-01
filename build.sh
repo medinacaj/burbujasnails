@@ -5,7 +5,7 @@ cd "$(dirname "$0")"
 node scripts/sync-assets.mjs --check
 PKG=$(mktemp -d)
 trap 'rm -rf "$PKG"' EXIT
-cp -R index.html servicios.html cejas-concepcion.html gestion.html gestion.css gestion.js bn-config.js catalogo-live.js admin.html privacidad.html 404.html favicon.svg styles.css app.js data.js robots.txt sitemap.xml gallery "$PKG/"
+cp -R index.html gestion.html gestion.css gestion.js bn-config.js catalogo-live.js admin.html privacidad.html 404.html legacy-route.js favicon.svg styles.css app.js data.js robots.txt sitemap.xml gallery "$PKG/"
 rm -f "$PKG/gallery/.gitkeep"
 rm -f burbujas-nails.zip
 (cd "$PKG" && zip -qr - .) > burbujas-nails.zip

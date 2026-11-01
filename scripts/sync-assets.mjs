@@ -7,7 +7,7 @@ import {fileURLToPath} from 'node:url';
 import {dirname,resolve} from 'node:path';
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const assets=['styles.css','app.js','data.js','bn-config.js','catalogo-live.js','gestion.css','gestion.js'];
-const pages=['index.html','servicios.html','cejas-concepcion.html','privacidad.html','404.html','gestion.html','admin.html'];
+const pages=['index.html','privacidad.html','404.html','gestion.html','admin.html'];
 const hashes=new Map(assets.map(file=>{
  const bytes=readFileSync(resolve(root,file));
  const hash=createHash('sha1').update('blob '+bytes.length+'\0').update(bytes).digest('hex').slice(0,10);

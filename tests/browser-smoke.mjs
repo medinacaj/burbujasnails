@@ -23,7 +23,14 @@ const server=createServer(async (request,response)=>{
     response.writeHead(200,{'Content-Type':mime[extname(file)]||'application/octet-stream'});
     response.end(bytes)
   }
-  catch{response.writeHead(404).end('No encontrado')}
+  catch{
+    if(extname(file)==='.html'){
+      // GitHub Pages envía 404.html para páginas inexistentes, con respuesta HTTP 404.
+      const errorPage=await readFile(resolve(root,'404.html'),'utf8');
+      const safeError=errorPage.replaceAll('; upgrade-insecure-requests','');
+      response.writeHead(404,{'Content-Type':'text/html; charset=utf-8'}).end(safeError);
+    }else response.writeHead(404).end('No encontrado')
+  }
 });
 await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
 const base='http://127.0.0.1:'+server.address().port;
@@ -56,10 +63,34 @@ try{
             throw new Error(engine+' '+width+'px catálogo sin render: '+JSON.stringify({state,errors,failedRequests,original:error.message}));
           }
           assert.equal(await page.locator('#serviceList .service').count(),6,'Debe mostrar seis tarjetas iniciales');
+          // En GitHub Pages las rutas antiguas devuelven 404 y el navegador
+          // recupera el catálogo de la portada sin mostrar otra landing.
+          if(engine==='chromium'&&width===375){
+            for(const path of ['/servicios.html','/cejas-concepcion.html']){
+              const legacyPage=await context.newPage();
+              try{
+                await legacyPage.goto(base+path,{waitUntil:'domcontentloaded'});
+                await legacyPage.waitForURL(base+'/#servicios',{timeout:10000});
+                assert(await legacyPage.locator('#serviceList .service').first().isVisible(),'Ruta antigua recupera OnePage: '+path);
+              }finally{await legacyPage.close()}
+            }
+          }
+
+          assert.equal(await page.locator('#preguntas details').count(),5,'Preguntas originales integradas en OnePage');
+          assert(!(await page.locator('#preguntas details').first().getAttribute('open')),'Preguntas plegadas inicialmente');
+          await page.locator('#preguntas details').first().locator('summary').click();
+          assert(await page.locator('#preguntas details').first().locator('p').isVisible(),'FAQ expandible visible');
+          await page.locator('#preguntas details').first().locator('summary').press('Enter');
+          assert(!(await page.locator('#preguntas details').first().locator('p').isVisible()),'FAQ plegable con teclado');
+          await page.locator('#filters button[data-cat="Pestañas y cejas"]').click();
+          assert(await page.locator('#categoryNote').isVisible(),'Explicación de la categoría seleccionada');
+          assert.match(await page.locator('#categoryNote').innerText(),/perfilado/,'Contexto de cejas preservado');
+          await page.locator('#filters button[data-cat="Todos"]').click();
+          assert(!(await page.locator('#categoryNote').isVisible()),'No duplicar textos cuando se muestran todos');
           if(engine==='chromium'&&width===375){
             // Una comprobación automática ayuda a detectar regresiones; no sustituye
             // lectores de pantalla reales ni una evaluación completa de WCAG 2.2 AA.
-            for(const route of ['/','/servicios.html','/cejas-concepcion.html','/privacidad.html']){
+            for(const route of ['/','/privacidad.html']){
               if(route!=='/')await page.goto(base+route,{waitUntil:'domcontentloaded'});
               const audit=await new AxeBuilder({page})
                 .withTags(['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']).analyze();
@@ -69,6 +100,17 @@ try{
             }
             await page.goto(base,{waitUntil:'domcontentloaded'});
             await page.locator('#serviceList .service').first().waitFor();
+            // Con JavaScript deshabilitado, los 27 precios siguen accesibles en la única portada.
+            const noJS=await browser.newContext({viewport:{width:375,height:850},javaScriptEnabled:false});
+            try{
+              const fallbackPage=await noJS.newPage();
+              await fallbackPage.goto(base,{waitUntil:'domcontentloaded'});
+              assert.equal(await fallbackPage.locator('#serviceList .static-service').count(),27,'Sin JS deben verse los 27 servicios en OnePage');
+              assert(await fallbackPage.locator('#serviceList .static-service').first().isVisible(),'El catálogo sin JS es visible');
+              assert.equal(await fallbackPage.locator('.static-category-desc').count(),7,'Siete descripciones de categoría accesibles sin JavaScript');
+              assert.equal((await fallbackPage.goto(base+'/servicios.html')).status(),404,'No debe publicarse la página de servicios duplicada');
+              assert.equal((await fallbackPage.goto(base+'/cejas-concepcion.html')).status(),404,'No debe publicarse una landing de cejas');
+            }finally{await noJS.close()}
           }
           const bounds=await page.evaluate(()=>{
             const targets=['.wrap','.booking-card','.catalog-panel','.lightbox-box'];
@@ -106,11 +148,20 @@ try{
           assert(!(await page.locator('#lightbox').isVisible()),'Escape cierra');
           assert(await photo.evaluate(e=>document.activeElement===e),'Recupera foco al cerrar');
           await page.evaluate(()=>{window.__opened=[];window.open=(url)=>{window.__opened.push(String(url));return null}});
-          await page.locator('#mapOpen').click();
-          assert.equal(await page.locator('#mapFrame iframe').count(),1,'Mapa cargado a petición');
-          assert.equal(await page.locator('#mapOpen').getAttribute('aria-expanded'),'true');
-          await page.locator('#mapOpen').click();
-          assert((await page.evaluate(()=>window.__opened.at(-1))).includes('google.com/maps'),'Enlace externo del mapa');
+          const map=page.locator('#mapEmbed'),scheme=page.locator('#mapVisual'),toggle=page.locator('#mapOpen');
+          assert.equal(await map.count(),1,'Mapa interactivo debe existir desde HTML');
+          assert(await map.isVisible(),'Mapa interactivo visible por defecto');
+          assert(!(await scheme.isVisible()),'Esquema no visible inicialmente');
+          assert((await map.getAttribute('src')).startsWith('https://www.google.com/maps?q='),'Mapa embebido de Google');
+          assert.match(await toggle.innerText(),/Ver esquema ilustrativo/,'El botón ofrece la vista alternativa');
+          await toggle.click();
+          assert(!(await map.isVisible()),'Mapa oculto cuando se selecciona esquema');
+          assert(await scheme.isVisible(),'Esquema visible al alternar');
+          assert.match(await toggle.innerText(),/Ver mapa interactivo/,'Debe ofrecer volver al mapa');
+          await toggle.focus();
+          await page.keyboard.press('Enter');
+          assert(await map.isVisible(),'Enter recupera el mapa interactivo');
+          assert(!(await scheme.isVisible()),'Esquema oculto al volver al mapa');
           await page.locator('#serviceSelect').selectOption({index:1});
           await page.locator('#bookingName').fill('Prueba');
           await page.locator('#bookingForm button[type=submit]').click();

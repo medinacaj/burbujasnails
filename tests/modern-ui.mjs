@@ -6,6 +6,7 @@ const count=(data.match(/\bid:'s\d{2}'/g)||[]).length;
 assert.equal(count,27,'Mantener los 27 servicios originales y sus precios');
 for(const id of ['searchService','showAll','serviceSelect','preferredDate','bookingName','galleryGrid'])assert(html.includes('id="'+id+'"'),'Control faltante: '+id);
 assert(js.includes('window.INITIAL_SERVICES'),'Usar catálogo comercial versionado en data.js');
+assert(js.includes('const categoryIntros=')&&html.includes('id="categoryNote"'),'Explicaciones para filtros sin nueva página');
 assert(js.includes('aria-pressed'),'Estado accesible para filtros');
 assert(js.includes('aria-expanded'),'Detalle desplegable accesible');
 assert(js.includes('encodeURIComponent'),'Formar WhatsApp de manera segura');
@@ -15,4 +16,7 @@ assert(html.includes('https://link.mercadopago.cl/burbujasnails'),'Enlace de pag
 assert(html.includes('href="privacidad.html"'),'Enlace de privacidad');
 assert(css.includes('@media(max-width:380px)'),'Responsive para móvil pequeño');
 assert(css.includes('prefers-reduced-motion:reduce'),'Animación reducida');
+assert(!html.includes('class="hero-meta"'),'Eliminar métricas ornamentales redundantes de la portada');
+assert(!css.includes('.hero-meta'),'Eliminar estilos sin uso de métricas redundantes');
+assert(html.includes('class="hero-actions"')&&html.includes('href="#reserva"')&&html.includes('href="#galeria"'),'Conservar llamados a reserva y galería');
 console.log('Catálogo de 27, reservas, filtros y responsive: OK');
