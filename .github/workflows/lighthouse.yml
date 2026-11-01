@@ -32,8 +32,8 @@ jobs:
         run: |
           command -v google-chrome || command -v chromium
           mkdir -p .lighthouse
-          npx --yes lighthouse@13.6.0 https://burbujasnails.cl/ --output=json --output-path=./.lighthouse/mobile.json --only-categories=performance,accessibility,best-practices,seo --chrome-flags="--headless --no-sandbox" --quiet
-          npx --yes lighthouse@13.6.0 https://burbujasnails.cl/ --preset=desktop --output=json --output-path=./.lighthouse/desktop.json --only-categories=performance,accessibility,best-practices,seo --chrome-flags="--headless --no-sandbox" --quiet
+          npx --yes lighthouse@13.6.0 https://burbujasnails.cl/ --output=json --output-path=./lighthouse-report/mobile.json --only-categories=performance,accessibility,best-practices,seo --chrome-flags="--headless --no-sandbox" --quiet
+          npx --yes lighthouse@13.6.0 https://burbujasnails.cl/ --preset=desktop --output=json --output-path=./lighthouse-report/desktop.json --only-categories=performance,accessibility,best-practices,seo --chrome-flags="--headless --no-sandbox" --quiet
       - name: Publicar métricas de laboratorio y observaciones
         run: node scripts/report-lighthouse.mjs
       - name: Guardar informes originales para revisión
@@ -41,6 +41,6 @@ jobs:
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: lighthouse-burbujas-baseline
-          path: .lighthouse/*.json
+          path: lighthouse-report/*.json
           if-no-files-found: warn
           retention-days: 14
