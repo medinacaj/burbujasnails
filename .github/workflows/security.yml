@@ -42,3 +42,19 @@ jobs:
           node tests/public-hardening.mjs
       - name: Comprobar paquete distribuible
         run: bash build.sh
+
+  browser-smoke:
+    name: UI real Chromium / Firefox / WebKit
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Instalar herramientas de pruebas (solo CI)
+        run: npm install --no-save --no-package-lock playwright@1.64.1
+      - name: Instalar motores de navegador
+        run: npx playwright install --with-deps chromium firefox webkit
+      - name: Verificar recorridos y tamaños de pantalla
+        run: node tests/browser-smoke.mjs
