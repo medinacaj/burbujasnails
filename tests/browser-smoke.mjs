@@ -59,7 +59,7 @@ try{
           if(engine==='chromium'&&width===375){
             // Una comprobación automática ayuda a detectar regresiones; no sustituye
             // lectores de pantalla reales ni una evaluación completa de WCAG 2.2 AA.
-            for(const route of ['/','/servicios.html','/cejas-concepcion.html','/privacidad.html']){
+            for(const route of ['/','/privacidad.html']){
               if(route!=='/')await page.goto(base+route,{waitUntil:'domcontentloaded'});
               const audit=await new AxeBuilder({page})
                 .withTags(['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']).analyze();
@@ -69,6 +69,16 @@ try{
             }
             await page.goto(base,{waitUntil:'domcontentloaded'});
             await page.locator('#serviceList .service').first().waitFor();
+            // Con JavaScript deshabilitado, los 27 precios siguen accesibles en la única portada.
+            const noJS=await browser.newContext({viewport:{width:375,height:850},javaScriptEnabled:false});
+            try{
+              const fallbackPage=await noJS.newPage();
+              await fallbackPage.goto(base,{waitUntil:'domcontentloaded'});
+              assert.equal(await fallbackPage.locator('#serviceList .static-service').count(),27,'Sin JS deben verse los 27 servicios en OnePage');
+              assert(await fallbackPage.locator('#serviceList .static-service').first().isVisible(),'El catálogo sin JS es visible');
+              assert.equal((await fallbackPage.goto(base+'/servicios.html')).status(),404,'No debe publicarse la página de servicios duplicada');
+              assert.equal((await fallbackPage.goto(base+'/cejas-concepcion.html')).status(),404,'No debe publicarse una landing de cejas');
+            }finally{await noJS.close()}
           }
           const bounds=await page.evaluate(()=>{
             const targets=['.wrap','.booking-card','.catalog-panel','.lightbox-box'];

@@ -3,9 +3,7 @@ import assert from 'node:assert/strict';
 
 const origin='https://burbujasnails.cl';
 const targets=[
- ['/', 'text/html', 'Burbujas Nails'],
- ['/servicios.html','text/html','schema.org/Service'],
- ['/cejas-concepcion.html','text/html','Concepción'],
+ ['/', 'text/html', '"@type":"Service"'],
  ['/privacidad.html','text/html','Privacidad y datos personales'],
  ['/robots.txt','text/plain','Sitemap:'],
  ['/sitemap.xml','xml','<urlset'],
