@@ -41,5 +41,6 @@ for(const path of ['servicios.html','cejas-concepcion.html']){
 }
 assert(sitemap.includes('<loc>https://burbujasnails.cl/</loc>')&&sitemap.includes('trabajo-04.webp'),'Mantener URL canónica y fotografías');
 assert(build.includes('cp -R index.html gestion.html')&&!build.includes('servicios.html'),'Solo portada comercial en paquete');
+assert(build.includes('legacy-route.js')&&read('legacy-route.js').includes('location.replace("/#servicios")'),'Rutas antiguas deben recuperar la portada sin recrear sus HTML');
 assert(!css.includes('.hero::before{content:""')&&!css.includes('.hero-photos::before{content:""'));
 console.log('SEO OnePage: 27 servicios, 26 precios CLP, 7 categorías, galería, reservas y sitio canónico OK');

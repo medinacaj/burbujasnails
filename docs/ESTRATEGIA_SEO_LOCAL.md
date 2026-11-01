@@ -9,7 +9,7 @@
 
 ## Acciones externas por realizar
 1. En Google Search Console, registrar la URL canónica raíz y enviar sitemap; verificar la indexación del dominio.
-2. Configurar con el gestor del dominio/CDN redirecciones HTTP 301 de `/servicios.html` y `/cejas-concepcion.html` a `/#servicios` (o `/` si el CDN no conserva fragmentos). GitHub Pages no ofrece aquí un mecanismo propio para 301; hasta configurar esas reglas las URL antiguas devolverán 404, con recuperación de navegación.
+2. Configurar con el gestor del dominio/CDN redirecciones HTTP 301 de `/servicios.html` y `/cejas-concepcion.html` a `/#servicios` (o `/` si el CDN no conserva fragmentos). GitHub Pages no ofrece aquí un mecanismo propio para 301; hasta configurar esas reglas las URL antiguas devuelven HTTP 404 con una recuperación en el navegador hacia `/#servicios` (si JavaScript está habilitado). Esa recuperación no constituye una redirección HTTP 301 ni conserva automáticamente señales SEO.
 3. Validar Perfil de Empresa de Google y detalles de negocio reales, sin duplicaciones.
 4. Cuando el catálogo de Supabase se active, sincronizar `data.js`, HTML de respaldo y los datos estructurados mediante revisión y despliegue; el cambio en DOM no basta para buscadores.
 

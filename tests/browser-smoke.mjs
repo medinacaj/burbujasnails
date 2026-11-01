@@ -23,7 +23,14 @@ const server=createServer(async (request,response)=>{
     response.writeHead(200,{'Content-Type':mime[extname(file)]||'application/octet-stream'});
     response.end(bytes)
   }
-  catch{response.writeHead(404).end('No encontrado')}
+  catch{
+    if(extname(file)==='.html'){
+      // GitHub Pages envía 404.html para páginas inexistentes, con respuesta HTTP 404.
+      const errorPage=await readFile(resolve(root,'404.html'),'utf8');
+      const safeError=errorPage.replaceAll('; upgrade-insecure-requests','');
+      response.writeHead(404,{'Content-Type':'text/html; charset=utf-8'}).end(safeError);
+    }else response.writeHead(404).end('No encontrado')
+  }
 });
 await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
 const base='http://127.0.0.1:'+server.address().port;
@@ -56,6 +63,19 @@ try{
             throw new Error(engine+' '+width+'px catálogo sin render: '+JSON.stringify({state,errors,failedRequests,original:error.message}));
           }
           assert.equal(await page.locator('#serviceList .service').count(),6,'Debe mostrar seis tarjetas iniciales');
+          // En GitHub Pages las rutas antiguas devuelven 404 y el navegador
+          // recupera el catálogo de la portada sin mostrar otra landing.
+          if(engine==='chromium'&&width===375){
+            for(const path of ['/servicios.html','/cejas-concepcion.html']){
+              const legacyPage=await context.newPage();
+              try{
+                await legacyPage.goto(base+path,{waitUntil:'domcontentloaded'});
+                await legacyPage.waitForURL(base+'/#servicios',{timeout:10000});
+                assert(await legacyPage.locator('#serviceList .service').first().isVisible(),'Ruta antigua recupera OnePage: '+path);
+              }finally{await legacyPage.close()}
+            }
+          }
+
           assert.equal(await page.locator('#preguntas details').count(),5,'Preguntas originales integradas en OnePage');
           assert(!(await page.locator('#preguntas details').first().getAttribute('open')),'Preguntas plegadas inicialmente');
           await page.locator('#preguntas details').first().locator('summary').click();

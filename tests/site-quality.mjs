@@ -12,6 +12,8 @@ for(const [page,html] of [['portada',home],['privacidad',privacy],['404',page404
 assert(favicon.includes('<svg')&&favicon.includes('viewBox="0 0 64 64"'),'SVG de marca inválido');
 assert(!/\b(?:href|src)=["']https?:\/\//.test(favicon),'El favicon no debe solicitar recursos externos');
 assert(page404.includes('content="noindex,follow"'),'404 nunca debe indexarse');
+assert(page404.includes('src="/legacy-route.js"')&&page404.includes("script-src 'self'"),'Recuperación segura de rutas retiradas');
+assert(build.includes('legacy-route.js'),'El paquete debe incluir la recuperación de rutas antiguas');
 assert(page404.includes('href="/#servicios"'),'404 debe recuperar navegación al catálogo');
 assert(home.includes('<noscript><div class="static-catalog"'),'Falta catálogo completo sin JavaScript');
 assert(app.includes('const gallery=')&&count(app,'"alt":')===10,'Galería debe declarar 10 descripciones de imágenes');
