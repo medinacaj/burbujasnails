@@ -26,6 +26,7 @@ jobs:
           node --check admin.js
           node scripts/sync-assets.mjs --check
           node tests/site-integrity.mjs
+          node tests/performance-budget.mjs
           node tests/security.mjs
           node tests/rls-contract.mjs
           node tests/layout-contract.mjs
