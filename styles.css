@@ -100,3 +100,14 @@ footer{background:#3b2935;color:#fff3f5;padding:60px 0 25px}.foot-grid{display:g
 .error-content{max-width:660px}
 .error-content h1{font:500 clamp(42px,7vw,78px)/1.1 var(--serif);letter-spacing:-.05em;margin:15px 0;color:var(--cocoa)}
 .error-content p:not(.eye){color:var(--muted);line-height:1.8;margin-bottom:25px}
+
+/* Objetivos táctiles y legibilidad: preservan identidad y composición existente. */
+.filter,.morebtn,.map-open{min-height:44px}
+.searchbox input{min-height:44px;font-size:14px}
+.service-title,.price{font-size:13px}
+.service-sub,.service-body p,.service-body a{font-size:12px}
+.booking-card .fine,.field label,.booking-disclaimer{font-size:12px}
+.field select,.field input{min-height:44px;font-size:16px}
+.lb-close,.lb-dir{width:44px;height:44px}
+textarea:focus-visible{outline:3px solid #e996b4;outline-offset:3px}
+@media(max-width:650px){.filter{min-height:44px;font-size:12px}.service-title,.price{font-size:13px}.map-open{font-size:12px}.lb-dir{min-width:44px;min-height:44px}}
