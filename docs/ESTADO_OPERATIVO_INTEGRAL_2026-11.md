@@ -33,3 +33,9 @@
 
 ## Arquitectura OnePage — decisión 2026-11-01
 Se retiran las páginas promocionales `/servicios.html` y `/cejas-concepcion.html` y se concentra catálogo y precios en `/#servicios`. Enlaces, sitemap, pruebas y empaquetado se ajustan. Quedan pendientes redirecciones HTTP 301 desde Cloudflare u otro proveedor con permisos y verificación de indexación; GitHub Pages no las proporciona por sí mismo. El panel Supabase sigue desconectado.
+
+## Verificaciones externas que no se sustituyen con código
+- Protección de master (issue #29): la conexión de GitHub disponible permite ramas/PR pero no mutar reglas. El propietario debe exigir PR y checks exactos `static-security` y `UI real Chromium / Firefox / WebKit`, bloquear force push y eliminación y probar la regla con una vía de recuperación. Comprobar `protected: true` y las reglas efectivas antes de cerrar.
+- Rutas antiguas (issue #33): aplicar en el proveedor HTTP autorizado 301 para `/servicios.html` y `/cejas-concepcion.html` hacia `https://burbujasnails.cl/#servicios` (o `/` si no admite fragmentos), también desde www. Verificar código y Location sin JavaScript; no crear nuevas páginas comerciales ni modificar DNS como sustituto. No hay acceso a Cloudflare en esta conexión.
+- Horarios: se enlaza la ficha Google Maps existente identificada en el sitio. La herramienta de consulta no permitió leer esa ficha; no se copiaron horarios ni políticas de abono/cancelación desde resultados de otros negocios.
+- Panel: el propietario eligió mantenerlo deshabilitado. La eventual activación es una tarea posterior con pruebas reales y sincronización de precios indexables.

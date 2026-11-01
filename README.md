@@ -18,6 +18,11 @@ Para restaurar un panel:
 ## Publicación
 El catálogo público está en `data.js`. Para actualizar precios o servicios: editar el archivo, ejecutar `node scripts/sync-assets.mjs --write`, abrir PR, revisar vista previa y fusionar después de CI. `bash build.sh` comprueba que las versiones CSS/JS corresponden al contenido y crea un ZIP sin modificar los originales. GitHub Pages publica los archivos del repositorio, no el ZIP; la coherencia de las versiones se verifica en CI. El panel antiguo `admin.js` sigue excluido.
 
+## Desarrollo y verificación
+`npm ci --ignore-scripts` instala solo herramientas de prueba fijadas en `package-lock.json`; no se envían dependencias npm al navegador. `npm test` ejecuta el conjunto estático y las pruebas de catálogo/identidad de despliegue. `npm run test:browser` ejecuta Chromium, Firefox y WebKit después de `npx playwright install --with-deps chromium firefox webkit`.
+
+Lighthouse se dispara después de una publicación de Pages exitosa o manualmente. El checkout corresponde al SHA publicado y `scripts/verify-deployment.mjs` comprueba los bytes de HTML y recursos antes y después de medir, usando la misma URL de auditoría y las versiones `?v=` del navegador. Una publicación todavía no propagada se reintenta con límite; una discrepancia falla y no se presenta como medición válida de ese SHA. Los resultados siguen siendo de laboratorio, sin garantía de INP ni de Core Web Vitals reales.
+
 ## Controles
 `node tests/security.mjs` comprueba que la administración antigua no regrese. `node scripts/sync-assets.mjs --check` impide publicar URLs con versiones obsoletas de los recursos. Ambas verificaciones se ejecutan en GitHub Actions. `node tests/site-integrity.mjs` revisa rutas y fragmentos internos, canonical, datos estructurados y consistencia del catálogo. En CI se ejecuta Playwright con axe-core sobre las páginas públicas para detectar fallos graves o críticos WCAG automatizables; no sustituye validación manual.
 

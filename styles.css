@@ -143,3 +143,23 @@ textarea:focus-visible{outline:3px solid #e996b4;outline-offset:3px}
 .question p{padding:0 44px 23px 0;color:#6f5964;font-size:13px;line-height:1.85}
 @media(max-width:850px){.questions-grid{grid-template-columns:1fr;gap:24px}.questions-intro>p:last-child{max-width:640px}}
 @media(max-width:650px){.question summary{font-size:13px;padding:18px 0}.question p{padding:0 0 20px}.questions-grid{gap:21px}}
+
+/* Controles del catálogo y recuperación de consulta: misma marca y jerarquía. */
+.clear-filters{padding:10px 14px;min-height:44px;border:1px solid #d6c2c8;border-radius:20px;background:#fff;color:var(--rose-deep);font-size:13px;font-weight:700}
+.searchbox:focus-within{outline:3px solid #e996b4;outline-offset:3px}
+.booking-recovery{margin-top:16px;font-size:13px;color:var(--cocoa)}
+.booking-recovery a,.visit-data a{text-decoration:underline;text-underline-offset:3px}
+.booking-recovery a{display:inline-block;padding:10px 0;color:var(--rose-deep);font-weight:700}
+.service-sub,.service-body p,.catalog-note,.booking-card .fine,.booking-disclaimer{font-size:13px}
+.service-body a,.field label{font-size:13px}
+.field select,.field input{font-size:16px;min-height:44px}
+.filter{min-height:44px;font-size:12px}
+@media(max-width:650px){
+ .filters{flex-wrap:wrap;overflow:visible;gap:7px}
+ .filter{flex-shrink:1;max-width:100%;font-size:12px;min-height:44px}
+ .service-title,.price{font-size:13px}
+ .booking-steps span{font-size:13px}
+ .footcol a{font-size:13px}
+}
+
+.floating[hidden]{display:none}

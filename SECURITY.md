@@ -18,3 +18,7 @@ No publicar contraseñas, datos personales, pruebas de explotación ni hallazgos
 - Antes de publicar: CI verde, revisión de cambios, verificación de HTTPS, DNS y accesibilidad de los servicios.
 - Ante sospecha de incidente: contener accesos afectados, preservar logs, documentar cronología UTC y verificar recuperación antes de reabrir.
 - No realizar pruebas intrusivas contra servicios de terceros sin autorización.
+
+## Control adicional de credenciales en HEAD (CI)
+
+`node tests/no-embedded-credentials.mjs` examina los archivos de texto versionados y bloquea patrones de alta confianza de claves privadas y tokens, sin imprimir sus valores. Complementa `tests/no-tracked-secrets.mjs`, que comprueba nombres de archivos; **no** analiza todos los secretos posibles, el historial del repositorio ni cuentas externas. La contraseña antigua ya expuesta requiere rotación manual donde se hubiera reutilizado. Las alertas deben tratarse en un canal privado antes de corregirlas.

@@ -6,7 +6,7 @@
  const setup=get("setup"),login=get("login"),workspace=get("workspace"),status=get("status");
  const configured=/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(cfg.url||"")&&/^(sb_publishable_[A-Za-z0-9_-]+|eyJ[A-Za-z0-9_.-]+)$/.test(cfg.publishableKey||"");
  const auth={email:"",token:"",id:""};
- let rows=[],selected="",saving=false;
+ let rows=[],selected="",saving=false,sessionEpoch=0;
  const money=x=>x===null||x===undefined?"Consultar":"$"+new Intl.NumberFormat("es-CL").format(x);
  const say=(msg,ok=false)=>{status.hidden=false;status.classList.toggle("ok",ok);status.textContent=msg};
  const clear=()=>{status.hidden=true;status.textContent="";status.classList.remove("ok")};
@@ -16,14 +16,36 @@
    const headers={"apikey":cfg.publishableKey,"Content-Type":"application/json"};
    if(options.token!==false&&auth.token)headers.Authorization="Bearer "+auth.token;
    if(options.prefer)headers.Prefer=options.prefer;
+   const epoch=sessionEpoch;
    try{
      const response=await fetch(cfg.url+path,{method:options.method||"GET",headers,body:options.data===undefined?undefined:JSON.stringify(options.data),signal:controller.signal,cache:"no-store"});
-     const raw=await response.text();let data=null;try{data=raw?JSON.parse(raw):null}catch{}
-     if(!response.ok)throw Error(data?.message||data?.msg||data?.error_description||data?.error||"Error HTTP "+response.status);
+     const raw=await response.text();let data=null;
+     try{data=raw?JSON.parse(raw):null}catch{}
+     if(epoch!==sessionEpoch)throw Error("La sesión fue cerrada.");
+     if(!response.ok){
+       if((response.status===401||response.status===403)&&options.token!==false&&auth.token){
+         logout();
+         throw Error("Sesión vencida o permisos revocados. Vuelve a ingresar.");
+       }
+       throw Error(data?.message||data?.msg||data?.error_description||data?.error||"Error HTTP "+response.status);
+     }
      return data;
    }finally{clearTimeout(timeout)}
  }
- function logout(){auth.token="";auth.id="";auth.email="";rows=[];selected="";workspace.hidden=true;login.hidden=false;get("verify-form").hidden=true;get("token").value="";clear()}
+ function logout(){
+   const token=auth.token;
+   sessionEpoch++;
+   auth.token="";auth.id="";auth.email="";rows=[];selected="";
+   saving=false;get("save").disabled=false;get("logout").disabled=false;
+   workspace.hidden=true;login.hidden=false;
+   get("verify-form").hidden=true;get("token").value="";clear();
+   // Revocar únicamente la sesión actual; el JWT puede seguir válido hasta caducar.
+   // No persistir tokens en el cliente ni incluirlos en URL o registros.
+   if(token)void fetch(cfg.url+"/auth/v1/logout?scope=local",{
+     method:"POST",headers:{apikey:cfg.publishableKey,Authorization:"Bearer "+token},
+     cache:"no-store"
+   }).catch(()=>{});
+ }
  if(!configured){setup.hidden=false;return}
  login.hidden=false;
  get("request-form").addEventListener("submit",async e=>{
@@ -51,7 +73,7 @@
    }catch(err){auth.token="";workspace.hidden=true;login.hidden=false;say("No se pudo iniciar sesión: "+err.message)}
    finally{get("verify-code").disabled=false}
  });
- get("logout").addEventListener("click",logout);
+ get("logout").addEventListener("click",()=>{if(!saving)logout()});
  async function load(){
    const list=await api("/rest/v1/bn_services?select=id,name,category,price_clp,duration,description,display_order,updated_at&order=display_order.asc,id.asc");
    if(!Array.isArray(list))throw Error("Respuesta inesperada de los servicios.");
@@ -71,6 +93,7 @@
    if(!shown.length)list.append(element("p","No se encontraron servicios.","hint"))
  }
  function choose(id){
+   if(saving)return;
    const s=rows.find(x=>x.id===id);if(!s)return;
    selected=id;render();get("edit-form").hidden=false;
    get("edit-name").textContent=s.name;get("edit-category").textContent=s.category;
@@ -103,12 +126,12 @@
    if(price!==null&&(!Number.isInteger(price)||price<0||price>2000000))return say("El precio debe estar entre $0 y $2.000.000.");
    if(!duration||duration.length>60||description.length>1200)return say("Revisa la duración y la descripción.");
    if(price===service.price_clp&&duration===service.duration&&description===service.description)return say("No hay modificaciones para guardar.");
-   saving=true;get("save").disabled=true;const id=selected;
+   saving=true;get("save").disabled=true;get("logout").disabled=true;const id=selected;
    try{
      const result=await api("/rest/v1/bn_services?id=eq."+encodeURIComponent(id),{method:"PATCH",data:{price_clp:price,duration,description},prefer:"return=representation"});
      if(!Array.isArray(result)||result.length!==1)throw Error("La base no autorizó la actualización.");
      Object.assign(service,result[0]);render();await history(id);say("Cambios guardados en "+service.name+": "+money(service.price_clp),true)
    }catch(err){say("No se pudo guardar: "+err.message)}
-   finally{saving=false;get("save").disabled=false}
+   finally{saving=false;get("save").disabled=false;get("logout").disabled=false}
  });
 })();

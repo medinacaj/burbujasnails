@@ -9,8 +9,11 @@
 - Edición de 27 precios CLP, duraciones y descripciones, con permiso para «Consultar».
 - Auditoría automática del historial de cambios de precio en Postgres.
 - Políticas RLS: edición exclusivamente a usuarios autorizados en bn_admin_users.
-- Catálogo de la web con respaldo estático si falla la lectura remota.
+- Catálogo de la web con respaldo estático si falla la lectura remota. Una respuesta válida puede contener de 0 a 27 servicios activos del catálogo original; se retiran también del selector de consultas los servicios no activos. Una respuesta vacía bloquea el formulario y permite contactar directamente al estudio. Identidades desconocidas, duplicados o campos inválidos descartan la respuesta completa.
+- El respaldo estático refleja el último despliegue: si la red falla, no demuestra disponibilidad ni bajas recientes. Antes de activar, acordar la sincronización de HTML, JSON-LD y datos estáticos para que precios y bajas coincidan también sin JavaScript.
 - Diseño y mapa interactivo original preservados.
+- Cierre de sesión con intento de revocación local del refresh token; el JWT de acceso puede seguir válido hasta vencer. La interfaz bloquea nuevas ediciones tras HTTP 401/403 y deshabilita el cierre de sesión mientras se guarda una modificación.
+- Pruebas de navegador con backend simulado para OTP, acceso rechazado, edición autorizada y caducidad de permisos. **Son pruebas de interfaz, no demuestran permisos efectivos de la base de datos.**
 
 ## Activación (requiere autorización del propietario)
 1. Crear un proyecto Supabase exclusivo de Burbujas Nails en la organización seleccionada, informando y confirmando antes cualquier coste.
@@ -18,8 +21,9 @@
 3. Verificar 27 registros y sus 26 precios numéricos y una cotización «Consultar».
 4. Crear un usuario administrador en Supabase Auth, activar código OTP por correo e insertar su UUID real en bn_admin_users desde SQL Editor autorizado.
 5. Comprobar en la base que anon puede leer solo servicios activos; authenticated sin permisos administrativos no puede editar; el administrador sí; el historial no es público.
-6. Completar bn-config.js con URL Supabase y clave publica (sb_publishable_...). Nunca insertar claves secretas, service_role, contraseñas ni tokens de usuario.
-7. Probar lectura de catálogo, cambios de precios, historial y acceso a la web pública desde móvil y computador.
+6. Implantar y comprobar el proceso de sincronización de HTML/JSON-LD y fallback estático al actualizar precios o activar/desactivar servicios. El panel dinámico por sí solo no cumple este criterio.
+7. Completar bn-config.js con URL Supabase y clave publica (sb_publishable_...). Nunca insertar claves secretas, service_role, contraseñas ni tokens de usuario.
+8. Probar lectura de catálogo, cambios de precios, historial y acceso a la web pública desde móvil y computador.
 
 ## Alcance y advertencias
 - No se ha creado todavía un proyecto Supabase ni un usuario administrador; los precios permanecen inalterados.
@@ -27,7 +31,11 @@
 - La URL de login puede ser pública pero la autorización la controla Supabase RLS. La página antigua admin.html sigue deshabilitada.
 - GitHub Pages publica frontend estático: no es un servidor de autenticación ni almacena contraseñas.
 
+## Decisión del propietario
+El propietario indicó mantener el panel deshabilitado por ahora. No crear ni reutilizar proyectos Supabase, usuarios ni configuración productiva por esta actualización.
+
 ## Pruebas
+npm test
 node tests/gestion-precios.mjs
 node --check gestion.js
 node --check catalogo-live.js
