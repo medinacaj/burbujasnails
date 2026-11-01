@@ -1,5 +1,5 @@
 # Operación, seguridad y gestión de servicios — Burbujas Nails
-**Versión:** 2026-10-29. **Estado:** guía operativa; no constituye certificación ISO, ITIL, SOC ni auditoría externa.
+**Versión:** 2026-11-01. **Estado:** guía operativa; no constituye certificación ISO, ITIL, SOC ni auditoría externa.
 
 ## Inventario de servicio
 | Componente | Función | Control y límite |
@@ -7,7 +7,7 @@
 | NIC Chile | Registro del dominio | Renovación, titularidad y servidores DNS por confirmar periódicamente |
 | Cloudflare | DNS autoritativo | Registros A + CNAME; DNS only en la configuración conocida; WAF/proxy no declarado activo |
 | GitHub Pages | Entrega de HTML/CSS/JS | HTTPS, dominio, estado de builds; exposición inherente de código cliente |
-| GitHub | Control de cambios | Ramas/PR, validaciones CI, MFA y protección de `master` pendientes de verificación |
+| GitHub | Control de cambios | CI y PR operativos; comprobado el 01-11-2026 que `master` NO está protegido, MFA pendiente de comprobación |
 | WhatsApp / Mercado Pago | Contacto/pago | Servicios externos, sus políticas y datos fuera de la web |
 | Supabase (SQL preparado) | Futuro catálogo/panel | NO desplegado ni autorizado para uso real; issue #2 |
 
@@ -20,10 +20,10 @@
 - **Continuidad:** mantener copia de configuración DNS y registro de configuración, probar restauración de sitio y renovar dominio oportunamente.
 
 ## SOC / monitoreo proporcional
-No existe SOC 24/7 ni monitoreo permanente confirmado. Para una operación básica:
+No existe SOC 24/7. Se configuró un chequeo HTTPS diario y tras push a `master` mediante `.github/workflows/availability.yml`; su resultado debe verificarse después del despliegue y **no es monitoreo continuo en tiempo real**. Para una operación básica:
 1. Habilitar notificaciones de fallas de GitHub Actions, alertas de la cuenta de GitHub y del registrador.
 2. Activar 2FA/MFA en GitHub, Cloudflare, NIC Chile y proveedores de pago; inventariar acceso y retirar cuentas obsoletas.
-3. Considerar monitor externo HTTPS para portada y `www` (no configurado aquí).
+3. Revisar el chequeo automático del dominio raíz (`tests/production-health.mjs`); verificar por separado el subdominio `www`, DNS y certificados. Considerar monitor externo continuo si se justifica.
 4. Si se activa Cloudflare Proxy/WAF, definir reglas adecuadas, probar TLS extremo a extremo y revisar falsos positivos; **DNS only no proporciona WAF HTTP de Cloudflare**.
 5. Revisar registros de despliegue y cambios ante eventos; evitar almacenar datos personales o secretos en Issues públicos.
 6. Revisar trimestralmente amenazas, respaldos, URLs externas y el inventario de dependencias. No afirmar "cero vulnerabilidades".

@@ -19,7 +19,7 @@ assert(app.includes('alt="${esc(item.alt)}"'),'Las miniaturas deben tener texto 
 assert(app.includes('lbImg.alt=gallery[idx].alt'),'El visor debe mantener el mismo texto alternativo');
 assert(app.includes('function closeMobileMenu(')&&app.includes("e.key==='Escape'&&mobile.classList.contains('is-open')"),'Menú móvil no se cierra con Escape');
 assert(app.includes('No encontramos servicios que coincidan'),'Falta respuesta al buscar sin resultados');
-assert(app.includes('aria-label="Ver detalles de ${esc(s.name)}"'),'Falta etiqueta de las tarjetas');
+assert(app.includes('class="service-top"')&&!app.includes('aria-label="Ver detalles de ${esc(s.name)}"'),'La tarjeta debe anunciar el texto visible sin aria-label discordante');
 assert(css.includes('.catalog-empty{')&&css.includes('.directory-breadcrumb{'),'Estilos accesibles no definidos');
 assert(count(services,'itemtype="https://schema.org/Service"')===27,'Se requieren 27 servicios estructurados');
 assert(count(services,'itemtype="https://schema.org/Offer"')===26,'Solo 26 precios numéricos públicos deben tener oferta');
