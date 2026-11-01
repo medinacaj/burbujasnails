@@ -1,67 +1,17 @@
-# Estrategia de SEO local — Burbujas Nails, Concepción
-**Actualización:** 30-10-2026 · **Dominio:** https://burbujasnails.cl · **Ubicación pública de referencia:** Maipú 1020, oficina 4, Concepción (confirmar con la administración).
+# Estrategia SEO local — OnePage Burbujas Nails
+**Actualización:** 2026-11-01 · **Dominio canónico:** https://burbujasnails.cl/ · **Ubicación de referencia:** Maipú 1020, oficina 4, Concepción (confirmar con la administración).
 
-## Meta comercial
-Aumentar las consultas de personas que buscan uñas, manicure, esmaltado semipermanente, nail art, soft gel y pedicura en Concepción. En búsqueda local la posición varía según ubicación, relevancia y popularidad; no se promete un puesto específico.
+## Arquitectura OnePage
+- Una sola página comercial: `/`, con anclas `/#servicios`, `/#reserva`, `/#galeria` y `/#visitanos`.
+- La portada incluye 27 servicios y 26 precios numéricos más una cotización «Consultar» en datos estructurados `NailSalon.hasOfferCatalog`; el catálogo sin JavaScript se conserva mediante `noscript` sin duplicarlo visualmente.
+- `/privacidad.html` es una política legal complementaria; `/gestion.html` es un panel técnico no indexable, no una landing.
+- `/servicios.html` y `/cejas-concepcion.html` se retiran del repositorio y sitemap por solicitud del propietario.
 
-## Matriz de intención de búsqueda
-| Intención | Búsquedas objetivo | Página |
-|---|---|---|
-| Principal / transaccional | uñas Concepción, salón de uñas Concepción, manicure Concepción | `/` |
-| Servicios y precios | precios manicure Concepción, uñas semipermanentes Concepción, soft gel Concepción, pedicura Concepción | `/servicios.html` |
-| Inspiración visual | nail art Concepción, diseño de uñas Concepción, francesa uñas | `/#galeria`, imágenes reales y sus textos alternativos |
-| Acceso al negocio | Burbujas Nails, dirección Burbujas Nails, Maipú 1020 Concepción | `/#visitanos` y Perfil de Empresa |
+## Acciones externas por realizar
+1. En Google Search Console, registrar la URL canónica raíz y enviar sitemap; verificar la indexación del dominio.
+2. Configurar con el gestor del dominio/CDN redirecciones HTTP 301 de `/servicios.html` y `/cejas-concepcion.html` a `/#servicios` (o `/` si el CDN no conserva fragmentos). GitHub Pages no ofrece aquí un mecanismo propio para 301; hasta configurar esas reglas las URL antiguas devolverán 404, con recuperación de navegación.
+3. Validar Perfil de Empresa de Google y detalles de negocio reales, sin duplicaciones.
+4. Cuando el catálogo de Supabase se active, sincronizar `data.js`, HTML de respaldo y los datos estructurados mediante revisión y despliegue; el cambio en DOM no basta para buscadores.
 
-No crear páginas repetitivas con cambios mínimos solo para multiplicar palabras clave; debe haber información diferenciada y útil.
-
-## Cambios técnicos incluidos en la actualización
-1. Título y descripción de portada orientados a intención local, conservando la personalidad de la marca.
-2. Texto visible de manicure, uñas y nail art en Concepción centro, con dirección y enlaces de navegación.
-3. Página de catálogo **HTML estático** con los 27 servicios reales, precios, duración, descripciones y enlaces de consulta.
-4. Enlaces internos entre portada, directorio, galería y reserva; URL canónica para cada página.
-5. Sitemap actualizado, manteniendo las diez fotografías WebP y su texto alternativo; metadata de redes.
-6. Pruebas de integración SEO, contenido indexable, continuidad de datos, y sin afectación de seguridad/CSP.
-
-## Acciones necesarias en Google Perfil de Empresa (requieren acceso del titular)
-**Alta prioridad:**
-- Comprobar que la ficha correcta es la correspondiente a `ChIJcV6iZwC1aZYRHvw-7mt7No0`; verificar o reclamar la propiedad sin duplicar la ficha.
-- Revisar **nombre real** «Burbujas Nails» (sin palabras clave añadidas artificialmente), categoría principal más específica disponible, teléfono, sitio y dirección exacta con oficina, horarios de atención y horario especial.
-- Completar servicios ofrecidos realmente, usando nombres y descripciones precisos, y agregar enlace de reserva/consulta que funcione.
-- Publicar fotografías reales y actuales del estudio, de trabajos y del acceso al local cuando corresponda. Priorizar una portada del negocio, no artes generados artificialmente.
-- Pedir reseñas genuinas a clientes luego del servicio, sin ofrecer recompensas por evaluaciones y sin condicionar las solicitudes a comentarios positivos. Responder de manera respetuosa y sin divulgar información personal.
-
-**Constancia mensual:** actualizar fotos de trabajos con autorización, responder reseñas y comprobar cambios de horarios y servicios. El posicionamiento local depende principalmente de relevancia, distancia y popularidad; no puede garantizarse ni comprarse un lugar concreto.
-
-## Google Search Console: configuración y medición
-1. En Search Console, crear o revisar propiedad de dominio `burbujasnails.cl` y verificar con TXT en Cloudflare cuando Google lo solicite (el valor TXT debe obtenerse del panel, nunca inventarse).
-2. Enviar `https://burbujasnails.cl/sitemap.xml` y comprobar las URLs `/` y `/servicios.html` mediante Inspección de URL.
-3. Consultar resultados de rendimiento en períodos comparables de 28 días: clics orgánicos, impresiones, CTR, posición media y consultas por marca vs. no marca.
-4. Analizar por páginas e intención local (uñas, manicure, soft gel, esmaltado, pedicura), comprobar indexación y solucionar avisos antes de crear más contenido.
-5. En Google Perfil de Empresa, monitorear búsquedas, visitas al sitio, solicitudes de indicaciones y contactos, conforme a los datos disponibles en el panel.
-
-## Plan sugerido
-**Semana 1:** publicar SEO técnico y directorio, verificar sitemap e inspeccionar las dos URLs; actualizar información del Perfil de Empresa.
-**Semanas 2–4:** subir fotografías reales, completar categorías/servicios del perfil y solicitar reseñas sin incentivos; validar consistencia de nombre, dirección y teléfono.
-**Meses 2–3:** revisar consultas de Search Console, mejorar títulos/descripciones según consultas reales; crear una guía útil sobre técnicas de uñas solo si responde a preguntas reales y añade contenido nuevo.
-
-## Control de calidad
-- Sin reseñas, calificaciones, estadísticas de popularidad, premios ni certificaciones inventados.
-- Sin afirmar que Google ha indexado contenido hasta comprobarlo en Search Console.
-- Sin uso de horarios no confirmados o de otras ubicaciones.
-- Datos y servicios deben coincidir con el catálogo comercial existente.
-- Mantener accesibilidad, CSS adaptable, CSP, fotos de autor y enlaces a reservas.
-
-### Referencias oficiales
-- Google Perfil de Empresa: https://support.google.com/business/answer/7091?hl=es-419
-- Datos estructurados LocalBusiness: https://developers.google.com/search/docs/appearance/structured-data/local-business?hl=es
-- SEO de imágenes: https://developers.google.com/search/docs/appearance/google-images?hl=es
-- Fundamentos de SEO: https://developers.google.com/search/docs/essentials
-
-## Foco adicional: cejas y nails en Concepción (1 de noviembre de 2026)
-- **Portada (/):** intención principal «uñas Concepción», «nails Concepción», manicure, esmaltado y nail art. Mantener un título descriptivo, no acumular sinónimos artificialmente.
-- **Precios (/servicios.html):** intención «precios manicure Concepción», «soft gel Concepción», «pedicura Concepción» y catálogo completo.
-- **Cejas (/cejas-concepcion.html):** intención específica «cejas Concepción», «diseño de cejas Concepción», «laminado de cejas Concepción», «perfilado de cejas Concepción» y «planchado de cejas Concepción». Contiene tres tratamientos de cejas y dos servicios complementarios reales, con precios exactos de data.js.
-- **Enlaces internos:** portada, precios y página de cejas se vinculan mutuamente; no duplicar todo el catálogo en nuevas páginas.
-- **Search Console:** inspeccionar la URL nueva, enviar el sitemap y revisar mensualmente consultas por página, impresiones, clics, CTR y cambios de posición en la misma ventana temporal. Las posiciones dependen de ubicación, competencia, distancia y otros factores.
-- **Google Business Profile:** verificar la ficha, actualizar catálogo de servicios reales y fotografías con autorización, horarios exactos y responder reseñas genuinas. No cambiar el nombre comercial añadiendo palabras clave.
-- **Contenido futuro:** incorporar fotos reales de cejas solo cuando el estudio las proporcione y tenga permiso para publicarlas; evitar imágenes de uñas etiquetadas como cejas.
+## Privacidad, negocio y métricas
+No inventar reseñas, horarios, pagos, autorizaciones ni precios. Proteger los datos que se compartan por WhatsApp. No insertar analítica sin evaluación de privacidad. Los resultados Lighthouse puntuales no prueban Core Web Vitals de campo.

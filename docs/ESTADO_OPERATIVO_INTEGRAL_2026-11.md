@@ -30,3 +30,6 @@
 - GitHub Pages no permite configurar por estos archivos las cabeceras HTTP `frame-ancestors`/HSTS. La meta-CSP no las sustituye; revisarlas en la infraestructura compatible tras autorización.
 - Ninguna medida evita al 100% la copia de recursos públicos.
 - No instalar scripts de rastreo, popups de cookies o servicios de pago sin necesidades verificadas.
+
+## Arquitectura OnePage — decisión 2026-11-01
+Se retiran las páginas promocionales `/servicios.html` y `/cejas-concepcion.html` y se concentra catálogo y precios en `/#servicios`. Enlaces, sitemap, pruebas y empaquetado se ajustan. Quedan pendientes redirecciones HTTP 301 desde Cloudflare u otro proveedor con permisos y verificación de indexación; GitHub Pages no las proporciona por sí mismo. El panel Supabase sigue desconectado.

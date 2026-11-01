@@ -8,7 +8,7 @@ const budgets={
  'styles.css':45000,'app.js':16000,'data.js':16000,
  'bn-config.js':3000,'catalogo-live.js':6000,
  'gestion.js':12000,'gestion.css':9000,
- 'index.html':27000,'servicios.html':47000,'cejas-concepcion.html':20000
+ 'index.html':48000
 };
 for(const [file,maxBytes] of Object.entries(budgets)){
  const bytes=size(file);
