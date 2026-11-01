@@ -13,7 +13,7 @@ assert(favicon.includes('<svg')&&favicon.includes('viewBox="0 0 64 64"'),'SVG de
 assert(!/\b(?:href|src)=["']https?:\/\//.test(favicon),'El favicon no debe solicitar recursos externos');
 assert(page404.includes('content="noindex,follow"'),'404 nunca debe indexarse');
 assert(page404.includes('href="/#servicios"'),'404 debe recuperar navegación al catálogo');
-assert(home.includes('<noscript><p>Para consultar el catálogo completo'),'Falta catálogo sin JavaScript');
+assert(home.includes('<noscript><div class="static-catalog"'),'Falta catálogo completo sin JavaScript');
 assert(app.includes('const gallery=')&&count(app,'"alt":')===10,'Galería debe declarar 10 descripciones de imágenes');
 assert(app.includes('alt="${esc(item.alt)}"'),'Las miniaturas deben tener texto alternativo descriptivo');
 assert(app.includes('lbImg.alt=gallery[idx].alt'),'El visor debe mantener el mismo texto alternativo');
