@@ -25,6 +25,6 @@ assert(home.includes('cejas-concepcion.html')&&prices.includes('cejas-concepcion
 assert(home.includes('id="mapOpen"')&&app.includes("getElementById('mapOpen')"),'Mapa interactivo conservado');
 assert(cejas.includes('script-src \'self\'')&&cejas.includes('/catalogo-live.js'),'Catálogo de cejas preparado para precios dinámicos');
 assert(sitemap.includes('<loc>https://burbujasnails.cl/cejas-concepcion.html</loc>'),'URL nueva en sitemap');
-assert(build.includes('cp -R index.html servicios.html cejas-concepcion.html')&&build.includes('for page in index.html servicios.html cejas-concepcion.html'),'Falta página en ZIP/cache');
+assert(build.includes('cp -R index.html servicios.html cejas-concepcion.html')&&build.includes('node scripts/sync-assets.mjs --check'),'Falta página en ZIP/control de caché');
 assert(!cejas.includes('aggregateRating')&&!cejas.includes('reviewCount'),'No inventar reseñas');
 console.log('SEO uñas y cejas Concepción: 5 servicios reales, precios, enlaces y mapa OK');
