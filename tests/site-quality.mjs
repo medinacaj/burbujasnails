@@ -29,6 +29,6 @@ assert.equal(products?.length,27,'27 servicios estructurados en OnePage');
 assert.equal(products.filter(x=>x.offers?.priceCurrency==='CLP').length,26,'26 ofertas CLP para precios reales');
 assert.equal((home.match(/class="static-service"/g)||[]).length,27,'Fallback estático de precios para no-JS');
 assert(!home.includes('servicios.html')&&!home.includes('cejas-concepcion.html'),'Eliminar links comerciales duplicados');
-assert(build.includes('404.html favicon.svg'),'Empaquetado incompleto');
+assert(build.includes('404.html legacy-route.js favicon.svg'),'Empaquetado incompleto');
 assert(build.includes('node scripts/sync-assets.mjs --check'),'Falta validar versionado real de recursos');
 console.log('Calidad OnePage: 404, 27 servicios, 26 precios, navegación y galería OK');
