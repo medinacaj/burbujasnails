@@ -6,6 +6,10 @@ const records=[...data.matchAll(/\{\s*id:'(s\d+)', icon:'[^']+', category:'([^']
 assert.equal(records.length,27,'Mantener los 27 servicios comerciales originales');
 assert.equal((home.match(/class="static-service"/g)||[]).length,27,'27 servicios en fallback sin JavaScript');
 assert.equal((home.match(/class="static-category"/g)||[]).length,7,'Preservar las siete categorías');
+assert.equal((home.match(/class="static-category-desc"/g)||[]).length,7,'Mantener el contexto de las siete categorías sin JavaScript');
+assert.equal((home.match(/class="question"/g)||[]).length,5,'Integrar preguntas útiles de páginas comerciales anteriores');
+assert(home.includes('¿Qué diferencia hay entre diseño, laminado y planchado de cejas?'),'Conservar la orientación sobre cejas');
+assert(home.includes('¿Qué técnica de uñas me conviene?'),'Conservar orientación sobre manicure y extensiones');
 const fallback=home.match(/<noscript><div class="static-catalog"[\s\S]*?<\/div><\/noscript>/);
 assert(fallback,'Falta catálogo completo sin JavaScript');
 const schemaText=home.match(/<script type="application\/ld\+json">\s*([\s\S]*?)\s*<\/script>/);

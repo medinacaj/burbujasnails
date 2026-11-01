@@ -14,6 +14,7 @@ for(const m of cejas){
  assert(home.includes(m[3]),'Falta servicio de cejas en portada '+m[1]);
 }
 assert(home.includes('laminado')&&home.includes('cejas'),'Mantener intención local de cejas');
+assert(home.includes('¿Qué incluye el diseño de cejas?')&&home.includes('¿Qué diferencia hay entre diseño, laminado y planchado de cejas?'),'Integrar guía de cejas en la única portada');
 assert(home.includes('Maipú 1020, oficina 4')&&home.includes('56930912644'));
 assert(home.includes('id="mapOpen"')&&app.includes("getElementById('mapOpen')"),'Mapa original conservado');
 assert(!existsSync(new URL('../cejas-concepcion.html',import.meta.url)),'El formato OnePage no publica landing de cejas');

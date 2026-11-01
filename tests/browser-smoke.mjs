@@ -56,6 +56,17 @@ try{
             throw new Error(engine+' '+width+'px catálogo sin render: '+JSON.stringify({state,errors,failedRequests,original:error.message}));
           }
           assert.equal(await page.locator('#serviceList .service').count(),6,'Debe mostrar seis tarjetas iniciales');
+          assert.equal(await page.locator('#preguntas details').count(),5,'Preguntas originales integradas en OnePage');
+          assert(!(await page.locator('#preguntas details').first().getAttribute('open')),'Preguntas plegadas inicialmente');
+          await page.locator('#preguntas details').first().locator('summary').click();
+          assert(await page.locator('#preguntas details').first().locator('p').isVisible(),'FAQ expandible visible');
+          await page.locator('#preguntas details').first().locator('summary').press('Enter');
+          assert(!(await page.locator('#preguntas details').first().locator('p').isVisible()),'FAQ plegable con teclado');
+          await page.locator('#filters button[data-cat="Pestañas y cejas"]').click();
+          assert(await page.locator('#categoryNote').isVisible(),'Explicación de la categoría seleccionada');
+          assert.match(await page.locator('#categoryNote').innerText(),/perfilado/,'Contexto de cejas preservado');
+          await page.locator('#filters button[data-cat="Todos"]').click();
+          assert(!(await page.locator('#categoryNote').isVisible()),'No duplicar textos cuando se muestran todos');
           if(engine==='chromium'&&width===375){
             // Una comprobación automática ayuda a detectar regresiones; no sustituye
             // lectores de pantalla reales ni una evaluación completa de WCAG 2.2 AA.
@@ -76,6 +87,7 @@ try{
               await fallbackPage.goto(base,{waitUntil:'domcontentloaded'});
               assert.equal(await fallbackPage.locator('#serviceList .static-service').count(),27,'Sin JS deben verse los 27 servicios en OnePage');
               assert(await fallbackPage.locator('#serviceList .static-service').first().isVisible(),'El catálogo sin JS es visible');
+              assert.equal(await fallbackPage.locator('.static-category-desc').count(),7,'Siete descripciones de categoría accesibles sin JavaScript');
               assert.equal((await fallbackPage.goto(base+'/servicios.html')).status(),404,'No debe publicarse la página de servicios duplicada');
               assert.equal((await fallbackPage.goto(base+'/cejas-concepcion.html')).status(),404,'No debe publicarse una landing de cejas');
             }finally{await noJS.close()}

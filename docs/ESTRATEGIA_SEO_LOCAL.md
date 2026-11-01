@@ -15,3 +15,6 @@
 
 ## Privacidad, negocio y métricas
 No inventar reseñas, horarios, pagos, autorizaciones ni precios. Proteger los datos que se compartan por WhatsApp. No insertar analítica sin evaluación de privacidad. Los resultados Lighthouse puntuales no prueban Core Web Vitals de campo.
+
+## Integración de contenido de páginas retiradas
+Las descripciones de las siete categorías aparecen al filtrar el catálogo y como texto de respaldo sin JavaScript. Cinco preguntas informativas sobre técnicas, diseño de cejas, variaciones de precio y confirmación de cita están integradas cerca de la reserva, no en una landing independiente. La galería existente ya presenta los diez trabajos reales, sin crear una segunda galería. Los datos estructurados y el catálogo comercial siguen siendo únicos en la portada.

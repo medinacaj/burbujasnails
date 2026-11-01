@@ -123,3 +123,23 @@ textarea:focus-visible{outline:3px solid #e996b4;outline-offset:3px}
 
 /* Fallback accesible solo sin JavaScript, sin duplicar el catálogo visible. */
 .static-catalog{display:grid;gap:20px}.static-category h3{font:600 20px/1.3 var(--serif);margin:14px 0}.static-category-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.static-service{padding:16px;border:1px solid #ead9df;border-radius:14px;background:#fff}.static-service h4{font-size:15px;margin:0 0 6px}.static-service strong{display:block;color:#794a62}.static-service small{color:var(--muted)}.static-service p{font-size:13px;line-height:1.6;margin:8px 0 0}@media(max-width:650px){.static-category-list{grid-template-columns:1fr}}
+
+
+/* Orientación dentro del catálogo: contexto solo para la categoría seleccionada. */
+.catalog-category-note:not([hidden]){margin:0 0 19px;color:#624c58;font-size:13px;line-height:1.7;max-width:760px}
+.static-category-desc{max-width:740px;font-size:13px;line-height:1.65;color:var(--muted);margin:0 0 15px}
+/* Preguntas integradas en la portada, sin tarjetas anidadas ni repetición del catálogo. */
+.questions{background:#f7ecea}
+.questions-grid{display:grid;grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);gap:clamp(36px,7vw,108px);align-items:start}
+.questions-intro h2{margin:14px 0 18px}
+.questions-intro>p:last-child{color:#705865;line-height:1.85;max-width:360px}
+.questions-list{border-top:1px solid #dfcbd0}
+.question{border-bottom:1px solid #dfcbd0}
+.question summary{display:flex;align-items:center;justify-content:space-between;gap:18px;cursor:pointer;padding:21px 0;color:#44303b;font-weight:700;font-size:14px;list-style:none;min-height:62px}
+.question summary::-webkit-details-marker{display:none}
+.question summary::after{content:'+';display:grid;place-items:center;flex:0 0 30px;height:30px;border-radius:50%;background:#fff9f8;color:#97456b;font-size:20px;font-weight:400}
+.question[open] summary::after{content:'−'}
+.question summary:focus-visible{outline:3px solid #c56b91;outline-offset:4px;border-radius:5px}
+.question p{padding:0 44px 23px 0;color:#6f5964;font-size:13px;line-height:1.85}
+@media(max-width:850px){.questions-grid{grid-template-columns:1fr;gap:24px}.questions-intro>p:last-child{max-width:640px}}
+@media(max-width:650px){.question summary{font-size:13px;padding:18px 0}.question p{padding:0 0 20px}.questions-grid{gap:21px}}

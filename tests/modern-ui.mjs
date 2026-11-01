@@ -6,6 +6,7 @@ const count=(data.match(/\bid:'s\d{2}'/g)||[]).length;
 assert.equal(count,27,'Mantener los 27 servicios originales y sus precios');
 for(const id of ['searchService','showAll','serviceSelect','preferredDate','bookingName','galleryGrid'])assert(html.includes('id="'+id+'"'),'Control faltante: '+id);
 assert(js.includes('window.INITIAL_SERVICES'),'Usar catálogo comercial versionado en data.js');
+assert(js.includes('const categoryIntros=')&&html.includes('id="categoryNote"'),'Explicaciones para filtros sin nueva página');
 assert(js.includes('aria-pressed'),'Estado accesible para filtros');
 assert(js.includes('aria-expanded'),'Detalle desplegable accesible');
 assert(js.includes('encodeURIComponent'),'Formar WhatsApp de manera segura');
