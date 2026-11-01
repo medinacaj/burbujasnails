@@ -33,7 +33,8 @@ try{
     const browser=await type.launch({headless:true});
     try{
       for(const width of (engine==='chromium'?[320,375,768,1440]:[375,1440])){
-        const page=await browser.newPage({viewport:{width,height:850}});
+        const context=await browser.newContext({viewport:{width,height:850}});
+        const page=await context.newPage();
         const errors=[];
         page.on('pageerror',error=>errors.push(error.message));
         const failedRequests=[];page.on('requestfailed',request=>{if(request.url().includes('127.0.0.1'))failedRequests.push({url:request.url(),error:request.failure()?.errorText})});
@@ -118,7 +119,7 @@ try{
           assert(decodeURIComponent(wa).includes('Prueba'),'Conserva nombre en consulta');
           assert.deepEqual(errors,[],'Sin excepciones de JavaScript');
           console.log('OK '+engine+' '+width+'px: filtros, diseño, mapa, reserva, modal, menú y ancho');
-        }finally{await page.close()}
+        }finally{await context.close()}
       }
     }finally{await browser.close()}
   }
