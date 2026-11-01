@@ -55,6 +55,9 @@ window.addEventListener("bn:catalog-updated",e=>{
 });
 const date=document.getElementById('preferredDate');function updateDateMin(){const today=new Date();date.min=[today.getFullYear(),String(today.getMonth()+1).padStart(2,'0'),String(today.getDate()).padStart(2,'0')].join('-')}updateDateMin();date.addEventListener('focus',updateDateMin);
 const bookingForm=document.getElementById('bookingForm'),recovery=document.getElementById('bookingRecovery'),fallback=document.getElementById('bookingFallback');
+// El acceso flotante no debe cubrir los campos ni el botón de la consulta.
+const floatingContact=document.querySelector('.floating');
+new IntersectionObserver(entries=>{floatingContact.hidden=entries[0].isIntersecting},{threshold:0}).observe(bookingForm);
 bookingForm.addEventListener('input',()=>{recovery.hidden=true;fallback.removeAttribute('href')});
 bookingForm.addEventListener('change',()=>{recovery.hidden=true;fallback.removeAttribute('href')});
 bookingForm.addEventListener('submit',e=>{

@@ -161,3 +161,5 @@ textarea:focus-visible{outline:3px solid #e996b4;outline-offset:3px}
  .booking-steps span{font-size:13px}
  .footcol a{font-size:13px}
 }
+
+.floating[hidden]{display:none}

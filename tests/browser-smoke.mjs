@@ -282,6 +282,9 @@ try{
           await page.keyboard.press('Enter');
           assert(await map.isVisible(),'Enter recupera el mapa interactivo');
           assert(!(await scheme.isVisible()),'Esquema oculto al volver al mapa');
+          await page.locator('#bookingForm').scrollIntoViewIfNeeded();
+          await page.waitForFunction(()=>document.querySelector('.floating').hidden,{},{timeout:1500});
+          assert(!(await page.locator('.floating').isVisible()),'El botón flotante no debe tapar campos ni acciones de consulta');
           await page.locator('#serviceSelect').selectOption({index:1});
           await page.locator('#bookingName').fill('Prueba');
           await page.locator('#preferredDate').fill('2030-12-15');
