@@ -8,7 +8,8 @@ const read=(path)=>readFileSync(resolve(root,path),'utf8');
 const failures=[];
 const pathFor=(current,url)=>{
  const [pathname]=url.split(/[?#]/);
- if(pathname===''||pathname==='/')return 'index.html';
+ if(pathname==='')return current;
+ if(pathname==='/')return 'index.html';
  if(pathname.startsWith('/'))return pathname.slice(1);
  return resolve(dirname(current),pathname);
 };
