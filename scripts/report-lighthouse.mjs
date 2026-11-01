@@ -1,6 +1,10 @@
 // Muestra resultados del laboratorio Lighthouse, sin inventar datos CrUX.
 import assert from 'node:assert/strict';
 import {readFileSync,appendFileSync} from 'node:fs';
+const before=JSON.parse(readFileSync('lighthouse-report/deployment-before.json','utf8'));
+const after=JSON.parse(readFileSync('lighthouse-report/deployment-after.json','utf8'));
+assert(before.expectedSha&&before.expectedSha===after.expectedSha,'Falta identidad del commit publicado');
+assert.deepEqual(before.files,after.files,'La versión cambió durante Lighthouse');
 const files=['mobile','desktop'];
 const rows=[];
 for(const device of files){
@@ -39,7 +43,7 @@ for(const device of files){
  console.log('Lighthouse '+device+' (laboratorio): '+JSON.stringify({scores,metrics,opportunities}));
 }
 let markdown='# Auditoría Lighthouse — Burbujas Nails (laboratorio)\n\n';
-markdown+='**La ejecución analiza producción actualmente publicada, NO el código de la rama del PR.** Datos puntuales de laboratorio; no son percentiles p75 de usuarios reales ni comprueban INP.\n\n';
+markdown+='**Producción verificada contra el commit '+before.expectedSha+' antes y después de medir.** Datos puntuales de laboratorio; no son percentiles p75 de usuarios reales ni comprueban INP.\n\n';
 markdown+='| Dispositivo | Performance | Accesibilidad | Prácticas | SEO | LCP | CLS | TBT |\n';
 markdown+='|---|---:|---:|---:|---:|---|---|---|\n';
 for(const r of rows){

@@ -12,36 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
-          node-version: '22'
+          node-version: '24'
+          package-manager-cache: false
       - name: Comprobar sintaxis y ausencia de administración insegura
-        run: |
-          node --check app.js
-          node --check gestion.js
-          node --check bn-config.js
-          node --check catalogo-live.js
-          node --check data.js
-          node --check admin.js
-          node scripts/sync-assets.mjs --check
-          node tests/site-integrity.mjs
-          node tests/performance-budget.mjs
-          node tests/security.mjs
-          node tests/rls-contract.mjs
-          node tests/layout-contract.mjs
-          node tests/modern-ui.mjs
-          node tests/seo-gallery-map.mjs
-          node tests/seo-local.mjs
-          node tests/seo-cejas.mjs
-          node tests/gestion-precios.mjs
-          node tests/site-quality.mjs
-          node tests/gallery-modal.mjs
-          node tests/responsive-width.mjs
-          node tests/iconography.mjs
-          node tests/gitignore-security.mjs
-          node tests/no-tracked-secrets.mjs
-          node tests/public-hardening.mjs
+        run: npm test
       - name: Comprobar paquete distribuible
         run: bash build.sh
 
@@ -50,12 +27,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
-          node-version: '22'
+          node-version: '24'
+          package-manager-cache: false
       - name: Instalar herramientas de pruebas (solo CI)
-        run: npm install --no-save --no-package-lock playwright@1.64.1 @axe-core/playwright@4.14.0
+        run: npm ci --ignore-scripts
       - name: Instalar motores de navegador
         run: npx playwright install --with-deps chromium firefox webkit
       - name: Verificar recorridos y tamaños de pantalla
