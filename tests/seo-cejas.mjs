@@ -1,0 +1,30 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
+const home=read('index.html'),prices=read('servicios.html'),cejas=read('cejas-concepcion.html');
+const data=read('data.js'),sitemap=read('sitemap.xml'),build=read('build.sh'),app=read('app.js');
+assert(cejas.includes('<title>Cejas en Concepción | Diseño, Laminado y Perfilado | Burbujas Nails</title>'));
+assert(cejas.includes('rel="canonical" href="https://burbujasnails.cl/cejas-concepcion.html"'));
+assert(cejas.includes('name="robots" content="index, follow, max-image-preview:large"'));
+assert(cejas.includes('<h1 id="cejas-title">Diseño y laminado de cejas en Concepción</h1>'));
+assert(cejas.includes('Maipú 1020, oficina 4')&&cejas.includes('56930912644'));
+const records=[...data.matchAll(/\{\s*id:'(s\d+)', icon:'[^']+', category:'([^']+)',\s*name:'([^']+)',\s*price:'([^']+)', duration:'([^']+)', popular:(true|false),\s*description:'([^']+)'/g)];
+assert.equal(records.length,27,'El catálogo original conserva los 27 servicios');
+const cejaRecords=records.filter(m=>m[2]==='Pestañas y cejas');
+assert.equal(cejaRecords.length,5);
+assert.equal((cejas.match(/itemtype="https:\/\/schema.org\/Service"/g)||[]).length,5);
+assert.equal((cejas.match(/itemtype="https:\/\/schema.org\/Offer"/g)||[]).length,5);
+for(const m of cejaRecords){
+  assert(cejas.includes('data-service-id="'+m[1]+'"'),'Falta '+m[1]);
+  assert(cejas.includes(m[3]),'Nombre distinto para '+m[1]);
+  assert(cejas.includes('$'+m[4])&&cejas.includes('content="'+m[4].replaceAll('.','')+'"'),'Precio real distinto: '+m[1]);
+  assert(cejas.includes(m[5])&&cejas.includes(m[7]),'Duración o descripción distinta para '+m[1]);
+}
+assert((prices.match(/itemtype="https:\/\/schema.org\/Service"/g)||[]).length===27,'No modificar precios actuales');
+assert(home.includes('cejas-concepcion.html')&&prices.includes('cejas-concepcion.html'),'Enlaces internos para el nuevo contenido');
+assert(home.includes('id="mapOpen"')&&app.includes("getElementById('mapOpen')"),'Mapa interactivo conservado');
+assert(cejas.includes('script-src \'self\'')&&cejas.includes('/catalogo-live.js'),'Catálogo de cejas preparado para precios dinámicos');
+assert(sitemap.includes('<loc>https://burbujasnails.cl/cejas-concepcion.html</loc>'),'URL nueva en sitemap');
+assert(build.includes('cp -R index.html servicios.html cejas-concepcion.html')&&build.includes('for page in index.html servicios.html cejas-concepcion.html'),'Falta página en ZIP/cache');
+assert(!cejas.includes('aggregateRating')&&!cejas.includes('reviewCount'),'No inventar reseñas');
+console.log('SEO uñas y cejas Concepción: 5 servicios reales, precios, enlaces y mapa OK');
