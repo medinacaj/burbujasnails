@@ -32,7 +32,18 @@ try{
         await page.route('https://www.google.com/maps**',route=>route.fulfill({status:200,contentType:'text/html',body:'<p>Mapa de prueba</p>'}));
         try{
           await page.goto(base,{waitUntil:'domcontentloaded'});
-          await page.locator('#serviceList .service').first().waitFor();
+          try{await page.locator('#serviceList .service').first().waitFor({timeout:10000})}
+          catch(error){
+            const state=await page.evaluate(()=>({
+              readyState:document.readyState,
+              hasData:!!window.INITIAL_SERVICES,
+              count:window.INITIAL_SERVICES?.length,
+              serviceList:document.querySelector('#serviceList')?.innerHTML.slice(0,150),
+              scripts:[...document.scripts].filter(s=>s.src).map(s=>s.src),
+              csp:document.querySelector('meta[http-equiv="Content-Security-Policy"]')?.content.slice(0,250)
+            }));
+            throw new Error(engine+' '+width+'px catálogo sin render: '+JSON.stringify({state,errors,original:error.message}));
+          }
           assert.equal(await page.locator('#serviceList .service').count(),6,'Debe mostrar seis tarjetas iniciales');
           const bounds=await page.evaluate(()=>{
             const targets=['.wrap','.booking-card','.catalog-panel','.lightbox-box'];
