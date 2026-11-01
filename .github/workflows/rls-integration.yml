@@ -6,6 +6,8 @@ on:
       - 'supabase/**'
       - 'tests/rls-ci-bootstrap.sql'
       - 'tests/rls-integration.sh'
+      - 'tests/catalog-seed-parity.mjs'
+      - 'data.js'
       - '.github/workflows/rls-integration.yml'
   push:
     branches: [master]
@@ -50,5 +52,11 @@ jobs:
             sudo apt-get update -qq
             sudo apt-get install -y postgresql-client
           fi
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Comparar los 27 servicios del catálogo con el seed SQL
+        run: node tests/catalog-seed-parity.mjs
       - name: Probar RLS con identidades simuladas
         run: bash tests/rls-integration.sh
