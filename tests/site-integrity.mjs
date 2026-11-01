@@ -38,6 +38,12 @@ for(const page of pages){
  }
  if(!/<html\b[^>]*lang=["']es(?:-CL)?["']/.test(html))failures.push(page+': falta idioma');
  if(!/<h1\b/.test(html))failures.push(page+': falta H1');
+ // Validación estructural de saltos de encabezado h1→h2→h3 (sin imponer niveles dentro de cada sección).
+ const levels=[...html.matchAll(/<h([1-6])\b[^>]*>/gi)].map(match=>Number(match[1]));
+ if(levels.length&&levels[0]!==1)failures.push(page+': primer encabezado no es h1');
+ for(let i=1;i<levels.length;i++)if(levels[i]>levels[i-1]+1)
+   failures.push(page+': salto de encabezado h'+levels[i-1]+' a h'+levels[i]);
+
  if(page==='index.html'||page==='servicios.html'||page==='cejas-concepcion.html'){
   if(!html.includes('rel="canonical"'))failures.push(page+': sin canonical');
   if(!html.includes('name="description"'))failures.push(page+': sin meta description');
