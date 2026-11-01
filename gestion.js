@@ -40,7 +40,7 @@
    workspace.hidden=true;login.hidden=false;
    get("verify-form").hidden=true;get("token").value="";clear();
    // Revocar únicamente la sesión actual; el JWT puede seguir válido hasta caducar.
-   // Nunca dejar una clave ni token en localStorage, URL o registros.
+   // No persistir tokens en el cliente ni incluirlos en URL o registros.
    if(token)void fetch(cfg.url+"/auth/v1/logout?scope=local",{
      method:"POST",headers:{apikey:cfg.publishableKey,Authorization:"Bearer "+token},
      cache:"no-store"
