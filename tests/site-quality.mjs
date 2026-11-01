@@ -31,5 +31,5 @@ for(const price of allPrices.filter(v=>v!=='Consultar'))
 assert(services.includes('aria-current="page"'),'Ruta de navegación sin posición actual');
 assert(services.includes('name="twitter:card"'),'Falta tarjeta social de servicios');
 assert(build.includes('404.html favicon.svg'),'Empaquetado incompleto');
-assert(build.includes('servicios.html privacidad.html 404.html'),'Cache busting incompleto');
+assert(build.includes('servicios.html cejas-concepcion.html privacidad.html 404.html'),'Cache busting incompleto');
 console.log('Calidad web: iconos, 404, 27 servicios tipados, 26 precios, navegación y galería OK');
