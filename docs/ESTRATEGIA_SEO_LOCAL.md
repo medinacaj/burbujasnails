@@ -56,3 +56,12 @@ No crear páginas repetitivas con cambios mínimos solo para multiplicar palabra
 - Datos estructurados LocalBusiness: https://developers.google.com/search/docs/appearance/structured-data/local-business?hl=es
 - SEO de imágenes: https://developers.google.com/search/docs/appearance/google-images?hl=es
 - Fundamentos de SEO: https://developers.google.com/search/docs/essentials
+
+## Foco adicional: cejas y nails en Concepción (1 de noviembre de 2026)
+- **Portada (/):** intención principal «uñas Concepción», «nails Concepción», manicure, esmaltado y nail art. Mantener un título descriptivo, no acumular sinónimos artificialmente.
+- **Precios (/servicios.html):** intención «precios manicure Concepción», «soft gel Concepción», «pedicura Concepción» y catálogo completo.
+- **Cejas (/cejas-concepcion.html):** intención específica «cejas Concepción», «diseño de cejas Concepción», «laminado de cejas Concepción», «perfilado de cejas Concepción» y «planchado de cejas Concepción». Contiene tres tratamientos de cejas y dos servicios complementarios reales, con precios exactos de data.js.
+- **Enlaces internos:** portada, precios y página de cejas se vinculan mutuamente; no duplicar todo el catálogo en nuevas páginas.
+- **Search Console:** inspeccionar la URL nueva, enviar el sitemap y revisar mensualmente consultas por página, impresiones, clics, CTR y cambios de posición en la misma ventana temporal. Las posiciones dependen de ubicación, competencia, distancia y otros factores.
+- **Google Business Profile:** verificar la ficha, actualizar catálogo de servicios reales y fotografías con autorización, horarios exactos y responder reseñas genuinas. No cambiar el nombre comercial añadiendo palabras clave.
+- **Contenido futuro:** incorporar fotos reales de cejas solo cuando el estudio las proporcione y tenga permiso para publicarlas; evitar imágenes de uñas etiquetadas como cejas.
