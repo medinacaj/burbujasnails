@@ -4,6 +4,7 @@ import {createServer} from 'node:http';
 import {dirname,resolve,extname,sep} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {chromium,firefox,webkit} from 'playwright';
+import AxeBuilder from '@axe-core/playwright';
 
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const mime={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'application/javascript; charset=utf-8','.webp':'image/webp','.jpg':'image/jpeg','.svg':'image/svg+xml','.txt':'text/plain','.xml':'application/xml'};
@@ -54,6 +55,20 @@ try{
             throw new Error(engine+' '+width+'px catálogo sin render: '+JSON.stringify({state,errors,failedRequests,original:error.message}));
           }
           assert.equal(await page.locator('#serviceList .service').count(),6,'Debe mostrar seis tarjetas iniciales');
+          if(engine==='chromium'&&width===375){
+            // Una comprobación automática ayuda a detectar regresiones; no sustituye
+            // lectores de pantalla reales ni una evaluación completa de WCAG 2.2 AA.
+            for(const route of ['/','/servicios.html','/cejas-concepcion.html','/privacidad.html']){
+              if(route!=='/')await page.goto(base+route,{waitUntil:'domcontentloaded'});
+              const audit=await new AxeBuilder({page})
+                .withTags(['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']).analyze();
+              const serious=audit.violations.filter(item=>item.impact==='serious'||item.impact==='critical');
+              if(serious.length)throw new Error('A11y '+route+': '+JSON.stringify(serious.map(item=>({id:item.id,impact:item.impact,count:item.nodes.length,examples:item.nodes.slice(0,6).map(n=>({target:n.target,summary:n.failureSummary?.slice(0,160)}))}))));
+              console.log('A11y OK '+route+' (sin hallazgos graves/críticos automáticos)');
+            }
+            await page.goto(base,{waitUntil:'domcontentloaded'});
+            await page.locator('#serviceList .service').first().waitFor();
+          }
           const bounds=await page.evaluate(()=>{
             const targets=['.wrap','.booking-card','.catalog-panel','.lightbox-box'];
             return targets.flatMap(sel=>[...document.querySelectorAll(sel)].filter(el=>{
