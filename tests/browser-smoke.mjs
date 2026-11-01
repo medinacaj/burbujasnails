@@ -13,7 +13,15 @@ const server=createServer(async (request,response)=>{
   catch{response.writeHead(400).end();return}
   const file=resolve(root,pathname.replace(/^\/+/, '')||'index.html');
   if(file!==root&&!file.startsWith(root+sep)){response.writeHead(403).end();return}
-  try{const bytes=await readFile(file);response.writeHead(200,{'Content-Type':mime[extname(file)]||'application/octet-stream'});response.end(bytes)}
+  try{
+    let bytes=await readFile(file);
+    // El sitio real se publica por HTTPS. El servidor HTTP de pruebas no puede
+    // usar upgrade-insecure-requests: WebKit transforma los subrecursos locales
+    // en https://127.0.0.1 y bloquea data.js, aunque CSP de producción sea válida.
+    if(extname(file)==='.html')bytes=Buffer.from(bytes.toString('utf8').replaceAll('; upgrade-insecure-requests',''));
+    response.writeHead(200,{'Content-Type':mime[extname(file)]||'application/octet-stream'});
+    response.end(bytes)
+  }
   catch{response.writeHead(404).end('No encontrado')}
 });
 await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
@@ -27,6 +35,7 @@ try{
         const page=await browser.newPage({viewport:{width,height:850}});
         const errors=[];
         page.on('pageerror',error=>errors.push(error.message));
+        const failedRequests=[];page.on('requestfailed',request=>{if(request.url().includes('127.0.0.1'))failedRequests.push({url:request.url(),error:request.failure()?.errorText})});
         await page.route('https://fonts.googleapis.com/**',route=>route.abort());
         await page.route('https://fonts.gstatic.com/**',route=>route.abort());
         await page.route('https://www.google.com/maps**',route=>route.fulfill({status:200,contentType:'text/html',body:'<p>Mapa de prueba</p>'}));
@@ -42,7 +51,7 @@ try{
               scripts:[...document.scripts].filter(s=>s.src).map(s=>s.src),
               csp:document.querySelector('meta[http-equiv="Content-Security-Policy"]')?.content.slice(0,250)
             }));
-            throw new Error(engine+' '+width+'px catálogo sin render: '+JSON.stringify({state,errors,original:error.message}));
+            throw new Error(engine+' '+width+'px catálogo sin render: '+JSON.stringify({state,errors,failedRequests,original:error.message}));
           }
           assert.equal(await page.locator('#serviceList .service').count(),6,'Debe mostrar seis tarjetas iniciales');
           const bounds=await page.evaluate(()=>{
