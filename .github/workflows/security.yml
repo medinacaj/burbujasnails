@@ -30,6 +30,7 @@ jobs:
           node tests/modern-ui.mjs
           node tests/seo-gallery-map.mjs
           node tests/seo-local.mjs
+          node tests/seo-cejas.mjs
           node tests/gestion-precios.mjs
           node tests/site-quality.mjs
           node tests/gallery-modal.mjs
