@@ -6,7 +6,7 @@ window.INITIAL_SERVICES = [
   {
     id:'s01', icon:'polish', category:'Uñas manos',
     name:'Esmaltado semipermanente',
-    price:'10.000', duration:'60 min', popular:true,
+    price:'15.000', duration:'60 min', popular:true,
     description:'Esmaltado gel de larga duración que mantiene el color perfecto por semanas.',
     includes:['Limpieza de cutícula','Esmaltado semipermanente','Acabado brillante']
   },
