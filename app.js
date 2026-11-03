@@ -50,8 +50,9 @@ const grid=document.getElementById('galleryGrid');grid.innerHTML=gallery.map((it
 const lb=document.getElementById('lightbox'),lbImg=document.getElementById('lbImage'),lbCap=document.getElementById('lbCaption');let idx=0,priorFocus=null;
 function sizeLightboxPhoto(){
   if(!lbImg.naturalWidth||!lbImg.naturalHeight)return;
-  const gap=window.innerWidth<=850?8:16;
-  const maxW=window.innerWidth-gap,maxH=window.innerHeight-gap;
+  const isMobile=window.innerWidth<=850;
+  const maxW=Math.min(window.innerWidth*(isMobile?.88:.78),isMobile?460:720);
+  const maxH=window.innerHeight*(isMobile?.76:.8);
   const scale=Math.min(maxW/lbImg.naturalWidth,maxH/lbImg.naturalHeight,1);
   lbImg.style.width=Math.floor(lbImg.naturalWidth*scale)+'px';
   lbImg.style.height=Math.floor(lbImg.naturalHeight*scale)+'px';
