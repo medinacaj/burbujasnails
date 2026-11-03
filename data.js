@@ -6,28 +6,28 @@ window.INITIAL_SERVICES = [
   {
     id:'s01', icon:'polish', category:'Uñas manos',
     name:'Esmaltado semipermanente',
-    price:'15.000', duration:'60 min', popular:true,
+    price:'16.000', duration:'60 min', popular:true,
     description:'Esmaltado gel de larga duración que mantiene el color perfecto por semanas.',
     includes:['Limpieza de cutícula','Esmaltado semipermanente','Acabado brillante']
   },
   {
     id:'s02', icon:'layers', category:'Uñas manos',
     name:'Esmaltado gel builder',
-    price:'15.000', duration:'75 min', popular:true,
+    price:'20.000', duration:'75 min', popular:true,
     description:'Gel builder que fortalece y embellece la uña natural con un acabado impecable.',
     includes:['Preparación de uña','Gel builder','Esmaltado a color']
   },
   {
     id:'s03', icon:'sparkles', category:'Uñas manos',
     name:'Esmaltado francesa',
-    price:'12.000', duration:'70 min', popular:false,
+    price:'18.000', duration:'70 min', popular:false,
     description:'Clásica francesa que nunca pasa de moda, elegante y atemporal.',
     includes:['Limpieza de cutícula','Francesa semipermanente','Acabado natural']
   },
   {
     id:'s04', icon:'brush', category:'Uñas manos',
     name:'Esmaltado plus decorado',
-    price:'14.000', duration:'80 min', popular:true,
+    price:'25.000', duration:'80 min', popular:true,
     description:'Esmaltado semipermanente con diseño artístico personalizado.',
     includes:['Esmaltado base','Diseño a elección','Acabado matte o brillante']
   },
@@ -55,7 +55,7 @@ window.INITIAL_SERVICES = [
   {
     id:'s08', icon:'gem', category:'Uñas manos',
     name:'Full set semipermanente',
-    price:'20.000', duration:'100 min', popular:true,
+    price:'25.000', duration:'100 min', popular:true,
     description:'Servicio completo con limpieza, forma y esmaltado semipermanente en todas las uñas.',
     includes:['Limpieza completa','Moldeado y forma','Esmaltado semipermanente']
   },
@@ -69,7 +69,7 @@ window.INITIAL_SERVICES = [
   {
     id:'s10', icon:'gem', category:'Extensiones',
     name:'Soft Gel Manicure',
-    price:'22.000', duration:'90 min', popular:true,
+    price:'28.000', duration:'90 min', popular:true,
     description:'Extensiones de soft gel que imitan la uña natural con resultado ultrarealista.',
     includes:['Preparación de uña','Colocación soft gel','Esmaltado a color']
   },
@@ -90,14 +90,14 @@ window.INITIAL_SERVICES = [
   {
     id:'s13', icon:'gem', category:'Extensiones',
     name:'Acrílicas / Polygel',
-    price:'28.000', duration:'120 min', popular:true,
+    price:'30.000', duration:'120 min', popular:true,
     description:'Sistema de uñas con acrílico o polygel para máxima resistencia y largo.',
     includes:['Preparación completa','Acrílico o polygel','Esmaltado y forma']
   },
   {
     id:'s14', icon:'footprints', category:'Uñas pies',
     name:'Pedicura básica',
-    price:'10.000', duration:'50 min', popular:false,
+    price:'12.000', duration:'50 min', popular:false,
     description:'Pedicura esencial con limpieza, cortado y esmaltado.',
     includes:['Limpieza de pie','Cortado y limado','Esmaltado tradicional']
   },
@@ -111,42 +111,42 @@ window.INITIAL_SERVICES = [
   {
     id:'s16', icon:'flower', category:'Uñas pies',
     name:'Pedicura spa',
-    price:'18.000', duration:'80 min', popular:false,
+    price:'25.000', duration:'80 min', popular:false,
     description:'Experiencia spa completa con exfoliación, hidratación y esmaltado.',
     includes:['Baño relajante','Exfoliación','Hidratación','Esmaltado a elección']
   },
   {
     id:'s17', icon:'flower', category:'Uñas pies',
     name:'Pedicura deluxe',
-    price:'22.000', duration:'90 min', popular:false,
+    price:'35.000', duration:'90 min', popular:false,
     description:'La experiencia más completa: spa + semipermanente + decorado.',
     includes:['Pedicura spa completa','Esmaltado semipermanente','Decorado básico incluido']
   },
   {
     id:'s18', icon:'gift', category:'Promociones',
     name:'Combo manos + pies',
-    price:'24.000', duration:'120 min', popular:true,
+    price:'35.000', duration:'120 min', popular:true,
     description:'Esmaltado semipermanente manos y pies al mejor precio.',
     includes:['Semipermanente manos','Semipermanente pies','Ahorro garantizado']
   },
   {
     id:'s19', icon:'droplet', category:'Retiros',
     name:'Retiro de esmalte',
-    price:'5.000', duration:'30 min', popular:false,
+    price:'4.000', duration:'30 min', popular:false,
     description:'Retiro seguro de esmaltado semipermanente o gel sin dañar la uña.',
     includes:['Retiro con acetona','Hidratación de uña','Sin daño a la lámina']
   },
   {
     id:'s20', icon:'scissors', category:'Retiros',
     name:'Retiro extensiones',
-    price:'8.000', duration:'45 min', popular:false,
+    price:'10.000', duration:'45 min', popular:false,
     description:'Retiro profesional de acrílico, polygel o soft gel.',
     includes:['Retiro seguro','Limpieza de uña natural','Hidratación incluida']
   },
   {
     id:'s21', icon:'eye', category:'Pestañas y cejas',
     name:'Diseño de cejas',
-    price:'8.000', duration:'40 min', popular:true,
+    price:'10.000', duration:'40 min', popular:true,
     description:'Diseño y perfilado de cejas personalizado según tu morfología facial.',
     includes:['Diseño personalizado','Depilación','Definición con hilo o cera']
   },
@@ -174,7 +174,7 @@ window.INITIAL_SERVICES = [
   {
     id:'s25', icon:'leaf', category:'Pestañas y cejas',
     name:'Depilación facial',
-    price:'6.000', duration:'30 min', popular:false,
+    price:'15.000', duration:'30 min', popular:false,
     description:'Depilación de bozo, patillas y contorno facial con hilo o cera.',
     includes:['Depilación completa','Calmante post-depilación']
   },
