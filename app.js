@@ -48,7 +48,17 @@ const date=document.getElementById('preferredDate');function updateDateMin(){con
 document.getElementById('bookingForm').addEventListener('submit',e=>{e.preventDefault();if(!select.value){select.focus();return;}let dateText=date.value?(' Mi día preferido es '+date.value+'.'):'';let name=document.getElementById('bookingName').value.trim();let msg=`Hola, quisiera consultar disponibilidad para ${select.value}.${dateText}${name?' Mi nombre es '+name+'.':''} Muchas gracias.`;window.open(wa(msg),'_blank','noopener,noreferrer')});
 const grid=document.getElementById('galleryGrid');grid.innerHTML=gallery.map((item,i)=>`<button type="button" class="gallery-btn" data-idx="${i}" aria-label="Ampliar: ${esc(item.title)}"><img loading="lazy" decoding="async" width="720" height="1280" alt="${esc(item.alt)}" src="${photoData[item.photo]}"></button>`).join('');
 const lb=document.getElementById('lightbox'),lbImg=document.getElementById('lbImage'),lbCap=document.getElementById('lbCaption');let idx=0,priorFocus=null;
-function showPic(i){idx=(i+gallery.length)%gallery.length;lbImg.src=photoData[gallery[idx].photo];lbImg.alt=gallery[idx].alt;lbCap.textContent=gallery[idx].title}
+function sizeLightboxPhoto(){
+  if(!lbImg.naturalWidth||!lbImg.naturalHeight)return;
+  const gap=window.innerWidth<=850?8:16;
+  const maxW=window.innerWidth-gap,maxH=window.innerHeight-gap;
+  const scale=Math.min(maxW/lbImg.naturalWidth,maxH/lbImg.naturalHeight,1);
+  lbImg.style.width=Math.floor(lbImg.naturalWidth*scale)+'px';
+  lbImg.style.height=Math.floor(lbImg.naturalHeight*scale)+'px';
+}
+lbImg.addEventListener('load',sizeLightboxPhoto);
+window.addEventListener('resize',()=>{if(lb.classList.contains('open'))sizeLightboxPhoto()});
+function showPic(i){idx=(i+gallery.length)%gallery.length;lbImg.style.width='';lbImg.style.height='';lbImg.src=photoData[gallery[idx].photo];lbImg.alt=gallery[idx].alt;lbCap.textContent=gallery[idx].title;if(lbImg.complete)sizeLightboxPhoto()}
 let inerted=[];
 function openLb(i){priorFocus=document.activeElement;showPic(i);lb.classList.add('open');inerted=[...document.body.children].filter(el=>el!==lb&&!el.inert);inerted.forEach(el=>el.inert=true);document.body.classList.add('noscroll');document.getElementById('lbClose').focus()}
 function closeLb(){lb.classList.remove('open');document.body.classList.remove('noscroll');inerted.forEach(el=>el.inert=false);inerted=[];priorFocus?.focus()}
