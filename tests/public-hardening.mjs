@@ -11,7 +11,7 @@ assert(!csp.includes("'unsafe-eval'"),'Eval no autorizado');
 const ld=html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1];
 assert(ld,'Datos estructurados ausentes');JSON.parse(ld);
 const hash=createHash('sha256').update(ld,'utf8').digest('base64');
-assert(csp.includes("'sha256-"+hash+"'"),'Hash CSP/JSON-LD no coincide');
+assert(csp.includes("'sha256-"+hash+"'"),'Hash CSP/JSON-LD no coincide: esperado sha256-'+hash);
 assert(!/<script>(?!\s*\{)/.test(html),'No incluir scripts de aplicación inline');
 assert(html.includes('src="data.js?v=')&&html.includes('src="app.js?v='),'JS separado y cacheado');
 assert(!js.includes('data:image/webp;base64'),'No incrustar 10 fotos en JS');
