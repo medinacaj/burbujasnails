@@ -35,6 +35,7 @@ jobs:
           node tests/seo-local.mjs
           node tests/seo-cejas.mjs
           node tests/gestion-precios.mjs
+          node --test tests/catalog-live-status.mjs
           node tests/site-quality.mjs
           node tests/gallery-modal.mjs
           node tests/responsive-width.mjs
