@@ -4,6 +4,9 @@
 (()=>{
  const cfg=window.BN_CATALOG_CONFIG||{};
  if(!/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(cfg.url||"")||!/^(sb_publishable_[A-Za-z0-9_-]+|eyJ[A-Za-z0-9_.-]+)$/.test(cfg.publishableKey||""))return;
+ const status=document.getElementById("catalog-sync-status");
+ const show=(state,message)=>{if(!status)return;status.hidden=false;status.dataset.state=state;status.textContent=message;};
+ show("pending","Comprobando los precios del catálogo en línea…");
  const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),8000);
  fetch(cfg.url+"/rest/v1/bn_services?select=id,name,price_clp,duration,description&is_active=eq.true&order=display_order.asc,id.asc",{
   headers:{apikey:cfg.publishableKey},cache:"no-store",signal:controller.signal
@@ -11,13 +14,18 @@
   if(!result.ok)throw Error("Error de lectura de Supabase");
   return result.json()
  }).then(rows=>{
-  if(!Array.isArray(rows)||rows.length!==27||new Set(rows.map(s=>s.id)).size!==27)return;
+  if(!Array.isArray(rows)||rows.length!==27||new Set(rows.map(s=>s.id)).size!==27)
+    throw Error("Catálogo remoto incompleto");
   const valid=rows.every(s=>/^s\d{2}$/.test(s.id)&&
    (s.price_clp===null||(Number.isInteger(s.price_clp)&&s.price_clp>=0&&s.price_clp<=2000000))&&
    typeof s.name==="string"&&typeof s.duration==="string"&&typeof s.description==="string");
-  if(!valid)return;
+  if(!valid)throw Error("Catálogo remoto inválido");
   window.dispatchEvent(new CustomEvent("bn:catalog-updated",{detail:rows}));
+  show("current","Precios obtenidos del catálogo en línea. Confirma el valor final al reservar.");
   // La portada OnePage renderiza el catálogo mediante app.js.
   // No se mantienen páginas comerciales duplicadas.
- }).catch(()=>{/* Modo seguro: los precios estáticos se mantienen. */}).finally(()=>clearTimeout(timeout))
+ }).catch(()=>{
+  // Never pretend stale static values were confirmed against the live catalog.
+  show("offline","No fue posible confirmar los precios en línea. Los valores visibles son referenciales; confirma el precio por WhatsApp antes de reservar.");
+ }).finally(()=>clearTimeout(timeout))
 })();
