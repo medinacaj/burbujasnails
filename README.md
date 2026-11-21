@@ -39,3 +39,18 @@ El catálogo público está en `data.js`. Para actualizar precios o servicios: e
 6. Mantener el panel Supabase deshabilitado hasta aprobar implementación y pruebas de autorización reales.
 
 **Límite:** en una web pública el navegador recibe HTML, CSS y JavaScript; esos recursos pueden inspeccionarse/copiarse. Un repositorio público se puede clonar. No afirmar invulnerabilidad ni imposibilidad de copia.
+
+
+## Continuidad y estado verificable · 21/11/2026
+
+**Propósito:** Sitio público estático de catálogo, galería y contacto para servicios de uñas.
+
+**Límite de alcance:** La administración antigua está deshabilitada; no activar acceso administrativo sin Auth y RLS.
+
+- **Código:** consultar la rama predeterminada y el historial de commits antes de afirmar una implementación reciente; el contenido anterior de este README conserva sus salvedades y evidencia histórica.
+- **Pruebas y CI:** consultar la ejecución de GitHub Actions asociada al SHA que se pretende entregar. Esta revisión documental no ejecuta pruebas de aplicación.
+- **Despliegue:** verificar directamente el entorno y la versión servida; ni un commit ni una demo ni CI satisfactoria acreditan por sí solos un despliegue productivo.
+- **Trabajo siguiente:** revisar los issues y PR abiertos, resolver el último bloqueo concreto y registrar cambio, rama, SHA, pruebas, entorno efectivamente comprobado y pendientes.
+- **Seguridad:** no introducir secretos, información personal ni datos reales en demos; conservar fixtures sintéticos y separar los entornos.
+
+**Fuente de verdad:** este repositorio y sus decisiones propias; no importar reglas de otro producto. Revisar la documentación técnica y operativa propia antes de implementar cambios. 
