@@ -1,0 +1,64 @@
+name: Autorización SQL — PostgreSQL temporal
+on:
+  pull_request:
+    branches: [master]
+    paths:
+      - 'supabase/**'
+      - 'tests/rls-ci-bootstrap.sql'
+      - 'tests/rls-integration.sh'
+      - 'tests/catalog-seed-parity.mjs'
+      - 'data.js'
+      - '.github/workflows/rls-integration.yml'
+  push:
+    branches: [master]
+    paths:
+      - 'supabase/**'
+      - 'tests/rls-ci-bootstrap.sql'
+      - 'tests/rls-integration.sh'
+      - 'tests/catalog-seed-parity.mjs'
+      - 'data.js'
+      - '.github/workflows/rls-integration.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  rls-integration:
+    name: PostgreSQL temporal — permisos y auditoría RLS
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: local-test-only
+          POSTGRES_DB: bn_rls_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U postgres -d bn_rls_test"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+    env:
+      PGHOST: 127.0.0.1
+      PGPORT: '5432'
+      PGUSER: postgres
+      PGPASSWORD: local-test-only
+      PGDATABASE: bn_rls_test
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Instalar cliente PostgreSQL si falta
+        run: |
+          if ! command -v psql >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y postgresql-client
+          fi
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Comparar los 27 servicios del catálogo con el seed SQL
+        run: node tests/catalog-seed-parity.mjs
+      - name: Probar RLS con identidades simuladas
+        run: bash tests/rls-integration.sh

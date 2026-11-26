@@ -1,46 +1,50 @@
 name: Diagnóstico Lighthouse — producción
 on:
-  pull_request:
+  workflow_run:
+    workflows: ['pages build and deployment']
+    types: [completed]
     branches: [master]
-    paths:
-      - '.github/workflows/lighthouse.yml'
-      - 'scripts/report-lighthouse.mjs'
-      - 'scripts/check-canonical-host.mjs'
-  push:
-    branches: [master]
-    paths:
-      - '.github/workflows/lighthouse.yml'
-      - 'scripts/report-lighthouse.mjs'
-      - 'scripts/check-canonical-host.mjs'
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
   lighthouse-baseline:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     name: Lighthouse móvil y escritorio — producción publicada
     runs-on: ubuntu-latest
     timeout-minutes: 18
+    env:
+      BN_EXPECTED_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          persist-credentials: false
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           node-version: '24'
           package-manager-cache: false
+      - name: Verificar bytes de la versión publicada antes de medir
+        run: |
+          mkdir -p lighthouse-report
+          node scripts/verify-deployment.mjs lighthouse-report/deployment-before.json
       - name: Verificar dominio raíz y diagnosticar www
         run: node scripts/check-canonical-host.mjs
       - name: Ejecutar Lighthouse 13.6.0 (solo lectura)
         run: |
           command -v google-chrome || command -v chromium
           mkdir -p lighthouse-report
-          npx --yes lighthouse@13.6.0 https://burbujasnails.cl/ --output=json --output-path=./lighthouse-report/mobile.json --only-categories=performance,accessibility,best-practices,seo --chrome-flags="--headless --no-sandbox" --quiet
-          npx --yes lighthouse@13.6.0 https://burbujasnails.cl/ --preset=desktop --output=json --output-path=./lighthouse-report/desktop.json --only-categories=performance,accessibility,best-practices,seo --chrome-flags="--headless --no-sandbox" --quiet
+          npx --yes lighthouse@13.6.0 "https://burbujasnails.cl/?bn_commit=$BN_EXPECTED_SHA" --output=json --output-path=./lighthouse-report/mobile.json --only-categories=performance,accessibility,best-practices,seo --chrome-flags="--headless --no-sandbox" --quiet
+          npx --yes lighthouse@13.6.0 "https://burbujasnails.cl/?bn_commit=$BN_EXPECTED_SHA" --preset=desktop --output=json --output-path=./lighthouse-report/desktop.json --only-categories=performance,accessibility,best-practices,seo --chrome-flags="--headless --no-sandbox" --quiet
+      - name: Confirmar que la versión no cambió durante la medición
+        run: node scripts/verify-deployment.mjs lighthouse-report/deployment-after.json
       - name: Publicar métricas de laboratorio y observaciones
         run: node scripts/report-lighthouse.mjs
       - name: Guardar informes originales para revisión
         if: always()
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
-          name: lighthouse-burbujas-baseline
+          name: lighthouse-burbujas-${{ github.event.workflow_run.head_sha || github.sha }}
           path: lighthouse-report/*.json
           if-no-files-found: warn
           retention-days: 14

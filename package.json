@@ -1,0 +1,13 @@
+{
+  "name": "burbujas-nails-site",
+  "private": true,
+  "description": "Herramientas de validación del sitio estático; no se distribuyen dependencias al navegador.",
+  "scripts": {
+    "test": "node scripts/test-static.mjs",
+    "test:browser": "node tests/browser-smoke.mjs"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "playwright": "1.64.1"
+  }
+}

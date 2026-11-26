@@ -13,6 +13,10 @@ assert(html.includes("script-src 'self'")&&html.includes("connect-src 'self' htt
 assert(app.includes('bn:catalog-updated')&&app.includes('id:s.id'),'El catálogo no está enlazado');
 assert(panel.includes('name="robots" content="noindex,nofollow,noarchive"'),'Panel no indexable');
 assert(panelJS.includes('/auth/v1/otp')&&panelJS.includes('/auth/v1/verify'),'Autenticación OTP requerida');
+assert(panelJS.includes('/auth/v1/logout?scope=local'),'Cierre de sesión remoto local ausente');
+assert(panelJS.includes('response.status===401||response.status===403'),'Bloqueo ante token o permisos caducados ausente');
+assert(panelJS.includes('get("logout").disabled=true'),'Proteger cambios pendientes al cerrar sesión');
+assert(panel.includes('precios del HTML indexable'),'Aviso de sincronización de precios indexables ausente');
 assert(panelJS.includes('bn_admin_users?select=user_id'),'Verificación RLS ausente');
 assert(panelJS.includes('bn_price_history?select'),'Historial de precios ausente');
 assert(!panelJS.includes('localStorage')&&!panelJS.includes('sessionStorage'),'No conservar token en navegador');
