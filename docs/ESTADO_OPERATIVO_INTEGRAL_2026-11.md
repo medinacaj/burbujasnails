@@ -33,3 +33,6 @@
 
 ## Arquitectura OnePage — decisión 2026-11-01
 Se retiran las páginas promocionales `/servicios.html` y `/cejas-concepcion.html` y se concentra catálogo y precios en `/#servicios`. Enlaces, sitemap, pruebas y empaquetado se ajustan. Quedan pendientes redirecciones HTTP 301 desde Cloudflare u otro proveedor con permisos y verificación de indexación; GitHub Pages no las proporciona por sí mismo. El panel Supabase sigue desconectado.
+
+## Continuidad del respaldo — 26-11-2026
+El estado de esta página fechado el 1 de noviembre es histórico. El estado central vigente y sus límites están en [MEMORIA_OPERATIVA](MEMORIA_OPERATIVA.md) y [DECISIONES](DECISIONES.md). Master incorporó PR #37 y PR #35 permanece pendiente de reconciliación; no restaurar tarifas de ramas antiguas. El propietario decidió mantener Supabase deshabilitado. Staging y versión servida en producción no se verificaron directamente durante este respaldo; CI y Pages exitosos no sustituyen esa comprobación.
